@@ -5,7 +5,7 @@ import mdx from '@astrojs/mdx';
 
 export default defineConfig({
   site: 'https://mycustomagency.github.io',
-  base: '/trouvetonfatbike',
+  base: '/trouvetonfatbike/',
   integrations: [
     tailwind({ applyBaseStyles: false }),
     
