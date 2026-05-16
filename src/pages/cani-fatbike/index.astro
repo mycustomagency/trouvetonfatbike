@@ -1,0 +1,406 @@
+---
+import Base from '@layouts/Base.astro';
+import AffiliateBanner from '@components/product/AffiliateBanner.astro';
+import Newsletter from '@components/sections/Newsletter.astro';
+import FAQ from '@components/sections/FAQ.astro';
+import { amazonSearch } from '@utils/affiliate';
+
+// ─── FAQ ──────────────────────────────────────────────────────────────────────
+const FAQ_ITEMS = [
+  {
+    question: 'Mon chien doit-il être d\'une race sportive pour pratiquer ?',
+    answer:   'Non. L\'essentiel est que ton chien soit en bonne santé, suffisamment grand pour courir à côté du vélo sans être entraîné, et qu\'il apprécie l\'effort. Beaucoup de chiens de toutes morphologies adorent ces balades à condition d\'adapter l\'intensité et la durée à leurs capacités. Un vétérinaire peut te confirmer si ton chien est apte.',
+  },
+  {
+    question: 'À quel âge mon chien peut-il commencer ?',
+    answer:   'Attends la fin de la croissance : 12 mois pour les petites et moyennes races, 18 mois pour les grandes races comme le Berger Allemand ou le Labrador, 24 mois pour les races géantes (Dogue, Saint-Bernard, Terre-Neuve). Avant ces âges, les articulations sont encore en développement. Consulte ton vétérinaire.',
+  },
+  {
+    question: 'Quelle laisse et quelle fixation utiliser ?',
+    answer:   'La laisse s\'accroche sur la tige de selle, jamais sur le guidon. Des systèmes comme le Springer ou le Walky Dog incluent un amortisseur qui absorbe les à-coups quand le chien change brusquement de direction. La longueur idéale est 1,2 à 1,5m — assez pour que le chien coure confortablement à l\'avant sans se faire rattraper par la roue.',
+  },
+  {
+    question: 'Mon chien doit-il porter un harnais spécial ?',
+    answer:   'Un harnais de type "no-pull" ou "sport" qui répartit la traction sur le poitrail est fortement recommandé. Évite le collier (risque de blessure cervicale si le chien se retrouve tiré) et les harnais de marche basiques qui bloquent les épaules. Pour les gros chiens, des harnais comme le Julius K9 ou le Ruffwear Web Master sont très adaptés.',
+  },
+  {
+    question: 'Le fatbike électrique est-il adapté à cette pratique ?',
+    answer:   'Parfaitement. Le mode Eco permet de réguler ta vitesse sans distancer le chien, de l\'accompagner à son rythme, et de gérer facilement les dénivelés sans qu\'il soit mis en difficulté. C\'est aussi plus confortable pour toi sur les longues balades.',
+  },
+  {
+    question: 'Peut-on pratiquer avec un gros chien ou un molosse ?',
+    answer:   'Oui, avec les bonnes précautions. Les grandes races comme le Rottweiler, le Dogue Allemand, le Labrador ou le Golden Retriever peuvent tout à fait pratiquer à vitesse modérée et sur de courtes distances. L\'important est d\'adapter l\'intensité, d\'éviter les terrains durs (asphalte chaud) et de surveiller les signes de fatigue. Les races brachycéphales (Bouledogue, Carlin, Shih Tzu) ne peuvent pas faire d\'effort intense : ce n\'est pas une question de gabarit mais de capacité respiratoire.',
+  },
+  {
+    question: 'Quelle vitesse et quelle distance pour commencer ?',
+    answer:   'Pour les premières sorties : 10–15 min à allure de trot confortable (8–12 km/h), terrain plat, revêtement souple. Augmente progressivement sur plusieurs semaines. Un chien bien entraîné peut tenir 45 min à 1h sur terrain varié, mais ça prend du temps à construire. Arrête toujours avant qu\'il soit à bout.',
+  },
+];
+
+// ─── Profils de chiens — vision inclusive ─────────────────────────────────────
+const DOG_PROFILES = [
+  {
+    profil:  'Chiens sportifs naturels',
+    exemples: 'Husky, Border Collie, Braque, Vizsla, Greyound, Berger Australien',
+    capacite: 'Haute',
+    rythme:  'Longues distances, terrain varié, bonne cadence',
+    conseil: 'Ces chiens ont besoin d\'un débouché physique important. Le fatbike est parfait pour les "vider" mentalement et physiquement. Prévois 30–60 min de sortie active.',
+  },
+  {
+    profil:  'Grandes races polyvalentes',
+    exemples: 'Labrador, Golden Retriever, Berger Allemand, Malinois, Dobermann',
+    capacite: 'Moyenne à haute',
+    rythme:  'Balades régulières, rythme adapté, terrain souple privilégié',
+    conseil: 'Excellents compagnons de balade. Ils n\'ont pas l\'instinct de traction mais l\'enthousiasme et l\'endurance. Démarre doucement, ils adorent partager un effort avec toi.',
+  },
+  {
+    profil:  'Molosses & grosses races',
+    exemples: 'Rottweiler, Dogue Allemand, Labrador (gabarit fort), Saint-Bernard, Terre-Neuve',
+    capacite: 'Modérée',
+    rythme:  'Courtes balades à rythme tranquille, terrain plat, repos fréquents',
+    conseil: 'Oui, c\'est possible ! L\'essentiel est d\'adapter l\'allure (pas trop vite), la durée (20–30 min max au début) et le terrain (éviter l\'asphalte chaud). Le fatbike électrique en mode Eco est idéal pour réguler.',
+  },
+  {
+    profil:  'Petites & moyennes races actives',
+    exemples: 'Jack Russell, Beagle, Épagneul, Cocker, Teckel (long format), Shiba Inu',
+    capacite: 'Variable',
+    rythme:  'Balades courtes à allure tranquille, idéal à vélo lent',
+    conseil: 'Selon la race et l\'individu. Un Jack Russell a une énergie infinie, un Beagle aura besoin de plus de pauses. La clé : observer ton chien et ne jamais le forcer. La balade à vélo reste un moment de plaisir partagé.',
+  },
+];
+---
+
+<Base
+  title="Balades à Vélo avec son Chien — Guide Fatbike & Chien 2026"
+  description="Partir en balade à fatbike avec son chien : comment bien démarrer, quel équipement, quelle sécurité. Guide pratique pour tous les chiens et tous les gabarits."
+>
+
+  <!-- ─── Hero ─────────────────────────────────────────────────── -->
+  <section class="relative overflow-hidden" style="min-height: 480px;">
+    <div class="absolute inset-0 z-0" aria-hidden="true">
+      <img
+        src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=1600&q=80"
+        alt="Chien qui court à côté d'un vélo en forêt, balade nature"
+        class="w-full h-full object-cover object-center"
+        loading="eager" fetchpriority="high" width="1600" height="700"
+      />
+      <div class="absolute inset-0 bg-gradient-to-t from-brand-black via-brand-black/55 to-brand-black/15"></div>
+      <div class="absolute inset-0 bg-gradient-to-r from-brand-black/65 to-transparent"></div>
+    </div>
+
+    <div class="relative z-10 container-site pt-8">
+      <nav aria-label="Fil d'Ariane">
+        <ol class="flex items-center gap-2 text-xs text-brand-gray-400" role="list">
+          <li><a href="/" class="hover:text-brand-orange transition-colors">Accueil</a></li>
+          <li><span aria-hidden="true">/</span></li>
+          <li class="text-brand-gray-200">Fatbike & chien</li>
+        </ol>
+      </nav>
+    </div>
+
+    <div class="relative z-10 container-site py-16 md:py-24">
+      <div class="max-w-2xl">
+        <div class="section-label mb-5">
+          <span class="text-lg" aria-hidden="true">🐕</span>
+          Balade, plaisir & complicité
+        </div>
+        <h1 class="heading-h1 mb-5">
+          Rouler avec ton chien :<br/>
+          <span class="text-brand-orange">une aventure à deux</span>
+        </h1>
+        <p class="text-brand-gray-200 text-lg leading-relaxed mb-8 text-pretty">
+          Partir en balade à fatbike avec ton chien qui trotte à côté, c'est l'un des meilleurs moments 
+          que tu puisses partager avec lui. Dépense physique, stimulation mentale, complicité renforcée — 
+          et c'est accessible à toutes les races selon leurs capacités.
+        </p>
+        <div class="flex flex-wrap gap-3">
+          <span class="badge badge-orange border border-brand-orange/25">🐕 Tous gabarits bienvenus</span>
+          <span class="badge badge-gray">🌲 Forêt & chemins</span>
+          <span class="badge badge-gray">❤️ Plaisir & bien-être chien</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Pourquoi strip ────────────────────────────────────────── -->
+  <div class="bg-brand-gray-900 border-y border-brand-gray-800">
+    <div class="container-site py-8">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+        {[
+          { v: '12 mois+', l: 'Âge min. petites races'  },
+          { v: '18–24 mois', l: 'Âge min. grandes races' },
+          { v: '10–30 km',   l: 'Distance typique'       },
+          { v: 'Toutes races', l: 'Adaptées à leurs capacités' },
+        ].map(s => (
+          <div>
+            <div class="font-mono font-bold text-xl text-brand-orange">{s.v}</div>
+            <div class="text-xs text-brand-gray-400 mt-0.5">{s.l}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <div class="container-site py-14 md:py-20">
+    <div class="grid grid-cols-1 xl:grid-cols-[1fr_300px] gap-12">
+
+      <main class="flex flex-col gap-16">
+
+        <!-- ─── Intro pourquoi ──────────────────────────────────── -->
+        <section aria-labelledby="pourquoi-heading">
+          <h2 id="pourquoi-heading" class="heading-h3 mb-6">Pourquoi c'est bon pour ton chien</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {[
+              {
+                icon: '🧠',
+                title: 'Stimulation mentale',
+                body:  'Courir en extérieur, sentir des odeurs nouvelles, naviguer dans un environnement changeant — c\'est une stimulation mentale intense qui "vide" ton chien bien plus que 30 min dans un jardin.',
+              },
+              {
+                icon: '💪',
+                title: 'Dépense physique adaptée',
+                body:  'Le fatbike te permet de contrôler ton allure précisément. Tu t\'adaptes au rythme de ton chien, et non l\'inverse. Le mode Eco de l\'assistance électrique est parfait pour ça.',
+              },
+              {
+                icon: '❤️',
+                title: 'Lien renforcé',
+                body:  'Partager une activité physique ensemble renforce le lien humain-animal de façon remarquable. Ton chien te regarde différemment après une bonne balade partagée.',
+              },
+              {
+                icon: '😴',
+                title: 'Un chien fatigué est un chien heureux',
+                body:  'Un chien bien dépensé physiquement est plus calme, moins anxieux, moins destructeur à la maison. Et c\'est bon pour toi aussi — c\'est du sport déguisé en balade.',
+              },
+            ].map(item => (
+              <div class="card-base p-5">
+                <div class="text-2xl mb-3" aria-hidden="true">{item.icon}</div>
+                <h3 class="font-display font-semibold text-brand-offwhite text-sm mb-2">{item.title}</h3>
+                <p class="text-xs text-brand-gray-300 leading-relaxed">{item.body}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <!-- ─── Profils de chiens ──────────────────────────────── -->
+        <section aria-labelledby="profils-heading">
+          <h2 id="profils-heading" class="heading-h3 mb-3">Tous les chiens peuvent profiter — selon leurs capacités</h2>
+          <p class="text-brand-gray-300 text-sm mb-6 leading-relaxed">
+            Pas besoin d'un Husky ou d'un Border Collie. Ce qui compte c'est de connaître 
+            les limites de <em>ton</em> chien et d'adapter l'activité. Voici comment envisager la pratique selon son profil.
+          </p>
+          <div class="flex flex-col gap-4">
+            {DOG_PROFILES.map(profile => (
+              <div class="card-base p-6">
+                <div class="flex flex-wrap items-start justify-between gap-3 mb-4">
+                  <h3 class="font-display font-semibold text-brand-offwhite text-base">{profile.profil}</h3>
+                  <span class:list={[
+                    'badge border text-xs',
+                    profile.capacite === 'Haute'           ? 'badge-orange border-brand-orange/25' :
+                    profile.capacite === 'Moyenne à haute' ? 'badge-green border-emerald-500/25'   :
+                                                            'badge-gray border-brand-gray-600',
+                  ]}>
+                    Capacité : {profile.capacite}
+                  </span>
+                </div>
+                <p class="text-xs text-brand-gray-400 mb-3">
+                  <span class="font-medium text-brand-gray-300">Exemples : </span>
+                  {profile.exemples}
+                </p>
+                <div class="bg-brand-gray-800 rounded-xl px-4 py-3 mb-3">
+                  <span class="text-2xs font-medium text-brand-gray-500 uppercase tracking-wide">Rythme typique</span>
+                  <p class="text-xs text-brand-gray-200 mt-0.5">{profile.rythme}</p>
+                </div>
+                <p class="text-xs text-brand-gray-300 leading-relaxed">{profile.conseil}</p>
+              </div>
+            ))}
+          </div>
+          <div class="mt-5 bg-brand-gray-900 border border-brand-gray-700 rounded-xl px-5 py-4">
+            <p class="text-xs text-brand-gray-300 leading-relaxed">
+              <strong class="text-brand-offwhite">⚠️ Exception à respecter :</strong> Les races brachycéphales 
+              (Bouledogue Français/Anglais, Carlin, Shih Tzu, Pékinois) ne peuvent pas faire d'effort physique 
+              intense en raison de leur anatomie respiratoire. Ce n'est pas une question de gabarit — 
+              c'est une limite physiologique réelle. Consulte ton vétérinaire pour toute activité physique avec ces races.
+            </p>
+          </div>
+        </section>
+
+        <!-- ─── Bien démarrer ─────────────────────────────────── -->
+        <section aria-labelledby="debuter-heading">
+          <h2 id="debuter-heading" class="heading-h3 mb-6">Comment bien démarrer</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {[
+              {
+                n: '01', title: 'Visite vétérinaire d\'abord',
+                body: 'Avant la première sortie, fais valider l\'aptitude de ton chien par ton vétérinaire. Bilan articulaire, évaluation de l\'âge, de l\'état de santé général. C\'est la base.',
+              },
+              {
+                n: '02', title: 'Le bon équipement',
+                body: 'Un harnais adapté qui ne bloque pas les épaules, une fixation amortissante sur la tige de selle (pas sur le guidon), de l\'eau pour le chien. C\'est tout ce qu\'il faut pour commencer.',
+              },
+              {
+                n: '03', title: 'Commencer très doucement',
+                body: 'Premières sorties : 10–15 minutes, terrain plat, allure de trot confortable. Le chien doit rester enthousiaste tout au long. Si tu dois le motiver, c\'est trop long ou trop vite.',
+              },
+              {
+                n: '04', title: 'Choisir le bon terrain',
+                body: 'Chemins forestiers avec sous-sol souple : terre battue, herbe, sable. Évite l\'asphalte chaud (brûle les coussinets), les chemins caillouteux et les fortes chaleurs.',
+              },
+              {
+                n: '05', title: 'Lire les signaux de ton chien',
+                body: 'Langue qui pend excessivement, halètement fort, ralentissement — c\'est lui qui parle. Arrête avant qu\'il soit épuisé. La règle d\'or : terminer la sortie sur une bonne note.',
+              },
+              {
+                n: '06', title: 'Hydrater régulièrement',
+                body: 'Propose de l\'eau à ton chien toutes les 15–20 minutes en été, 30 min en hiver. Un chien qui fait de l\'effort consomme beaucoup plus d\'eau que tu ne le penses.',
+              },
+            ].map(step => (
+              <div class="card-base p-5 flex gap-4">
+                <span class="font-mono text-2xl font-bold text-brand-orange opacity-35 flex-shrink-0 leading-none mt-0.5">
+                  {step.n}
+                </span>
+                <div>
+                  <h3 class="font-display font-semibold text-brand-offwhite text-sm mb-2">{step.title}</h3>
+                  <p class="text-xs text-brand-gray-300 leading-relaxed">{step.body}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <!-- ─── Équipement recommandé ─────────────────────────── -->
+        <section aria-labelledby="equip-heading">
+          <h2 id="equip-heading" class="heading-h3 mb-6">L'équipement essentiel</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {[
+              {
+                icon: '🦺', title: 'Harnais adapté',
+                body:  'Un harnais "no-pull" ou sport qui répartit la traction sur le poitrail sans bloquer les épaules. Julius K9 IDC (~45€), Ruffwear Web Master (~99€) ou Non-Stop Freemotion (~89€) pour les chiens sportifs.',
+                href:  amazonSearch('harnais chien sport no pull julius k9'),
+              },
+              {
+                icon: '🔗', title: 'Fixation amortissante sur le vélo',
+                body:  'Springer ou Walky Dog Plus (~35–65€) : se fixe sur la tige de selle et absorbe les à-coups. Ne jamais accrocher la laisse au guidon — risque de chute important.',
+                href:  amazonSearch('springer vélo chien walky dog fixation'),
+              },
+              {
+                icon: '💧', title: 'Hydratation trail',
+                body:  'Gourde pliable + gamelle légère à glisser dans un sac de guidon. Ruffwear Quencher (~25€) ou gamelle de voyage simple. L\'eau c\'est la priorité en sortie.',
+                href:  amazonSearch('gourde gamelle chien trail sport'),
+              },
+              {
+                icon: '🛡️', title: 'Protection coussinets',
+                body:  'Crème Musher\'s Secret (~15€) avant les sorties sur terrain dur ou chaud. Pour les gros chiens, des bottines de protection existent si le terrain est très abrasif.',
+                href:  amazonSearch('creme protection coussinets chien mushers secret'),
+              },
+              {
+                icon: '🌡️', title: 'Thermomètre & sécurité chaleur',
+                body:  'Par température > 22°C, sois très vigilante. Les chiens surchauffent vite à l\'effort. Veste rafraîchissante Ruffwear (~55€) pour les journées chaudes.',
+                href:  amazonSearch('veste rafraichissante chien sport ruffwear'),
+              },
+              {
+                icon: '📍', title: 'GPS chien (optionnel)',
+                body:  'Si la laisse se détache accidentellement, un GPS Tractive (~50€ + abo) est très rassurant. Particulièrement utile en forêt ou terrain ouvert.',
+                href:  amazonSearch('gps traceur chien tractive'),
+              },
+            ].map(item => (
+              <div class="card-base p-5">
+                <div class="flex items-center gap-3 mb-3">
+                  <span class="text-2xl" aria-hidden="true">{item.icon}</span>
+                  <h3 class="font-display font-semibold text-brand-offwhite text-sm">{item.title}</h3>
+                </div>
+                <p class="text-xs text-brand-gray-300 leading-relaxed mb-4">{item.body}</p>
+                <a
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer nofollow"
+                  class="affiliate-cta text-xs py-2 px-4 inline-flex"
+                >
+                  Voir sur Amazon →
+                </a>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <!-- ─── FAQ ─────────────────────────────────────────────── -->
+        <FAQ title="Questions fréquentes — Fatbike & chien" items={FAQ_ITEMS} />
+
+      </main>
+
+      <!-- ─── Sidebar ────────────────────────────────────────────── -->
+      <aside class="flex flex-col gap-5">
+        <div class="card-glass p-5 rounded-2xl sticky top-24">
+          <p class="text-xs font-medium text-brand-orange uppercase tracking-widest mb-4">
+            Équipement de base
+          </p>
+          <div class="flex flex-col gap-3 mb-5">
+            {[
+              { label: 'Harnais sport chien',       href: amazonSearch('harnais sport chien no pull') },
+              { label: 'Fixation vélo Springer',     href: amazonSearch('springer vélo chien fixation selle') },
+              { label: 'Gamelle trail portable',     href: amazonSearch('gamelle pliable chien randonnee') },
+              { label: 'Crème coussinets',           href: amazonSearch('creme coussinets chien sport') },
+              { label: 'GPS tracker chien',          href: amazonSearch('gps chien tractive') },
+            ].map(item => (
+              <a
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer nofollow"
+                class="flex items-center justify-between px-3 py-2.5 rounded-xl
+                       bg-brand-gray-800 text-xs text-brand-gray-200
+                       hover:bg-brand-orange/10 hover:text-brand-orange
+                       transition-all duration-150"
+              >
+                <span>{item.label}</span>
+                <svg class="w-3.5 h-3.5 text-brand-gray-600" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                  <path d="M5 3l4 4-4 4" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/>
+                </svg>
+              </a>
+            ))}
+          </div>
+
+          <div class="pt-4 border-t border-brand-gray-800">
+            <p class="text-xs font-medium text-brand-offwhite mb-3">Quel fatbike pour les balades ?</p>
+            <a href="/categorie/fatbike-debutant/" class="btn-ghost btn-sm w-full justify-center">
+              Voir notre sélection →
+            </a>
+          </div>
+        </div>
+
+        <!-- Encart sécurité -->
+        <div class="card-base p-5 border-amber-500/20">
+          <p class="text-xs font-medium text-amber-400 mb-3 flex items-center gap-2">
+            <svg class="w-4 h-4" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M8 2L14 13H2L8 2z" stroke="currentColor" stroke-width="1.25" stroke-linejoin="round"/>
+              <path d="M8 6v4M8 11v1" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/>
+            </svg>
+            Sécurité d'abord
+          </p>
+          <ul class="flex flex-col gap-2">
+            {[
+              'Visite véto avant de démarrer',
+              'Harnais adapté (pas un collier)',
+              'Jamais par grosse chaleur',
+              'Laisse sur tige de selle',
+              'Eau toutes les 15–20 min',
+            ].map(tip => (
+              <li class="flex items-start gap-2 text-xs text-brand-gray-300">
+                <svg class="w-3.5 h-3.5 text-amber-400 flex-shrink-0 mt-0.5" viewBox="0 0 14 14" fill="none">
+                  <path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/>
+                </svg>
+                {tip}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+
+  <div class="container-site pb-10">
+    <AffiliateBanner variant="guide" />
+  </div>
+
+  <Newsletter variant="compact" />
+
+</Base>

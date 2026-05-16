@@ -1,0 +1,124 @@
+---
+import Base from '@layouts/Base.astro';
+import Hero from '@components/sections/Hero.astro';
+import TrustStrip from '@components/sections/TrustStrip.astro';
+import WhyFatbike from '@components/sections/WhyFatbike.astro';
+import CategoryGrid from '@components/sections/CategoryGrid.astro';
+import FeaturedProducts from '@components/sections/FeaturedProducts.astro';
+import AdventureUniverse from '@components/sections/AdventureUniverse.astro';
+import QuizTeaser from '@components/sections/QuizTeaser.astro';
+import LatestGuides from '@components/sections/LatestGuides.astro';
+import AffiliateBanner from '@components/product/AffiliateBanner.astro';
+import FAQ from '@components/sections/FAQ.astro';
+import Newsletter from '@components/sections/Newsletter.astro';
+import { buildWebsiteSchema, SITE } from '@utils/seo';
+
+// ─── Homepage SEO ───────────────────────────────────────────────────────────
+const SEO = {
+  title:       undefined, // Homepage uses site default: "TrouveTonFatBike — Explore sans limites."
+  description: 'Comparateur et guide d\'achat fatbike électrique N°1 en France. Trouve le meilleur fatbike électrique selon ton terrain, ton budget et ton usage. Comparatifs 2026, avis experts et quiz personnalisé.',
+  tags:        ['fatbike électrique', 'meilleur fatbike', 'comparatif fatbike', 'guide achat fatbike', 'fatbike 2026', 'fatbike prix'],
+  ogImage:     '/og-default.jpg',
+};
+
+// Homepage specific schema
+const localBusinessSchema = {
+  '@context':  'https://schema.org',
+  '@type':     'WebPage',
+  name:        SITE.name,
+  description: SEO.description,
+  url:         SITE.url,
+  inLanguage:  'fr-FR',
+  about: {
+    '@type': 'Thing',
+    name:    'Fatbike électrique',
+  },
+  mainEntity: {
+    '@type': 'ItemList',
+    name:    'Meilleures catégories fatbike 2026',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Fatbike Montagne', url: `${SITE.url}/categorie/fatbike-montagne/` },
+      { '@type': 'ListItem', position: 2, name: 'Fatbike Plage',    url: `${SITE.url}/categorie/fatbike-plage/` },
+      { '@type': 'ListItem', position: 3, name: 'Fatbike Neige',    url: `${SITE.url}/categorie/fatbike-neige/` },
+      { '@type': 'ListItem', position: 4, name: 'Fatbike Urbain',   url: `${SITE.url}/categorie/fatbike-urbain/` },
+      { '@type': 'ListItem', position: 5, name: 'Cani-Fatbike',     url: `${SITE.url}/cani-fatbike/` },
+    ],
+  },
+};
+---
+
+<Base
+  {...SEO}
+  type="website"
+  schema={localBusinessSchema}
+>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       1. HERO — Cinématique, immersif, plein écran
+  ════════════════════════════════════════════════════════════ -->
+  <Hero />
+
+  <!-- ═══════════════════════════════════════════════════════════
+       2. TRUST STRIP — Chiffres clés, social proof
+  ════════════════════════════════════════════════════════════ -->
+  <TrustStrip />
+
+  <!-- ═══════════════════════════════════════════════════════════
+       3. CATÉGORIES — Grille immersive par usage / terrain
+  ════════════════════════════════════════════════════════════ -->
+  <CategoryGrid />
+
+  <!-- ═══════════════════════════════════════════════════════════
+       4. POURQUOI FATBIKE — Bénéfices avec statistiques
+  ════════════════════════════════════════════════════════════ -->
+  <WhyFatbike />
+
+  <!-- ═══════════════════════════════════════════════════════════
+       5. MEILLEURS MODÈLES — Sélection affiliation
+  ════════════════════════════════════════════════════════════ -->
+  <FeaturedProducts />
+
+  <!-- ═══════════════════════════════════════════════════════════
+       6. AFFILIATE BANNER — CTA Amazon élégant
+  ════════════════════════════════════════════════════════════ -->
+  <section class="section-padding-sm" aria-label="Offres du moment">
+    <div class="container-site">
+      <AffiliateBanner variant="amazon" />
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       7. UNIVERS AVENTURE — Terrain tabs lifestyle
+  ════════════════════════════════════════════════════════════ -->
+  <AdventureUniverse />
+
+  <!-- ═══════════════════════════════════════════════════════════
+       8. QUIZ TEASER — Quel fatbike pour moi ?
+  ════════════════════════════════════════════════════════════ -->
+  <QuizTeaser />
+
+  <!-- ═══════════════════════════════════════════════════════════
+       9. GUIDES — Derniers articles SEO
+  ════════════════════════════════════════════════════════════ -->
+  <LatestGuides />
+
+  <!-- ═══════════════════════════════════════════════════════════
+       10. AFFILIATE GUIDE BANNER
+  ════════════════════════════════════════════════════════════ -->
+  <section class="section-padding-sm" aria-label="Guide complet 2026">
+    <div class="container-site">
+      <AffiliateBanner variant="guide" />
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       11. FAQ SEO — Optimisée rich snippets Google
+  ════════════════════════════════════════════════════════════ -->
+  <FAQ />
+
+  <!-- ═══════════════════════════════════════════════════════════
+       12. NEWSLETTER — Capture email avec lead magnet
+  ════════════════════════════════════════════════════════════ -->
+  <Newsletter />
+
+</Base>

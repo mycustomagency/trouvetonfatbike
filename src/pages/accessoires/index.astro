@@ -1,0 +1,197 @@
+---
+import Base from '@layouts/Base.astro';
+import AffiliateBanner from '@components/product/AffiliateBanner.astro';
+import Newsletter from '@components/sections/Newsletter.astro';
+import { amazonSearch } from '@utils/affiliate';
+
+const CATEGORIES = [
+  {
+    id: 'casques', icon: '🪖', title: 'Casques',
+    description: 'Casques VTT homologués pour fatbike. Plein face, trail ou urbain.',
+    href: amazonSearch('casque vtt électrique'),
+    picks: [
+      { name: 'Fox Speedframe Pro',   price: 189, asin: 'B09ABC123', badge: '⭐ Meilleur choix' },
+      { name: 'Giro Manifest Mips',   price: 149, asin: 'B09DEF456' },
+      { name: 'Bell Super Air R Mips', price: 219, asin: 'B09GHI789' },
+    ],
+  },
+  {
+    id: 'eclairage', icon: '💡', title: 'Éclairage',
+    description: 'Feux avant/arrière puissants pour les sorties nocturnes et la visibilité.',
+    href: amazonSearch('éclairage vélo électrique puissant'),
+    picks: [
+      { name: 'Lezyne Mega Drive 1800', price: 89, asin: 'B08ABC123', badge: '💡 Plus lumineux' },
+      { name: 'Knog PWR Trail 1000',    price: 79, asin: 'B08DEF456' },
+      { name: 'Garmin Varia RTL515',    price: 149, asin: 'B08GHI789', badge: '🔴 Radar arrière' },
+    ],
+  },
+  {
+    id: 'antivols', icon: '🔒', title: 'Antivols',
+    description: 'Antivols U, chaînes et câbles pour sécuriser ton investissement.',
+    href: amazonSearch('antivol vélo électrique'),
+    picks: [
+      { name: 'Kryptonite New York Lock', price: 99,  asin: 'B07ABC123', badge: '🏆 Recommandé' },
+      { name: 'Abus Granit 460',          price: 69,  asin: 'B07DEF456' },
+      { name: 'Hiplok DX',                price: 119, asin: 'B07GHI789' },
+    ],
+  },
+  {
+    id: 'gants', icon: '🧤', title: 'Gants',
+    description: 'Gants VTT et trail pour toutes saisons. Protection et grip.',
+    href: amazonSearch('gants vtt fatbike'),
+    picks: [
+      { name: 'Fox Ranger Gel',      price: 39, asin: 'B06ABC123' },
+      { name: 'Giro DND',            price: 29, asin: 'B06DEF456', badge: '💰 Meilleur prix' },
+      { name: 'Dakine Covert Short', price: 45, asin: 'B06GHI789' },
+    ],
+  },
+  {
+    id: 'supports', icon: '📱', title: 'Supports smartphone',
+    description: 'Fixations téléphone et GPS pour naviguer en toute sécurité.',
+    href: amazonSearch('support smartphone vélo'),
+    picks: [
+      { name: 'Quad Lock Bike Mount', price: 49, asin: 'B05ABC123', badge: '🏆 Standard' },
+      { name: 'Rokform Rugged',       price: 59, asin: 'B05DEF456' },
+      { name: 'SP Connect Bundle',    price: 39, asin: 'B05GHI789' },
+    ],
+  },
+  {
+    id: 'batteries', icon: '🔋', title: 'Batteries de rechange',
+    description: 'Batteries supplémentaires et chargeurs pour doubler ton autonomie.',
+    href: amazonSearch('batterie vélo électrique 48v'),
+    picks: [
+      { name: 'Batterie Bafang 48V 17Ah', price: 349, asin: 'B04ABC123', badge: '⚡ Compatible Bafang' },
+      { name: 'Chargeur rapide 5A',        price: 89,  asin: 'B04DEF456' },
+      { name: 'Batterie 48V 20Ah LG',     price: 449, asin: 'B04GHI789' },
+    ],
+  },
+  {
+    id: 'remorques', icon: '🛒', title: 'Remorques & sacoches',
+    description: 'Remorques enfant, sacoches de guidon et bikepacking pour transporter plus.',
+    href: amazonSearch('remorque vélo fatbike'),
+    picks: [
+      { name: 'Thule Chariot Cross',   price: 899, asin: 'B03ABC123', badge: '👶 Top enfant' },
+      { name: 'Revelate Designs Tara', price: 149, asin: 'B03DEF456' },
+      { name: 'Apidura Backcountry',   price: 199, asin: 'B03GHI789' },
+    ],
+  },
+  {
+    id: 'harnais', icon: '🐕', title: 'Harnais cani-fatbike',
+    description: 'Harnais de traction et fixations pour la pratique du cani-fatbike.',
+    href: '/cani-fatbike/',
+    picks: [
+      { name: 'Non-Stop Dogwear Freemotion', price: 89,  asin: 'B02ABC123', badge: '🐕 Recommandé' },
+      { name: 'Ruffwear Web Master',          price: 99,  asin: 'B02DEF456' },
+      { name: 'Trixie Springer',              price: 59,  asin: 'B02GHI789' },
+    ],
+  },
+];
+---
+
+<Base
+  title="Accessoires Fatbike Électrique 2026 — Casques, Éclairage, Antivols"
+  description="Les meilleurs accessoires pour fatbike électrique en 2026. Casques, éclairage, antivols, gants, supports smartphone : notre sélection affiliée testée."
+>
+
+  <!-- Header -->
+  <section class="section-padding-sm border-b border-brand-gray-800">
+    <div class="container-site">
+      <nav aria-label="Fil d'Ariane" class="mb-6">
+        <ol class="flex items-center gap-2 text-xs text-brand-gray-400" role="list">
+          <li><a href="/" class="hover:text-brand-orange transition-colors">Accueil</a></li>
+          <li><span>/</span></li>
+          <li class="text-brand-gray-200">Accessoires</li>
+        </ol>
+      </nav>
+      <div class="section-label mb-4">Accessoires</div>
+      <h1 class="heading-h1 mb-4">Équipe ton fatbike</h1>
+      <p class="text-brand-gray-300 text-lg max-w-xl text-pretty">
+        Casques, antivols, éclairage, harnais cani-vélo : tout l'équipement sélectionné
+        pour rouler en sécurité et profiter de chaque aventure.
+      </p>
+
+      <!-- Anchor nav -->
+      <div class="flex flex-wrap gap-2 mt-8 overflow-x-auto scrollbar-hide pb-1">
+        {CATEGORIES.map(c => (
+          <a
+            href={`#${c.id}`}
+            class="flex items-center gap-1.5 px-4 py-2 rounded-full border border-brand-gray-700
+                   text-sm text-brand-gray-300 hover:border-brand-orange hover:text-brand-orange
+                   transition-all duration-200 flex-shrink-0 whitespace-nowrap"
+          >
+            <span aria-hidden="true">{c.icon}</span>
+            {c.title}
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories -->
+  <div class="container-site py-14 md:py-20 flex flex-col gap-20">
+    {CATEGORIES.map((cat, ci) => (
+      <section id={cat.id} aria-labelledby={`${cat.id}-heading`}>
+
+        <!-- Section header -->
+        <div class="flex items-end justify-between gap-4 mb-8">
+          <div>
+            <div class="flex items-center gap-3 mb-2">
+              <span class="text-2xl" aria-hidden="true">{cat.icon}</span>
+              <h2 id={`${cat.id}-heading`} class="heading-h3">{cat.title}</h2>
+            </div>
+            <p class="text-brand-gray-300 text-sm">{cat.description}</p>
+          </div>
+          <a
+            href={cat.href}
+            target={cat.href.startsWith('http') ? '_blank' : undefined}
+            rel={cat.href.startsWith('http') ? 'noopener noreferrer nofollow' : undefined}
+            class="btn-ghost btn-sm flex-shrink-0 whitespace-nowrap"
+          >
+            Voir tout →
+          </a>
+        </div>
+
+        <!-- Products -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          {cat.picks.map(p => (
+            <div class="card-base p-5 card-hover group">
+              <div class="flex items-start justify-between gap-3 mb-3">
+                <div>
+                  {p.badge && (
+                    <span class="badge badge-orange border border-brand-orange/25 mb-2 block w-fit text-2xs">
+                      {p.badge}
+                    </span>
+                  )}
+                  <h3 class="font-display font-semibold text-brand-offwhite text-sm leading-snug
+                             group-hover:text-brand-orange transition-colors duration-200">
+                    {p.name}
+                  </h3>
+                </div>
+                <span class="font-mono text-brand-orange font-bold text-sm flex-shrink-0">
+                  {p.price}€
+                </span>
+              </div>
+              <a
+                href={`https://www.amazon.fr/dp/${p.asin}?tag=trouveton-21`}
+                target="_blank"
+                rel="noopener noreferrer nofollow"
+                class="affiliate-cta w-full justify-center text-xs py-2.5 mt-2"
+              >
+                Voir sur Amazon
+              </a>
+            </div>
+          ))}
+        </div>
+
+      </section>
+    ))}
+  </div>
+
+  <!-- Bottom banner -->
+  <div class="container-site pb-14">
+    <AffiliateBanner variant="guide" />
+  </div>
+
+  <Newsletter variant="compact" />
+
+</Base>

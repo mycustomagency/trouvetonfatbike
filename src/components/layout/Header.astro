@@ -1,0 +1,299 @@
+---
+const NAV_LINKS = [
+  {
+    label: 'Catégories',
+    href: '/categorie/',
+    dropdown: [
+      { label: 'Montagne', href: '/categorie/fatbike-montagne/', icon: '⛰️' },
+      { label: 'Plage',    href: '/categorie/fatbike-plage/',    icon: '🏖️' },
+      { label: 'Neige',   href: '/categorie/fatbike-neige/',    icon: '❄️' },
+      { label: 'Urbain',  href: '/categorie/fatbike-urbain/',   icon: '🏙️' },
+      { label: 'Débutant',href: '/categorie/fatbike-debutant/', icon: '🚴' },
+      { label: 'Budget',  href: '/categorie/fatbike-petit-budget/', icon: '💰' },
+    ]
+  },
+  { label: 'Guides',       href: '/guide/' },
+  { label: 'Accessoires',  href: '/accessoires/' },
+  { label: 'Cani-fatbike', href: '/cani-fatbike/' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<header
+  id="site-header"
+  class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+  role="banner"
+>
+  <!-- Blur background (JS adds class 'scrolled') -->
+  <div
+    id="header-bg"
+    class="absolute inset-0 bg-brand-black/0 backdrop-blur-0 border-b border-transparent
+           transition-all duration-300"
+  ></div>
+
+  <div class="relative container-site">
+    <nav
+      class="flex items-center justify-between h-16 md:h-20"
+      aria-label="Navigation principale"
+    >
+
+      <!-- ─── Logo ─────────────────────────────────────────────── -->
+      <a
+        href="/"
+        class="flex items-center gap-3 group"
+        aria-label="TrouveTonFatBike — Accueil"
+      >
+        <!-- Logo SVG inline optimisé -->
+        <img
+          src="/logo.svg"
+          alt="TrouveTonFatBike — Explore sans limites"
+          width="178"
+          height="43"
+          class="h-9 md:h-10 w-auto transition-opacity duration-200 group-hover:opacity-90"
+          loading="eager"
+        />
+      </a>
+
+      <!-- ─── Desktop Nav ──────────────────────────────────────── -->
+      <ul class="hidden lg:flex items-center gap-1" role="list">
+        {NAV_LINKS.map(link => (
+          <li class="relative group">
+            {link.dropdown ? (
+              <>
+                <button
+                  class:list={[
+                    'flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200',
+                    'hover:bg-white/5 hover:text-brand-offwhite',
+                    currentPath.startsWith(link.href) 
+                      ? 'text-brand-orange' 
+                      : 'text-brand-gray-200',
+                  ]}
+                  aria-expanded="false"
+                  aria-haspopup="true"
+                >
+                  {link.label}
+                  <svg class="w-3.5 h-3.5 transition-transform duration-200 group-hover:rotate-180" 
+                       viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                    <path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                  </svg>
+                </button>
+
+                <!-- Dropdown -->
+                <div
+                  class="absolute top-full left-1/2 -translate-x-1/2 pt-3
+                         opacity-0 invisible group-hover:opacity-100 group-hover:visible
+                         transition-all duration-200 ease-out"
+                  role="menu"
+                >
+                  <div class="card-glass p-2 min-w-[220px] shadow-card">
+                    {link.dropdown.map(item => (
+                      <a
+                        href={item.href}
+                        class="flex items-center gap-3 px-3 py-2.5 rounded-xl
+                               text-sm text-brand-gray-200 hover:text-brand-offwhite
+                               hover:bg-white/5 transition-all duration-150"
+                        role="menuitem"
+                      >
+                        <span class="text-base leading-none">{item.icon}</span>
+                        <span>Fatbike {item.label}</span>
+                      </a>
+                    ))}
+                    <div class="divider my-2 mx-3"></div>
+                    <a
+                      href="/categorie/"
+                      class="flex items-center gap-2 px-3 py-2.5 rounded-xl
+                             text-sm text-brand-orange hover:bg-brand-orange/10
+                             transition-all duration-150 font-medium"
+                      role="menuitem"
+                    >
+                      Voir toutes les catégories →
+                    </a>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <a
+                href={link.href}
+                class:list={[
+                  'flex items-center px-4 py-2 rounded-full text-sm font-medium transition-all duration-200',
+                  'hover:bg-white/5 hover:text-brand-offwhite',
+                  currentPath.startsWith(link.href) 
+                    ? 'text-brand-orange' 
+                    : 'text-brand-gray-200',
+                ]}
+                aria-current={currentPath.startsWith(link.href) ? 'page' : undefined}
+              >
+                {link.label}
+              </a>
+            )}
+          </li>
+        ))}
+      </ul>
+
+      <!-- ─── Desktop CTA ──────────────────────────────────────── -->
+      <div class="hidden lg:flex items-center gap-3">
+        <a href="/quiz/" class="btn-ghost btn-sm">
+          <svg class="w-4 h-4" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.25"/>
+            <path d="M8 5.5V8.5M8 10.5V11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          Quel fatbike pour moi ?
+        </a>
+        <a href="/guide/meilleur-fatbike-electrique-2026/" class="btn-primary btn-sm">
+          Guide 2026
+        </a>
+      </div>
+
+      <!-- ─── Mobile menu toggle ───────────────────────────────── -->
+      <button
+        id="menu-toggle"
+        class="lg:hidden flex flex-col justify-center items-center w-10 h-10
+               rounded-xl border border-brand-gray-700 hover:border-brand-orange
+               transition-all duration-200 gap-1.5"
+        aria-label="Ouvrir le menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <span class="block w-5 h-px bg-brand-gray-200 transition-all duration-300" id="bar1"></span>
+        <span class="block w-5 h-px bg-brand-gray-200 transition-all duration-300" id="bar2"></span>
+        <span class="block w-3.5 h-px bg-brand-gray-200 transition-all duration-300 self-end" id="bar3"></span>
+      </button>
+
+    </nav>
+  </div>
+
+  <!-- ─── Mobile Menu ──────────────────────────────────────────── -->
+  <div
+    id="mobile-menu"
+    class="lg:hidden hidden border-t border-brand-gray-800"
+    aria-label="Menu mobile"
+    role="dialog"
+    aria-modal="true"
+  >
+    <div class="bg-brand-gray-900/95 backdrop-blur-lg">
+      <div class="container-site py-6 flex flex-col gap-2">
+        {NAV_LINKS.map(link => (
+          <div>
+            <a
+              href={link.href}
+              class:list={[
+                'flex items-center justify-between px-4 py-3 rounded-xl text-base font-medium transition-all duration-200',
+                'hover:bg-white/5',
+                currentPath.startsWith(link.href) 
+                  ? 'text-brand-orange bg-brand-orange/10' 
+                  : 'text-brand-gray-100',
+              ]}
+            >
+              {link.label}
+              {link.dropdown && (
+                <svg class="w-4 h-4 text-brand-gray-400" viewBox="0 0 12 12" fill="none">
+                  <path d="M4.5 2.5L8 6L4.5 9.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              )}
+            </a>
+            {link.dropdown && (
+              <div class="pl-4 mt-1 flex flex-col gap-1">
+                {link.dropdown.map(item => (
+                  <a
+                    href={item.href}
+                    class="flex items-center gap-2.5 px-4 py-2.5 rounded-lg
+                           text-sm text-brand-gray-300 hover:text-brand-offwhite
+                           hover:bg-white/5 transition-all duration-150"
+                  >
+                    <span>{item.icon}</span>
+                    <span>Fatbike {item.label}</span>
+                  </a>
+                ))}
+              </div>
+            )}
+          </div>
+        ))}
+
+        <div class="divider my-2"></div>
+
+        <a href="/quiz/" class="btn-ghost btn-md w-full justify-center">
+          Quel fatbike pour moi ?
+        </a>
+        <a href="/guide/meilleur-fatbike-electrique-2026/" class="btn-primary btn-md w-full justify-center">
+          Guide 2026
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Spacer to prevent content jump under fixed header -->
+<div class="h-16 md:h-20" aria-hidden="true"></div>
+
+<script>
+  // ─── Header scroll behavior ──────────────────────────────────────────────
+  const header  = document.getElementById('site-header')!;
+  const headerBg = document.getElementById('header-bg')!;
+
+  const handleScroll = () => {
+    if (window.scrollY > 20) {
+      headerBg.classList.add(
+        'bg-brand-black/90', 'backdrop-blur-md', 'border-brand-gray-800/60'
+      );
+      headerBg.classList.remove(
+        'bg-brand-black/0', 'backdrop-blur-0', 'border-transparent'
+      );
+    } else {
+      headerBg.classList.remove(
+        'bg-brand-black/90', 'backdrop-blur-md', 'border-brand-gray-800/60'
+      );
+      headerBg.classList.add(
+        'bg-brand-black/0', 'backdrop-blur-0', 'border-transparent'
+      );
+    }
+  };
+
+  window.addEventListener('scroll', handleScroll, { passive: true });
+  handleScroll();
+
+  // ─── Mobile menu toggle ──────────────────────────────────────────────────
+  const menuToggle = document.getElementById('menu-toggle')!;
+  const mobileMenu = document.getElementById('mobile-menu')!;
+  const bar1 = document.getElementById('bar1')!;
+  const bar2 = document.getElementById('bar2')!;
+  const bar3 = document.getElementById('bar3')!;
+
+  let menuOpen = false;
+
+  menuToggle.addEventListener('click', () => {
+    menuOpen = !menuOpen;
+
+    if (menuOpen) {
+      mobileMenu.classList.remove('hidden');
+      menuToggle.setAttribute('aria-expanded', 'true');
+      menuToggle.setAttribute('aria-label', 'Fermer le menu');
+      document.body.style.overflow = 'hidden';
+      // Animate bars to X
+      bar1.style.transform = 'translateY(6px) rotate(45deg)';
+      bar2.style.opacity = '0';
+      bar3.style.transform = 'translateY(-6px) rotate(-45deg) scaleX(1.4)';
+    } else {
+      mobileMenu.classList.add('hidden');
+      menuToggle.setAttribute('aria-expanded', 'false');
+      menuToggle.setAttribute('aria-label', 'Ouvrir le menu');
+      document.body.style.overflow = '';
+      // Reset bars
+      bar1.style.transform = '';
+      bar2.style.opacity = '';
+      bar3.style.transform = '';
+    }
+  });
+
+  // Close menu on outside click
+  document.addEventListener('click', (e) => {
+    if (menuOpen && !header.contains(e.target as Node)) {
+      menuToggle.click();
+    }
+  });
+
+  // Close menu on Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && menuOpen) menuToggle.click();
+  });
+</script>

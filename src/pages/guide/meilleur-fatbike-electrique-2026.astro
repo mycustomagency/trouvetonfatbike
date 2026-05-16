@@ -1,0 +1,234 @@
+---
+import ArticleLayout from '@layouts/ArticleLayout.astro';
+import ProductCard from '@components/product/ProductCard.astro';
+import AffiliateBanner from '@components/product/AffiliateBanner.astro';
+
+// This is the template for a guide article.
+// In production: use [...slug].astro + MDX collections.
+// For now: static example with full structure.
+
+const article = {
+  title:       'Meilleur Fatbike Électrique 2026 : Comparatif & Guide d\'Achat',
+  description: 'Comparatif des 15 meilleurs fatbikes électriques 2026. Budget, montagne, plage, puissance : notre sélection testée, classée selon 12 critères et mise à jour chaque trimestre.',
+  pubDate:     new Date('2026-01-15'),
+  updatedDate: new Date('2026-01-15'),
+  category:    'Comparatif',
+  author:      'Équipe TrouveTonFatBike',
+  readingTime: 18,
+  ogImage:     'https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=1200&q=80',
+  tags:        ['meilleur fatbike', 'fatbike électrique 2026', 'comparatif fatbike', 'guide achat'],
+};
+
+const toc = [
+  { id: 'selection',       label: 'Notre sélection 2026',           level: 2 },
+  { id: 'meilleur',        label: 'Meilleur rapport qualité/prix',   level: 2 },
+  { id: 'budget',          label: 'Meilleur petit budget',           level: 2 },
+  { id: 'premium',         label: 'Meilleur premium',                level: 2 },
+  { id: 'comment-choisir', label: 'Comment choisir son fatbike',     level: 2 },
+  { id: 'moteur',          label: 'Moteur : hub vs mid-drive',       level: 3 },
+  { id: 'batterie',        label: 'Batterie & autonomie',            level: 3 },
+  { id: 'budget-guide',    label: 'Guide des budgets',               level: 2 },
+  { id: 'faq-guide',       label: 'FAQ',                             level: 2 },
+];
+
+const relatedGuides = [
+  { title: 'Guide d\'achat fatbike : tout comprendre',  href: '/guide/guide-achat-fatbike/',       category: 'Guide d\'achat' },
+  { title: 'Autonomie batterie : comment l\'optimiser', href: '/guide/autonomie-batterie-fatbike/', category: 'Technique' },
+  { title: 'Réglementation VAE en France 2026',         href: '/guide/reglementation-vae-france/',  category: 'Légal' },
+  { title: 'Entretien fatbike : le guide complet',      href: '/guide/entretien-fatbike/',          category: 'Entretien' },
+];
+
+const TOP_PICKS = [
+  {
+    name: 'Cobra Pro', brand: 'Himiway', asin: 'B09X4WNKG6',
+    price: 2199, priceOld: 2499,
+    image: 'https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=400&q=75',
+    badge: '🏆 Meilleur choix global', badgeType: 'best' as const,
+    motor: '750W Bafang', battery: '48V 20Ah', autonomy: '80–130 km', weight: '34 kg',
+    pros: ['Moteur Bafang 750W très performant', 'Autonomie réelle 130km en Eco', 'Fourche suspendue incluse', 'Freins hydrauliques 4 pistons'],
+    rating: 4.7, reviewCount: 324,
+  },
+  {
+    name: 'EP-2 Pro', brand: 'Engwe', asin: 'B09N4GNHS2',
+    price: 899,
+    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=75',
+    badge: '💰 Meilleur prix', badgeType: 'budget' as const,
+    motor: '500W', battery: '48V 12.8Ah', autonomy: '60–120 km', weight: '31 kg',
+    pros: ['Pliant et compact', 'Excellent rapport qualité/prix', 'Disponible en France'],
+    rating: 4.4, reviewCount: 1240,
+  },
+];
+---
+
+<ArticleLayout
+  title={article.title}
+  description={article.description}
+  ogImage={article.ogImage}
+  type="article"
+  pubDate={article.pubDate}
+  updatedDate={article.updatedDate}
+  tags={article.tags}
+  article={article}
+  toc={toc}
+  relatedGuides={relatedGuides}
+>
+
+  <!-- ═══ ARTICLE CONTENT ════════════════════════════════════ -->
+
+  <h2 id="selection">Notre sélection fatbike électrique 2026</h2>
+
+  <p>
+    Après avoir testé <strong>plus de 50 modèles</strong> sur tous types de terrain (montagne, plage, neige, quotidien),
+    voici notre classement définitif pour 2026. Chaque modèle est évalué selon 12 critères : moteur, batterie,
+    freins, confort, poids, rapport qualité/prix, SAV et durabilité.
+  </p>
+
+  <!-- Top picks inline -->
+  <div class="not-prose my-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+      {TOP_PICKS.map(p => (
+        <ProductCard
+          name={p.name}
+          brand={p.brand}
+          asin={p.asin}
+          price={p.price}
+          priceOld={p.priceOld}
+          image={p.image}
+          badge={p.badge}
+          badgeType={p.badgeType}
+          motor={p.motor}
+          battery={p.battery}
+          autonomy={p.autonomy}
+          weight={p.weight}
+          pros={p.pros}
+          rating={p.rating}
+          reviewCount={p.reviewCount}
+        />
+      ))}
+    </div>
+  </div>
+
+  <h2 id="meilleur">🏆 Meilleur rapport qualité/prix : Himiway Cobra Pro</h2>
+
+  <p>
+    Le <strong>Himiway Cobra Pro</strong> s'impose comme notre recommandation principale en 2026.
+    Son moteur Bafang 750W offre une puissance suffisante pour tous les usages,
+    y compris les dénivelés modérés, tandis que sa batterie 48V 20Ah permet d'atteindre
+    130 km d'autonomie en mode Eco.
+  </p>
+
+  <ul>
+    <li><strong>Moteur :</strong> Bafang 750W brushless, 80 Nm de couple</li>
+    <li><strong>Batterie :</strong> 48V 20Ah (960 Wh) — cellules Samsung/LG</li>
+    <li><strong>Autonomie :</strong> 80–130 km selon mode et terrain</li>
+    <li><strong>Freins :</strong> Hydrauliques 4 pistons Tektro</li>
+    <li><strong>Pneus :</strong> Kenda 26" × 4", montage tubeless possible</li>
+    <li><strong>Poids :</strong> 34 kg — acceptable pour un fatbike 750W</li>
+  </ul>
+
+  <blockquote>
+    <p>Le Himiway Cobra Pro est le fatbike qu'on recommande à 80% des acheteurs. Il couvre tous les usages sans compromis majeur.</p>
+  </blockquote>
+
+  <div class="not-prose my-6">
+    <AffiliateBanner variant="amazon" />
+  </div>
+
+  <h2 id="budget">💰 Meilleur petit budget : Engwe EP-2 Pro</h2>
+
+  <p>
+    Pour moins de 1 000€, l'<strong>Engwe EP-2 Pro</strong> est incontournable. Pliant, polyvalent
+    et disponible en livraison rapide depuis l'Europe, c'est le choix idéal pour débuter
+    ou pour un usage quotidien sans se ruiner.
+  </p>
+
+  <ul>
+    <li><strong>Moteur :</strong> 500W hub arrière</li>
+    <li><strong>Batterie :</strong> 48V 12.8Ah (614 Wh)</li>
+    <li><strong>Autonomie :</strong> 60–120 km</li>
+    <li><strong>Point fort :</strong> Pliant, léger (31 kg), excellent SAV</li>
+    <li><strong>Limite :</strong> Pas de fourche suspendue, moteur hub moins efficace en côte</li>
+  </ul>
+
+  <h2 id="premium">⭐ Meilleur premium : Rambo Nomad</h2>
+
+  <p>
+    Si le budget n'est pas une contrainte, le <strong>Rambo Nomad</strong> offre la meilleure
+    expérience globale. Moteur 1000W, fourche suspendue premium, freins 4 pistons et
+    châssis tout-terrain : c'est le fatbike des riders exigeants.
+  </p>
+
+  <h2 id="comment-choisir">Comment choisir son fatbike électrique en 2026</h2>
+
+  <p>Avant d'acheter, pose-toi ces 4 questions :</p>
+
+  <ol>
+    <li><strong>Quel est ton terrain principal ?</strong> Montagne → mid-drive 500W+. Plage → hub 500W. Mixte → mid-drive polyvalent.</li>
+    <li><strong>Quel est ton budget réel ?</strong> En dessous de 800€, les compromis sont importants. Entre 1500€ et 3000€ se trouve le sweet spot qualité/prix.</li>
+    <li><strong>Quel gabarit ?</strong> Au-dessus de 90 kg, vérifie la charge maximale et préfère un moteur 500W+.</li>
+    <li><strong>Quelle autonomie minimum ?</strong> Pour 50 km/sortie : 48V 14Ah suffit. Pour 80km+ : vise 48V 17–20Ah.</li>
+  </ol>
+
+  <h3 id="moteur">Moteur hub vs mid-drive : lequel choisir ?</h3>
+
+  <p>
+    Le <strong>moteur hub</strong> (dans la roue arrière) est moins cher, plus simple à entretenir
+    et suffisant pour la plage, la ville ou les terrains plats. Le <strong>moteur mid-drive</strong>
+    (pédalier, type Bafang) est plus cher mais offre un meilleur couple en côte,
+    un comportement plus naturel et une meilleure efficacité générale.
+  </p>
+
+  <h3 id="batterie">Batterie & autonomie : ce qu'il faut savoir</h3>
+
+  <p>
+    L'autonomie dépend de 4 facteurs : capacité batterie (Wh), mode d'assistance,
+    terrain et poids du rider. En règle générale :
+  </p>
+
+  <ul>
+    <li>Mode Eco + terrain plat + 75 kg : environ <strong>100 Wh/100 km</strong></li>
+    <li>Mode Sport + montagne + 85 kg : environ <strong>300 Wh/100 km</strong></li>
+    <li>Mode Turbo + tout-terrain + 95 kg : environ <strong>400–500 Wh/100 km</strong></li>
+  </ul>
+
+  <h2 id="budget-guide">Guide des budgets fatbike 2026</h2>
+
+  <div class="not-prose my-6 overflow-x-auto rounded-2xl border border-brand-gray-800">
+    <table class="w-full text-sm">
+      <thead>
+        <tr class="bg-brand-gray-800">
+          <th class="text-left px-5 py-3.5 text-brand-gray-200 font-medium">Budget</th>
+          <th class="text-left px-5 py-3.5 text-brand-gray-200 font-medium">Ce qu'on trouve</th>
+          <th class="text-left px-5 py-3.5 text-brand-gray-200 font-medium">Recommandé pour</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-brand-gray-800">
+        {[
+          ['400–800€',     'Moteur hub 250–500W, batterie basique, freins mécaniques',               'Loisir très occasionnel, terrain plat uniquement'],
+          ['800–1500€',    'Moteur 500W, batterie 12–14Ah, freins hydrauliques possibles',           'Usage régulier plage/ville/chemins'],
+          ['1500–3000€',   'Moteur 500–750W, batterie 17–20Ah, composants vélo sérieux',             'Usage intensif, montagne modérée, bikepacking'],
+          ['3000–6000€',   'Mid-drive premium, batterie 20Ah+, fourche suspendue, full équipé',      'Riders exigeants, tout-terrain, longues distances'],
+          ['6000€+',       'Marques premium (Specialized, Trek, Haibike), composants haut de gamme', 'Professionnel, compétition, usage quotidien intensif'],
+        ].map(([budget, content, for_]) => (
+          <tr class="hover:bg-brand-gray-900/40 transition-colors">
+            <td class="px-5 py-4 font-mono text-brand-orange font-medium whitespace-nowrap">{budget}</td>
+            <td class="px-5 py-4 text-brand-gray-300">{content}</td>
+            <td class="px-5 py-4 text-brand-gray-400">{for_}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <h2 id="faq-guide">Questions fréquentes</h2>
+
+  <p><strong>Un fatbike électrique est-il lourd à pédaler sans assistance ?</strong></p>
+  <p>Oui, sans assistance un fatbike de 30–40 kg est lourd. C'est pourquoi il ne faut jamais le choisir si tu prévois de rouler souvent sans batterie.</p>
+
+  <p><strong>Quelle marque de fatbike électrique est la plus fiable ?</strong></p>
+  <p>Himiway, Engwe, Eleglide et Lankeleisi proposent le meilleur rapport fiabilité/prix. Dans le haut de gamme : Bafang, Rambo, Specialized.</p>
+
+  <p><strong>Peut-on recharger un fatbike électrique sur secteur 220V ?</strong></p>
+  <p>Oui, tous les fatbikes électriques se rechargent sur prise secteur standard 220V (prise française/européenne). Le chargeur est fourni et prend 4 à 8 heures selon la capacité.</p>
+
+</ArticleLayout>

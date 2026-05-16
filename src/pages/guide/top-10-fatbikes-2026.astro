@@ -1,0 +1,350 @@
+---
+import ArticleLayout from '@layouts/ArticleLayout.astro';
+import AffiliateBanner from '@components/product/AffiliateBanner.astro';
+import ProductCard from '@components/product/ProductCard.astro';
+import { amazonLink } from '@utils/affiliate';
+
+const ARTICLE = {
+  title:       'Top 10 des meilleurs fatbikes électriques 2026',
+  description: 'Notre sélection des 10 meilleurs fatbikes électriques 2026 : montagne, plage, budget, puissance. Comparatif indépendant mis à jour, avec avis détaillés et liens d\'achat.',
+  pubDate:     new Date('2026-01-15'),
+  updatedDate: new Date('2026-01-15'),
+  category:    'Comparatif',
+  tags:        ['top fatbike 2026', 'meilleur fatbike électrique', 'classement fatbike', 'comparatif fatbike 2026'],
+  readingTime: 14,
+  author:      'Équipe TrouveTonFatBike',
+  ogImage:     'https://images.unsplash.com/photo-1609862609989-fb86099e0432?w=1200&q=80',
+};
+
+// ─── Top 10 — données produits ─────────────────────────────────────────────
+const TOP_10 = [
+  {
+    rank: 1,
+    name: 'Himiway Cobra Pro', brand: 'Himiway',
+    asin: 'B09X4WNKG6',
+    price: 2199, priceOld: 2499,
+    image: 'https://images.unsplash.com/photo-1609862609989-fb86099e0432?w=400&q=75',
+    badge: '🥇 Notre #1', badgeType: 'best' as const,
+    motor: '750W Bafang', battery: '48V 20Ah', autonomy: '80–130 km', weight: '34 kg',
+    rating: 4.7, reviewCount: 324,
+    pros: ['Moteur Bafang 750W performant', 'Autonomie 130km en mode Eco', 'Fourche suspendue incluse'],
+    verdict: 'Le meilleur rapport qualité/prix du marché en 2026. Solide, puissant, polyvalent.',
+    usage: 'Montagne, trail, polyvalent',
+    category: 'Milieu de gamme',
+  },
+  {
+    rank: 2,
+    name: 'Engwe EP-2 Pro', brand: 'Engwe',
+    asin: 'B09N4GNHS2',
+    price: 899,
+    image: 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=400&q=75',
+    badge: '🥈 Meilleur prix', badgeType: 'budget' as const,
+    motor: '500W', battery: '48V 12.8Ah', autonomy: '60–120 km', weight: '31 kg',
+    rating: 4.4, reviewCount: 1240,
+    pros: ['Pliant et compact', 'Prix imbattable sous 1000€', 'Polyvalent plage & quotidien'],
+    verdict: 'Le roi du petit budget. Parfait pour débuter ou pour la plage et les balades.',
+    usage: 'Plage, urbain, débutant',
+    category: 'Petit budget',
+  },
+  {
+    rank: 3,
+    name: 'Rambo The Nomad', brand: 'Rambo Bikes',
+    asin: 'B08ZYVMHF4',
+    price: 3499,
+    image: 'https://images.unsplash.com/photo-1624366573671-4685b51e0558?w=400&q=75',
+    badge: '🥉 Premium', badgeType: 'editor' as const,
+    motor: '1000W Bafang', battery: '48V 21Ah', autonomy: '50–90 km', weight: '39 kg',
+    rating: 4.8, reviewCount: 89,
+    pros: ['Moteur 1000W ultra puissant', 'Cadre aluminium renforcé 200kg', 'Composants haut de gamme'],
+    verdict: 'Le meilleur pour les terrains extrêmes et les gabarits lourds. Machine de guerre.',
+    usage: 'Montagne, trail extrême, gros gabarit',
+    category: 'Haut de gamme',
+  },
+  // Rangs 4-10 : structures prêtes à remplir avec de vrais produits
+  {
+    rank: 4,
+    name: 'Eleglide Tankroll Pro', brand: 'Eleglide',
+    asin: 'B0CMPX1234',
+    price: 1199,
+    image: 'https://images.unsplash.com/photo-1544191696-102dbdaeeaa0?w=400&q=75',
+    badge: '4. Meilleure valeur', badgeType: 'deal' as const,
+    motor: '500W', battery: '48V 15Ah', autonomy: '70–100 km', weight: '29 kg',
+    rating: 4.3, reviewCount: 456,
+    pros: ['Rapport qualité/prix excellent', 'Pneus 20" × 4" confortables', 'Bon SAV France'],
+    verdict: 'Idéal pour qui veut la qualité sans le prix premium.',
+    usage: 'Polyvalent, loisir, balade',
+    category: 'Milieu de gamme',
+  },
+  {
+    rank: 5,
+    name: 'Fafrees F20 Master', brand: 'Fafrees',
+    asin: 'B0BDPX5678',
+    price: 1599,
+    image: 'https://images.unsplash.com/photo-1544191696-102dbdaeeaa0?w=400&q=75',
+    badge: '5. Meilleure autonomie', badgeType: 'new' as const,
+    motor: '500W', battery: '48V 22.5Ah', autonomy: '100–150 km', weight: '30 kg',
+    rating: 4.5, reviewCount: 178,
+    pros: ['Batterie 22.5Ah ultra capacité', 'Autonomie record jusqu\'à 150km', 'Affichage couleur'],
+    verdict: 'Le choix numéro un pour les longues distances et le bikepacking.',
+    usage: 'Longue distance, bikepacking',
+    category: 'Grande autonomie',
+  },
+];
+
+// Rangs 6-10 en placeholder simple
+const PLACEHOLDER_RANKS = [
+  { rank: 6, title: 'Meilleur fatbike pliant 2026',       note: '⬆ Bientôt disponible — en cours de test',   href: '/categorie/fatbike-pliant/'      },
+  { rank: 7, title: 'Meilleur fatbike femme 2026',        note: '⬆ Bientôt disponible — en cours de test',   href: '/categorie/fatbike-femme/'       },
+  { rank: 8, title: 'Meilleur fatbike neige 2026',        note: '⬆ Bientôt disponible — en cours de test',   href: '/categorie/fatbike-neige/'       },
+  { rank: 9, title: 'Meilleur fatbike débutant 2026',     note: '⬆ Bientôt disponible — en cours de test',   href: '/categorie/fatbike-debutant/'    },
+  { rank: 10,'title': 'Meilleur fatbike gros gabarit 2026', note: '⬆ Bientôt disponible — en cours de test', href: '/categorie/fatbike-gros-gabarit/' },
+];
+---
+
+<ArticleLayout
+  title={ARTICLE.title}
+  description={ARTICLE.description}
+  tags={ARTICLE.tags}
+  ogImage={ARTICLE.ogImage}
+  article={{
+    title:       ARTICLE.title,
+    description: ARTICLE.description,
+    pubDate:     ARTICLE.pubDate,
+    updatedDate: ARTICLE.updatedDate,
+    category:    ARTICLE.category,
+    tags:        ARTICLE.tags,
+    readingTime: ARTICLE.readingTime,
+    author:      ARTICLE.author,
+    ogImage:     ARTICLE.ogImage,
+  }}
+  relatedGuides={[
+    { title: "Guide complet fatbike",                href: "/guide/guide-achat-fatbike/",              category: "Guide achat" },
+    { title: 'Autonomie batterie — nos astuces',     href: '/guide/autonomie-batterie-fatbike/',       category: 'Technique' },
+    { title: 'Fatbike Montagne — notre sélection',   href: '/categorie/fatbike-montagne/',             category: 'Catégorie' },
+    { title: 'Quel fatbike pour moi ? Le quiz',      href: '/quiz/',                                   category: 'Quiz' },
+  ]}
+>
+
+  <!-- ─── Introduction ─────────────────────────────────────────── -->
+  <div class="not-prose mb-10 p-6 card-glass rounded-2xl">
+    <p class="text-sm font-medium text-brand-offwhite mb-3">📋 Ce que tu vas trouver dans ce guide</p>
+    <ul class="flex flex-col gap-2">
+      {[
+        'Notre classement des 10 meilleurs fatbikes 2026',
+        'Analyse par usage : montagne, plage, budget, autonomie...',
+        'Prix à jour et liens vérifiés',
+        'Nos critères de sélection transparents',
+        'Un quiz pour trouver le tien en 2 minutes',
+      ].map(item => (
+        <li class="flex items-center gap-2 text-xs text-brand-gray-300">
+          <svg class="w-3.5 h-3.5 text-brand-orange flex-shrink-0" viewBox="0 0 14 14" fill="none">
+            <path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/>
+          </svg>
+          {item}
+        </li>
+      ))}
+    </ul>
+  </div>
+
+  <p>
+    Le marché du fatbike électrique a explosé en 2025–2026. Des dizaines de nouveaux modèles, 
+    des prix qui baissent, des technologies qui progressent — s'y retrouver devient compliqué. 
+    On a passé en revue plus de 50 modèles pour te proposer les 10 meilleurs, 
+    classés par catégorie d'usage.
+  </p>
+
+  <div class="not-prose my-8 p-4 bg-brand-gray-800 border border-brand-gray-700 rounded-xl">
+    <p class="text-xs text-brand-gray-400 leading-relaxed">
+      <strong class="text-brand-gray-200">Notre méthode :</strong> sélection basée sur les fiches techniques constructeur, 
+      les avis vérifiés acheteurs, les tests de la presse spécialisée et les retours communauté. 
+      Aucun fabricant ne paie pour apparaître dans ce classement.
+    </p>
+  </div>
+
+  <!-- ─── Top 5 produits ────────────────────────────────────────── -->
+  <h2>Notre Top 5 — Les incontournables</h2>
+
+  <div class="not-prose grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
+    {TOP_10.slice(0, 4).map(product => (
+      <div class="relative">
+        <!-- Badge rang -->
+        <div class="absolute -top-3 -left-3 z-10 w-8 h-8 rounded-full bg-brand-orange
+                    flex items-center justify-center font-display font-bold text-sm text-white
+                    shadow-orange-sm">
+          {product.rank}
+        </div>
+        <ProductCard
+          name={product.name}
+          brand={product.brand}
+          asin={product.asin}
+          price={product.price}
+          priceOld={product.priceOld}
+          image={product.image}
+          badge={product.badge}
+          badgeType={product.badgeType}
+          motor={product.motor}
+          battery={product.battery}
+          autonomy={product.autonomy}
+          weight={product.weight}
+          rating={product.rating}
+          reviewCount={product.reviewCount}
+          pros={product.pros}
+        />
+        <!-- Verdict -->
+        <div class="mt-2 px-4 py-2 bg-brand-gray-800 rounded-xl">
+          <p class="text-xs text-brand-gray-300">
+            <span class="font-medium text-brand-orange">Notre avis :</span> {product.verdict}
+          </p>
+          <p class="text-2xs text-brand-gray-500 mt-1">Usage : {product.usage} · {product.category}</p>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <!-- ─── Affiliate banner mid-article ─────────────────────────── -->
+  <div class="not-prose my-10">
+    <AffiliateBanner variant="amazon" />
+  </div>
+
+  <!-- ─── #5 pleine largeur ─────────────────────────────────────── -->
+  <h3>#{TOP_10[4].rank} — {TOP_10[4].brand} {TOP_10[4].name}</h3>
+  <p>
+    Pour les adeptes de grandes distances, le <strong>{TOP_10[4].brand} {TOP_10[4].name}</strong> se 
+    distingue par sa batterie 22.5Ah qui lui confère une autonomie record jusqu'à 150 km en mode Eco. 
+    Un choix évident pour le bikepacking ou les sorties longues sans craindre la panne.
+  </p>
+
+  <div class="not-prose my-6">
+    <div class="card-base p-5 flex flex-col sm:flex-row gap-5 items-start">
+      <div class="flex-shrink-0 font-display font-bold text-5xl text-brand-orange opacity-25">
+        #{TOP_10[4].rank}
+      </div>
+      <div class="flex-1">
+        <p class="text-xs text-brand-orange font-medium uppercase tracking-wide mb-1">{TOP_10[4].category}</p>
+        <h4 class="font-display font-bold text-brand-offwhite text-lg">{TOP_10[4].brand} {TOP_10[4].name}</h4>
+        <p class="text-sm text-brand-gray-300 mt-1 mb-3">{TOP_10[4].verdict}</p>
+        <div class="flex flex-wrap gap-2 mb-4">
+          {TOP_10[4].pros.map(pro => (
+            <span class="badge badge-gray text-xs">{pro}</span>
+          ))}
+        </div>
+        <div class="flex items-center justify-between">
+          <span class="font-display font-bold text-xl text-brand-offwhite">
+            {TOP_10[4].price.toLocaleString('fr-FR')}€
+          </span>
+          <a
+            href={amazonLink(TOP_10[4].asin)}
+            target="_blank" rel="noopener noreferrer nofollow"
+            class="affiliate-cta"
+          >
+            Voir sur Amazon
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── Rangs 6-10 ────────────────────────────────────────────── -->
+  <h2>Rangs 6 à 10 — En cours de test</h2>
+  <p>
+    Notre équipe finalise les analyses des 5 modèles suivants. 
+    En attendant, retrouve nos sélections détaillées par usage dans les pages catégories.
+  </p>
+
+  <div class="not-prose flex flex-col gap-3 my-6">
+    {PLACEHOLDER_RANKS.map(item => (
+      <a
+        href={item.href}
+        class="card-base p-4 flex items-center gap-4 hover:border-brand-gray-600 transition-all duration-200 group"
+      >
+        <span class="font-mono font-bold text-brand-orange opacity-40 text-lg w-6 flex-shrink-0">
+          #{item.rank}
+        </span>
+        <span class="flex-1 text-sm text-brand-gray-200 group-hover:text-brand-offwhite transition-colors">
+          {item.title}
+        </span>
+        <span class="text-2xs text-brand-gray-500 flex-shrink-0 hidden sm:block">{item.note}</span>
+        <svg class="w-4 h-4 text-brand-gray-600 flex-shrink-0" viewBox="0 0 14 14" fill="none">
+          <path d="M5 3l4 4-4 4" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/>
+        </svg>
+      </a>
+    ))}
+  </div>
+
+  <!-- ─── Lead magnet newsletter ───────────────────────────────── -->
+  <div class="not-prose my-10 relative overflow-hidden rounded-2xl">
+    <div class="absolute inset-0 bg-gradient-to-br from-brand-gray-800 to-brand-gray-900" aria-hidden="true"></div>
+    <div class="absolute top-0 right-0 w-64 h-64 bg-brand-orange/10 rounded-full blur-3xl translate-x-1/3 -translate-y-1/3" aria-hidden="true"></div>
+    <div class="relative z-10 p-7 md:p-8">
+      <div class="flex flex-col md:flex-row items-start md:items-center gap-6">
+        <div class="flex-1">
+          <span class="badge badge-orange border border-brand-orange/25 mb-3">🎁 Lead magnet gratuit</span>
+          <h3 class="font-display font-bold text-brand-offwhite text-xl mb-2">
+            Reçois ce Top 10 en PDF + les bons plans du moment
+          </h3>
+          <p class="text-sm text-brand-gray-300">
+            Inscris-toi à la newsletter et reçois immédiatement : ce comparatif en PDF téléchargeable, 
+            les alertes prix sur les meilleures offres fatbike, et nos nouveaux guides dès publication.
+          </p>
+        </div>
+        <form
+          class="flex flex-col gap-3 w-full md:w-72 flex-shrink-0"
+          action="https://send.brevo.com/t/..."
+          method="POST"
+          novalidate
+        >
+          <label for="guide-email" class="sr-only">Adresse email</label>
+          <input
+            id="guide-email"
+            type="email"
+            name="EMAIL"
+            placeholder="ton@email.com"
+            required
+            class="input-base"
+            autocomplete="email"
+          />
+          <button type="submit" class="btn-primary btn-md w-full justify-center">
+            Recevoir le PDF gratuit
+          </button>
+          <p class="text-2xs text-brand-gray-500 text-center">Désinscription en un clic · RGPD</p>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── Comment choisir ──────────────────────────────────────── -->
+  <h2>Comment choisir ton fatbike électrique</h2>
+  <p>
+    Avant de regarder les modèles, pose-toi ces trois questions simples :
+  </p>
+
+  <h3>1. Quel terrain ?</h3>
+  <p>
+    C'est le critère numéro un. Un fatbike de montagne a besoin d'un moteur mid-drive puissant 
+    et d'une fourche suspendue. Pour la plage, un moteur hub 500W suffit largement. 
+    Pour la ville, la compacité prime sur la puissance.
+  </p>
+
+  <h3>2. Quel budget réel ?</h3>
+  <p>
+    Ajoute 10–15% au prix d'achat pour prévoir les accessoires indispensables 
+    (casque, antivol, éclairage, protection). Un fatbike à 900€ + accessoires revient à ~1 050€.
+  </p>
+
+  <h3>3. Quelle fréquence d'utilisation ?</h3>
+  <p>
+    Une sortie par semaine → entrée de gamme fiable suffit. 
+    Trois sorties par semaine et plus → investis dans le milieu ou haut de gamme, 
+    tu économiseras en entretien sur le long terme.
+  </p>
+
+  <div class="not-prose mt-8">
+    <a href="/quiz/" class="btn-primary btn-lg inline-flex group">
+      Faire le quiz — trouver mon fatbike en 2 min
+      <svg class="w-5 h-5 transition-transform duration-200 group-hover:translate-x-1" viewBox="0 0 20 20" fill="none">
+        <path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+      </svg>
+    </a>
+  </div>
+
+</ArticleLayout>

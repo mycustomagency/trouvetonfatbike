@@ -1,0 +1,212 @@
+---
+import CategoryLayout from '@layouts/CategoryLayout.astro';
+import ProductCard from '@components/product/ProductCard.astro';
+import AffiliateBanner from '@components/product/AffiliateBanner.astro';
+import FAQ from '@components/sections/FAQ.astro';
+import { CATEGORIES, getCategoryBySlug, getRelatedCategories } from '@data/categories';
+import { SITE } from '@utils/seo';
+
+export async function getStaticPaths() {
+  return CATEGORIES.map(cat => ({
+    params: { slug: cat.slug },
+  }));
+}
+
+const { slug } = Astro.params;
+const category  = getCategoryBySlug(slug!);
+
+if (!category) return Astro.redirect('/404');
+
+const related = getRelatedCategories(category.relatedSlugs).map(r => ({
+  title: r.title,
+  href:  `/categorie/${r.slug}/`,
+  icon:  r.icon,
+}));
+
+const seoProps = {
+  title:       category.titleSEO,
+  description: category.description,
+  tags:        category.seoKeywords,
+  ogImage:     category.coverImage,
+};
+---
+
+<CategoryLayout
+  {...seoProps}
+  category={{
+    title:      category.title,
+    slug:       category.slug,
+    terrain:    category.terrain,
+    icon:       category.icon,
+    coverImage: category.coverImage,
+    budgetMin:  category.budgetMin,
+    budgetMax:  category.budgetMax,
+    intro:      category.intro,
+    benefits:   category.benefits,
+  }}
+  related={related}
+>
+
+  <!-- ─── Top picks ───────────────────────────────────────────── -->
+  {category.topPicks.length > 0 ? (
+    <section class="mb-16" aria-labelledby="picks-heading">
+      <h2 id="picks-heading" class="heading-h3 mb-8">
+        Notre sélection — {category.title}
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {category.topPicks.map(p => (
+          <ProductCard
+            name={p.name}
+            brand={p.brand}
+            asin={p.asin}
+            price={p.price}
+            priceOld={p.priceOld}
+            image={p.image}
+            badge={p.badge}
+            badgeType={p.badgeType}
+            motor={p.motor}
+            battery={p.battery}
+            autonomy={p.autonomy}
+            weight={p.weight}
+            pros={p.pros}
+            rating={p.rating}
+            reviewCount={p.reviewCount}
+          />
+        ))}
+      </div>
+    </section>
+  ) : (
+    <!-- Placeholder when no products yet -->
+    <section class="mb-16" aria-labelledby="picks-heading">
+      <h2 id="picks-heading" class="heading-h3 mb-6">
+        Notre sélection — {category.title}
+      </h2>
+      <div class="card-glass rounded-2xl p-10 text-center">
+        <div class="text-4xl mb-4" aria-hidden="true">{category.icon}</div>
+        <p class="text-brand-gray-300 mb-6">
+          Notre comparatif {category.title} est en cours de rédaction.<br/>
+          En attendant, retrouve les meilleures offres sur Amazon.
+        </p>
+        <a
+          href={`https://www.amazon.fr/s?k=${encodeURIComponent(category.title + ' électrique')}&tag=trouveton-21`}
+          target="_blank"
+          rel="noopener noreferrer nofollow"
+          class="affiliate-cta inline-flex"
+        >
+          Voir les offres {category.title} →
+        </a>
+      </div>
+    </section>
+  )}
+
+  <!-- ─── Buying guide criteria ──────────────────────────────── -->
+  {category.buyingCriteria.length > 0 && (
+    <section class="mb-16" aria-labelledby="criteria-heading">
+      <h2 id="criteria-heading" class="heading-h3 mb-8">
+        Comment choisir ton {category.title} ?
+      </h2>
+      <div class="flex flex-col gap-5">
+        {category.buyingCriteria.map((c, i) => (
+          <div class="card-base p-6 flex gap-5">
+            <div class="flex-shrink-0 w-9 h-9 rounded-xl bg-brand-orange/10 border border-brand-orange/20
+                        flex items-center justify-center font-mono text-sm font-bold text-brand-orange">
+              {String(i + 1).padStart(2, '0')}
+            </div>
+            <div>
+              <h3 class="font-display font-semibold text-brand-offwhite text-base mb-2">
+                {c.label}
+              </h3>
+              <p class="text-sm text-brand-gray-300 leading-relaxed">
+                {c.body}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <!-- ─── Affiliate banner mid-page ─────────────────────────── -->
+  <div class="mb-16">
+    <AffiliateBanner variant="quiz" />
+  </div>
+
+  <!-- ─── Budget table ──────────────────────────────────────── -->
+  <section class="mb-16" aria-labelledby="budget-heading">
+    <h2 id="budget-heading" class="heading-h3 mb-6">
+      Quel budget pour un {category.title} ?
+    </h2>
+    <div class="overflow-x-auto rounded-2xl border border-brand-gray-800">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="bg-brand-gray-800 border-b border-brand-gray-700">
+            <th class="text-left px-5 py-3.5 text-brand-gray-200 font-medium">Gamme</th>
+            <th class="text-left px-5 py-3.5 text-brand-gray-200 font-medium">Budget</th>
+            <th class="text-left px-5 py-3.5 text-brand-gray-200 font-medium">Ce qu'on trouve</th>
+            <th class="text-left px-5 py-3.5 text-brand-gray-200 font-medium">Profil</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-brand-gray-800">
+          <tr class="hover:bg-brand-gray-900/50 transition-colors">
+            <td class="px-5 py-4 font-medium text-brand-offwhite">Entrée de gamme</td>
+            <td class="px-5 py-4 font-mono text-brand-orange">
+              {category.budgetMin.toLocaleString('fr-FR')}€ –
+              {Math.round(category.budgetMin + (category.budgetMax - category.budgetMin) * 0.33).toLocaleString('fr-FR')}€
+            </td>
+            <td class="px-5 py-4 text-brand-gray-300">Moteur hub, batterie 10–14Ah, composants basiques</td>
+            <td class="px-5 py-4 text-brand-gray-400">Loisir occasionnel</td>
+          </tr>
+          <tr class="hover:bg-brand-gray-900/50 transition-colors">
+            <td class="px-5 py-4 font-medium text-brand-offwhite">Milieu de gamme</td>
+            <td class="px-5 py-4 font-mono text-brand-orange">
+              {Math.round(category.budgetMin + (category.budgetMax - category.budgetMin) * 0.33).toLocaleString('fr-FR')}€ –
+              {Math.round(category.budgetMin + (category.budgetMax - category.budgetMin) * 0.66).toLocaleString('fr-FR')}€
+            </td>
+            <td class="px-5 py-4 text-brand-gray-300">Moteur 500W, batterie 17Ah, freins hydrauliques</td>
+            <td class="px-5 py-4 text-brand-gray-400">Usage régulier</td>
+          </tr>
+          <tr class="hover:bg-brand-gray-900/50 transition-colors">
+            <td class="px-5 py-4 font-medium text-brand-offwhite">Haut de gamme</td>
+            <td class="px-5 py-4 font-mono text-brand-orange">
+              {Math.round(category.budgetMin + (category.budgetMax - category.budgetMin) * 0.66).toLocaleString('fr-FR')}€ –
+              {category.budgetMax.toLocaleString('fr-FR')}€
+            </td>
+            <td class="px-5 py-4 text-brand-gray-300">Mid-drive, batterie 20Ah+, composants premium</td>
+            <td class="px-5 py-4 text-brand-gray-400">Pratique intensive</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ─── FAQ ─────────────────────────────────────────────────── -->
+  {category.faq.length > 0 && (
+    <FAQ
+      title={`Questions fréquentes — ${category.title}`}
+      items={category.faq}
+    />
+  )}
+
+  <!-- ─── Internal links to guides ──────────────────────────── -->
+  <section class="mt-16 pt-10 border-t border-brand-gray-800" aria-label="Articles liés">
+    <h2 class="heading-h3 mb-6">Guides associés</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      {[
+        { title: `Comparatif ${category.title} 2026`,          href: `/guide/meilleur-fatbike-electrique-2026/` },
+        { title: 'Guide d\'achat fatbike électrique complet',  href: `/guide/guide-achat-fatbike/` },
+        { title: 'Réglementation VAE en France',               href: `/guide/reglementation-vae-france/` },
+        { title: 'Accessoires indispensables',                  href: `/accessoires/` },
+      ].map(link => (
+        <a
+          href={link.href}
+          class="card-base p-4 hover:border-brand-gray-600 transition-all duration-200 group"
+        >
+          <span class="text-sm text-brand-gray-200 group-hover:text-brand-orange transition-colors leading-snug block">
+            {link.title} →
+          </span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+</CategoryLayout>

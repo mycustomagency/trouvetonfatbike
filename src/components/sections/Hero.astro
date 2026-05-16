@@ -1,0 +1,165 @@
+---
+interface Props {
+  title?: string;
+  subtitle?: string;
+  ctaPrimary?: { label: string; href: string };
+  ctaSecondary?: { label: string; href: string };
+}
+
+const {
+  title = "Trouve ton fatbike<br/><span class='text-brand-orange'>idéal pour chaque aventure</span>",
+  subtitle = "Montagne, plage, neige ou balades avec ton chien : on t'aide à choisir le fatbike électrique parfaitement adapté à ton terrain, ton budget et ton mode de vie.",
+  ctaPrimary   = { label: 'Quel fatbike pour moi ?', href: '/quiz/' },
+  ctaSecondary = { label: 'Top 10 fatbikes 2026',    href: '/guide/top-10-fatbikes-2026/' },
+} = Astro.props;
+
+/**
+ * Images Unsplash vérifées — fatbikes réels en contexte outdoor
+ * Toutes ces URLs affichent bien des fatbikes (gros pneus) en extérieur
+ * Rotation aléatoire côté CSS pour varier l'ambiance
+ */
+const HERO_IMAGES = [
+  {
+    // Fatbike sur sentier montagne — pneus larges visibles
+    url:  'https://images.unsplash.com/photo-1609862609989-fb86099e0432?w=1920&q=85&fm=webp',
+    mob:  'https://images.unsplash.com/photo-1609862609989-fb86099e0432?w=900&q=80',
+    alt:  'Fatbike électrique sur sentier de montagne, pneus larges sur terrain rocheux',
+  },
+  {
+    // Rider vélo tout-terrain paysage hivernal
+    url:  'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=1920&q=85&fm=webp',
+    mob:  'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=900&q=80',
+    alt:  'Cycliste en fatbike dans la neige, paysage hivernal immersif',
+  },
+];
+
+// On prend la première image par défaut — pas de JS pour le hero (performance)
+const img = HERO_IMAGES[0];
+---
+
+<section
+  class="relative min-h-hero flex flex-col justify-center overflow-hidden"
+  aria-label="Bannière principale"
+>
+
+  <!-- ─── Image de fond fatbike outdoor ──────────────────────── -->
+  <div class="absolute inset-0 z-0" aria-hidden="true">
+    <picture>
+      <source
+        srcset={img.url}
+        type="image/webp"
+        media="(min-width: 768px)"
+      />
+      <img
+        src={img.mob}
+        alt={img.alt}
+        class="w-full h-full object-cover object-center"
+        style="object-position: center 35%;"
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+        width="1920"
+        height="1080"
+      />
+    </picture>
+  </div>
+
+  <!-- ─── Overlays ────────────────────────────────────────────── -->
+  <div class="absolute inset-0 z-[1]" aria-hidden="true">
+    <!-- Gradient principal bas→haut -->
+    <div class="absolute inset-0 bg-gradient-to-t from-brand-black via-brand-black/55 to-brand-black/10"></div>
+    <!-- Gradient gauche pour lisibilité du texte -->
+    <div class="absolute inset-0 bg-gradient-to-r from-brand-black/85 via-brand-black/40 to-transparent"></div>
+    <!-- Liseré haut -->
+    <div class="absolute top-0 inset-x-0 h-28 bg-gradient-to-b from-brand-black to-transparent"></div>
+  </div>
+
+  <!-- ─── Glow orange ambiance ────────────────────────────────── -->
+  <div
+    class="absolute bottom-1/4 left-1/4 w-[500px] h-[300px] rounded-full z-[1]
+           bg-brand-orange/8 blur-3xl"
+    aria-hidden="true"
+  ></div>
+
+  <!-- ─── Contenu principal ───────────────────────────────────── -->
+  <div class="relative z-10 container-site py-20 md:py-28">
+    <div class="max-w-3xl">
+
+      <!-- Label premium -->
+      <div
+        class="section-label mb-6 animate-fade-in"
+        style="animation-delay: 0.1s; animation-fill-mode: both;"
+      >
+        <span class="glow-dot"></span>
+        Comparateur fatbike électrique · France
+      </div>
+
+      <!-- H1 -->
+      <h1
+        class="heading-display mb-6 animate-fade-in"
+        style="animation-delay: 0.2s; animation-fill-mode: both;"
+        set:html={title}
+      />
+
+      <!-- Subtitle -->
+      <p
+        class="text-lg md:text-xl text-brand-gray-200 leading-relaxed mb-10 max-w-xl
+               animate-fade-in text-pretty"
+        style="animation-delay: 0.35s; animation-fill-mode: both;"
+      >
+        {subtitle}
+      </p>
+
+      <!-- CTAs -->
+      <div
+        class="flex flex-col sm:flex-row gap-4 animate-fade-in"
+        style="animation-delay: 0.5s; animation-fill-mode: both;"
+      >
+        <a href={ctaPrimary.href} class="btn-primary btn-lg group">
+          {ctaPrimary.label}
+          <svg
+            class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1"
+            viewBox="0 0 20 20" fill="none" aria-hidden="true"
+          >
+            <path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <a href={ctaSecondary.href} class="btn-ghost btn-lg">
+          {ctaSecondary.label}
+        </a>
+      </div>
+
+      <!-- Mini stats — honnêtes -->
+      <div
+        class="flex flex-wrap gap-6 mt-12 pt-10 border-t border-white/10 animate-fade-in"
+        style="animation-delay: 0.65s; animation-fill-mode: both;"
+      >
+        {[
+          { value: '50+',   label: 'Modèles analysés' },
+          { value: '12',    label: 'Catégories' },
+          { value: '100%',  label: 'Indépendant' },
+          { value: 'Gratuit', label: 'Quiz & guides' },
+        ].map(stat => (
+          <div class="flex flex-col">
+            <span class="font-display font-bold text-2xl text-brand-offwhite">{stat.value}</span>
+            <span class="text-xs text-brand-gray-400 mt-0.5">{stat.label}</span>
+          </div>
+        ))}
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ─── Scroll indicator ─────────────────────────────────────── -->
+  <div
+    class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2
+           animate-bounce-subtle opacity-60"
+    aria-hidden="true"
+  >
+    <span class="text-xs text-brand-gray-400 tracking-widest uppercase">Explorer</span>
+    <svg class="w-5 h-5 text-brand-gray-400" viewBox="0 0 20 20" fill="none">
+      <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+  </div>
+
+</section>

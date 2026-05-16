@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 48" fill="none">
+  <!-- Icône fatbike -->
+  <g transform="translate(0,4)">
+    <!-- Roue arrière grande (fat) -->
+    <circle cx="14" cy="30" r="12" stroke="#E8593C" stroke-width="3" fill="none"/>
+    <circle cx="14" cy="30" r="5" fill="#E8593C"/>
+    <!-- Roue avant grande (fat) -->
+    <circle cx="52" cy="30" r="12" stroke="#E8593C" stroke-width="3" fill="none"/>
+    <circle cx="52" cy="30" r="5" fill="#E8593C"/>
+    <!-- Cadre -->
+    <path d="M26 30 L36 12 L52 30" stroke="#F4EFE6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <path d="M14 30 L36 12" stroke="#F4EFE6" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+    <!-- Guidon -->
+    <path d="M48 12 L56 12" stroke="#F4EFE6" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="52" y1="12" x2="52" y2="18" stroke="#F4EFE6" stroke-width="2.5" stroke-linecap="round"/>
+    <!-- Selle -->
+    <path d="M33 11 L40 11" stroke="#F4EFE6" stroke-width="2.5" stroke-linecap="round"/>
+  </g>
+  <!-- Texte wordmark -->
+  <text x="72" y="24" font-family="system-ui, -apple-system, sans-serif" font-weight="700" font-size="15" fill="#F4EFE6" letter-spacing="-0.3">Trouve<tspan fill="#E8593C">Ton</tspan>FatBike</text>
+  <text x="72" y="38" font-family="system-ui, -apple-system, sans-serif" font-weight="400" font-size="8.5" fill="#888888" letter-spacing="2">EXPLORE SANS LIMITES</text>
+</svg>

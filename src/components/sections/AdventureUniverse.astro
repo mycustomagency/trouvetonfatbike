@@ -1,0 +1,240 @@
+---
+const TERRAINS = [
+  {
+    id:      'montagne',
+    label:   'Montagne',
+    emoji:   '⛰️',
+    title:   'Trails & single tracks',
+    body:    'Les dénivelés n\'ont plus de secret. Le fatbike électrique te propulse sur les sentiers alpins, les pistes forestières et les cols escarpés que le VTT classique ne peut atteindre.',
+    href:    '/categorie/fatbike-montagne/',
+    image:   'https://images.unsplash.com/photo-1544191696-102dbdaeeaa0?w=800&q=75',
+    color:   'from-green-900/60',
+  },
+  {
+    id:      'plage',
+    label:   'Plage',
+    emoji:   '🏖️',
+    title:   'Sable & littoral',
+    body:    'Les pneus ballons 4" s\'enfoncent à peine dans le sable mou. Remonte les plages sauvages, longe les côtes rocheuses et explore les criques inaccessibles autrement.',
+    href:    '/categorie/fatbike-plage/',
+    image:   'https://images.unsplash.com/photo-1559741033-d28f8e36a744?w=800&q=75',
+    color:   'from-blue-900/60',
+  },
+  {
+    id:      'neige',
+    label:   'Neige',
+    emoji:   '❄️',
+    title:   'Trails hivernaux',
+    body:    'La saison froide n\'est plus une limite. Le fatbike ride sur la neige damée, les chemins givrés et les forêts enneigées avec une traction et un contrôle remarquables.',
+    href:    '/categorie/fatbike-neige/',
+    image:   'https://images.unsplash.com/photo-1547448415-e9f5b28e570d?w=800&q=75',
+    color:   'from-slate-900/70',
+  },
+  {
+    id:      'cani',
+    label:   'Cani-fatbike',
+    emoji:   '🐕',
+    title:   'Aventure avec ton chien',
+    body:    'Une pratique qui explose en France : courir avec ton chien en forêt, en plein air, à son rythme. Avec le bon harnais et le bon équipement, c\'est une aventure humain-animal inoubliable.',
+    href:    '/cani-fatbike/',
+    image:   'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=800&q=75',
+    color:   'from-amber-900/50',
+  },
+];
+---
+
+<section class="section-padding" aria-labelledby="adventure-heading">
+  <div class="container-site">
+
+    <!-- Header -->
+    <div class="text-center mb-14 reveal">
+      <div class="section-label justify-center mb-4">L'univers fatbike</div>
+      <h2 id="adventure-heading" class="heading-h2 mb-4 text-balance">
+        Ton terrain,<br/>
+        <span class="text-gradient-orange">ton aventure</span>
+      </h2>
+      <p class="text-brand-gray-300 text-lg max-w-xl mx-auto text-pretty">
+        Montagne, plage, neige ou forêt avec ton chien — chaque univers a son fatbike idéal.
+        Lequel appelle ton esprit d'aventure ?
+      </p>
+    </div>
+
+    <!-- Terrain tabs -->
+    <div class="relative">
+
+      <!-- Tab selectors -->
+      <div
+        class="flex gap-2 mb-6 overflow-x-auto scrollbar-hide pb-1"
+        role="tablist"
+        aria-label="Sélection du terrain"
+      >
+        {TERRAINS.map((t, i) => (
+          <button
+            class:list={[
+              'terrain-tab flex-shrink-0 flex items-center gap-2 px-5 py-2.5 rounded-full',
+              'text-sm font-medium border transition-all duration-200',
+              i === 0
+                ? 'bg-brand-orange text-white border-brand-orange'
+                : 'border-brand-gray-700 text-brand-gray-300 hover:border-brand-gray-500 hover:text-brand-offwhite',
+            ]}
+            data-terrain={t.id}
+            role="tab"
+            aria-selected={i === 0 ? 'true' : 'false'}
+            aria-controls={`terrain-panel-${t.id}`}
+          >
+            <span aria-hidden="true">{t.emoji}</span>
+            {t.label}
+          </button>
+        ))}
+      </div>
+
+      <!-- Terrain panels -->
+      {TERRAINS.map((t, i) => (
+        <div
+          id={`terrain-panel-${t.id}`}
+          class:list={[
+            'terrain-panel',
+            i !== 0 ? 'hidden' : '',
+          ]}
+          role="tabpanel"
+          aria-labelledby={`tab-${t.id}`}
+        >
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-center">
+
+            <!-- Image -->
+            <div class="relative rounded-3xl overflow-hidden aspect-[4/3] lg:aspect-[16/10] bg-brand-gray-800 reveal">
+              <img
+                src={t.image}
+                alt={`Fatbike ${t.label} — ${t.title}`}
+                class="w-full h-full object-cover object-center"
+                loading="lazy"
+                decoding="async"
+                width="800"
+                height="500"
+              />
+              <!-- Gradient overlay -->
+              <div class:list={[
+                'absolute inset-0 bg-gradient-to-t',
+                t.color,
+                'to-transparent',
+              ]}></div>
+
+              <!-- Terrain badge on image -->
+              <div class="absolute bottom-5 left-5">
+                <span class="text-3xl" aria-hidden="true">{t.emoji}</span>
+              </div>
+            </div>
+
+            <!-- Content -->
+            <div class="flex flex-col gap-6 reveal reveal-delay-2">
+              <div>
+                <span class="text-2xs font-medium text-brand-orange uppercase tracking-widest mb-2 block">
+                  {t.label}
+                </span>
+                <h3 class="font-display font-bold text-3xl text-brand-offwhite mb-4">
+                  {t.title}
+                </h3>
+                <p class="text-brand-gray-300 text-base leading-relaxed">
+                  {t.body}
+                </p>
+              </div>
+
+              <!-- Stats -->
+              <div class="grid grid-cols-2 gap-3">
+                {t.id === 'montagne' && [
+                  { v: '30%+', l: 'dénivelé atteignable' },
+                  { v: '50+',  l: 'modèles comparés' },
+                ].map(s => (
+                  <div class="bg-brand-gray-800 rounded-xl p-4">
+                    <div class="font-mono font-bold text-xl text-brand-orange">{s.v}</div>
+                    <div class="text-xs text-brand-gray-400 mt-0.5">{s.l}</div>
+                  </div>
+                ))}
+                {t.id === 'plage' && [
+                  { v: '4"', l: 'largeur pneu minimum' },
+                  { v: '0.5', l: 'bar pression sable mou' },
+                ].map(s => (
+                  <div class="bg-brand-gray-800 rounded-xl p-4">
+                    <div class="font-mono font-bold text-xl text-brand-orange">{s.v}</div>
+                    <div class="text-xs text-brand-gray-400 mt-0.5">{s.l}</div>
+                  </div>
+                ))}
+                {t.id === 'neige' && [
+                  { v: '-20°C', l: 'résistance batterie' },
+                  { v: '5"',   l: 'pneu idéal neige' },
+                ].map(s => (
+                  <div class="bg-brand-gray-800 rounded-xl p-4">
+                    <div class="font-mono font-bold text-xl text-brand-orange">{s.v}</div>
+                    <div class="text-xs text-brand-gray-400 mt-0.5">{s.l}</div>
+                  </div>
+                ))}
+                {t.id === 'cani' && [
+                  { v: '30+', l: 'races de chiens adaptées' },
+                  { v: '3',   l: 'harnais recommandés' },
+                ].map(s => (
+                  <div class="bg-brand-gray-800 rounded-xl p-4">
+                    <div class="font-mono font-bold text-xl text-brand-orange">{s.v}</div>
+                    <div class="text-xs text-brand-gray-400 mt-0.5">{s.l}</div>
+                  </div>
+                ))}
+              </div>
+
+              <a href={t.href} class="btn-outline-orange btn-md inline-flex self-start group">
+                Explorer les fatbikes {t.label}
+                <svg class="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1"
+                     viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+            </div>
+
+          </div>
+        </div>
+      ))}
+
+    </div>
+  </div>
+</section>
+
+<script>
+  // ─── Terrain tabs ────────────────────────────────────────────────────────
+  const tabs   = document.querySelectorAll<HTMLButtonElement>('.terrain-tab');
+  const panels = document.querySelectorAll<HTMLElement>('.terrain-panel');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const target = tab.dataset.terrain;
+
+      // Update tabs
+      tabs.forEach(t => {
+        const active = t.dataset.terrain === target;
+        t.classList.toggle('bg-brand-orange',  active);
+        t.classList.toggle('text-white',        active);
+        t.classList.toggle('border-brand-orange', active);
+        t.classList.toggle('border-brand-gray-700', !active);
+        t.classList.toggle('text-brand-gray-300',   !active);
+        t.setAttribute('aria-selected', active ? 'true' : 'false');
+      });
+
+      // Update panels
+      panels.forEach(p => {
+        const show = p.id === `terrain-panel-${target}`;
+        p.classList.toggle('hidden', !show);
+        if (show) {
+          // Re-trigger reveal animations
+          p.querySelectorAll('.reveal').forEach(el => {
+            el.classList.remove('revealed');
+            requestAnimationFrame(() => {
+              requestAnimationFrame(() => {
+                el.classList.add('revealed');
+              });
+            });
+          });
+        }
+      });
+    });
+  });
+
+  // Init: mark first tab panel reveals as visible
+  panels[0]?.querySelectorAll('.reveal').forEach(el => el.classList.add('revealed'));
+</script>

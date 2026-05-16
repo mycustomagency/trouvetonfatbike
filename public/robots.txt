@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://trouveton-fatbike.com/sitemap-index.xml
+
+# Disallow admin paths
+Disallow: /api/
+Disallow: /_astro/
+
+# Crawl delay (optional, be kind to servers)
+Crawl-delay: 1

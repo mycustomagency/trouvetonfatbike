@@ -1,0 +1,107 @@
+---
+import ProductCard from '@components/product/ProductCard.astro';
+
+interface Props {
+  title?: string;
+  subtitle?: string;
+}
+
+const {
+  title    = 'Les meilleurs fatbikes du moment',
+  subtitle = 'Sélection 2026 — testés, comparés et recommandés par notre équipe.',
+} = Astro.props;
+
+// Sample products — will be replaced with dynamic data from collections
+const FEATURED_PRODUCTS = [
+  {
+    name:        'Himiway Cobra Pro',
+    brand:       'Himiway',
+    asin:        'B09X4WNKG6',
+    price:       2199,
+    priceOld:    2499,
+    image:       'https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=400&q=75',
+    rating:      4.7,
+    reviewCount: 324,
+    badge:       'Meilleur choix',
+    badgeType:   'best' as const,
+    motor:       '750W Bafang',
+    battery:     '48V 20Ah',
+    autonomy:    '80–130 km',
+    weight:      '34 kg',
+    pros:        ['Moteur puissant 750W', 'Grande autonomie 130km', 'Pneus 26" × 4'],
+  },
+  {
+    name:        'Engwe EP-2 Pro',
+    brand:       'Engwe',
+    asin:        'B09N4GNHS2',
+    price:       899,
+    image:       'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=75',
+    rating:      4.4,
+    reviewCount: 1240,
+    badge:       'Meilleur rapport qualité/prix',
+    badgeType:   'budget' as const,
+    motor:       '500W',
+    battery:     '48V 12.8Ah',
+    autonomy:    '60–120 km',
+    weight:      '31 kg',
+    pros:        ['Pliant et pratique', 'Prix excellent', 'Polyvalent tous terrains'],
+  },
+  {
+    name:        'Rambo The Nomad',
+    brand:       'Rambo',
+    asin:        'B08ZYVMHF4',
+    price:       3499,
+    image:       'https://images.unsplash.com/photo-1624366573671-4685b51e0558?w=400&q=75',
+    rating:      4.8,
+    reviewCount: 89,
+    badge:       'Premium',
+    badgeType:   'editor' as const,
+    motor:       '1000W Bafang',
+    battery:     '48V 21Ah',
+    autonomy:    '50–90 km',
+    weight:      '39 kg',
+    pros:        ['Moteur 1000W ultra puissant', 'Fourche suspendue', 'Tous terrains extrêmes'],
+  },
+];
+---
+
+<section class="section-padding bg-brand-gray-900/40" aria-labelledby="featured-heading">
+  <div class="container-site">
+
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 reveal">
+      <div>
+        <div class="section-label mb-4">Sélection de la rédaction</div>
+        <h2 id="featured-heading" class="heading-h2 text-balance">{title}</h2>
+        <p class="text-brand-gray-300 mt-3 max-w-lg text-pretty">{subtitle}</p>
+      </div>
+      <a href="/guide/meilleur-fatbike-electrique-2026/" class="btn-ghost btn-md flex-shrink-0">
+        Comparatif complet 2026 →
+      </a>
+    </div>
+
+    <!-- Products grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {FEATURED_PRODUCTS.map((product, i) => (
+        <div class="reveal" style={`animation-delay: ${i * 0.12}s`}>
+          <ProductCard {...product} />
+        </div>
+      ))}
+    </div>
+
+    <!-- Bottom CTA -->
+    <div class="text-center mt-12 reveal">
+      <div class="inline-flex flex-col sm:flex-row items-center gap-4 p-6
+                  card-glass rounded-2xl">
+        <div class="text-left">
+          <p class="text-sm font-medium text-brand-offwhite">Pas sûr de ton choix ?</p>
+          <p class="text-xs text-brand-gray-400">Notre quiz te guide en 2 minutes</p>
+        </div>
+        <a href="/quiz/" class="btn-primary btn-md flex-shrink-0 whitespace-nowrap">
+          Faire le quiz →
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>

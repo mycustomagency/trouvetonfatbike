@@ -1,0 +1,368 @@
+---
+import Base from './Base.astro';
+import Newsletter from '@components/sections/Newsletter.astro';
+import AffiliateBanner from '@components/product/AffiliateBanner.astro';
+import { buildArticleSchema, buildBreadcrumbSchema, type SEOProps } from '@utils/seo';
+
+interface Props extends SEOProps {
+  article: {
+    title:        string;
+    description:  string;
+    pubDate:      Date;
+    updatedDate?: Date;
+    author?:      string;
+    category?:    string;
+    tags?:        string[];
+    readingTime?: number;
+    ogImage?:     string;
+  };
+  toc?: { id: string; label: string; level: number }[];
+  relatedGuides?: { title: string; href: string; category?: string }[];
+}
+
+const {
+  article,
+  toc = [],
+  relatedGuides = [],
+  ...seoProps
+} = Astro.props;
+
+const breadcrumb = [
+  { name: 'Accueil', url: '/' },
+  { name: 'Guides',  url: '/guide/' },
+  { name: article.title, url: Astro.url.pathname },
+];
+
+const schemas = [
+  buildBreadcrumbSchema(breadcrumb),
+  buildArticleSchema({
+    title:       article.title,
+    description: article.description,
+    url:         Astro.url.href,
+    image:       article.ogImage,
+    pubDate:     article.pubDate,
+    updatedDate: article.updatedDate,
+    author:      article.author,
+  }),
+];
+
+const pubFormatted     = article.pubDate.toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' });
+const updatedFormatted = article.updatedDate?.toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' });
+---
+
+<Base {...seoProps} type="article" schema={schemas} pubDate={article.pubDate} updatedDate={article.updatedDate}>
+
+  <!-- ─── Article header ────────────────────────────────────── -->
+  <header class="border-b border-brand-gray-800 bg-brand-gray-900/40">
+    <!-- Breadcrumb -->
+    <div class="container-site pt-8 pb-0">
+      <nav aria-label="Fil d'Ariane">
+        <ol class="flex items-center gap-2 text-xs text-brand-gray-400" role="list">
+          {breadcrumb.map((c, i) => (
+            <li class="flex items-center gap-2">
+              {i > 0 && <span aria-hidden="true">/</span>}
+              {i < breadcrumb.length - 1
+                ? <a href={c.url} class="hover:text-brand-orange transition-colors">{c.name}</a>
+                : <span class="text-brand-gray-200 line-clamp-1">{c.name}</span>
+              }
+            </li>
+          ))}
+        </ol>
+      </nav>
+    </div>
+
+    <div class="container-narrow py-12 md:py-16">
+      <!-- Category badge -->
+      {article.category && (
+        <div class="mb-4">
+          <span class="badge badge-orange border border-brand-orange/25">{article.category}</span>
+        </div>
+      )}
+
+      <!-- Title -->
+      <h1 class="heading-h1 mb-5 text-balance">{article.title}</h1>
+      <p class="text-brand-gray-300 text-lg leading-relaxed mb-8 text-pretty">
+        {article.description}
+      </p>
+
+      <!-- Meta bar -->
+      <div class="flex flex-wrap items-center gap-4 text-xs text-brand-gray-400">
+        <span class="flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <rect x="1.5" y="2.5" width="11" height="10" rx="1.5" stroke="currentColor" stroke-width="1.25"/>
+            <path d="M1.5 6h11M5 1.5v2M9 1.5v2" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/>
+          </svg>
+          Publié le <time datetime={article.pubDate.toISOString()}>{pubFormatted}</time>
+        </span>
+
+        {updatedFormatted && (
+          <span class="flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M12 7A5 5 0 112 7M12 7V4M12 7H9" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/>
+            </svg>
+            Mis à jour le <time datetime={article.updatedDate?.toISOString()}>{updatedFormatted}</time>
+          </span>
+        )}
+
+        {article.readingTime && (
+          <span class="flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.25"/>
+              <path d="M7 4.5V7L9 9" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/>
+            </svg>
+            {article.readingTime} min de lecture
+          </span>
+        )}
+
+        {article.author && (
+          <span>Par <strong class="text-brand-gray-300">{article.author}</strong></span>
+        )}
+
+        <!-- Affiliate disclosure -->
+        <span class="ml-auto badge badge-gray hidden sm:flex">
+          🔗 Liens affiliés présents
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ─── Hero image ────────────────────────────────────────── -->
+  {article.ogImage && (
+    <div class="container-narrow py-8">
+      <div class="rounded-2xl overflow-hidden aspect-[16/7] bg-brand-gray-800">
+        <img
+          src={article.ogImage}
+          alt={article.title}
+          class="w-full h-full object-cover"
+          loading="eager"
+          fetchpriority="high"
+          width="1200" height="525"
+        />
+      </div>
+    </div>
+  )}
+
+  <!-- ─── Main content ──────────────────────────────────────── -->
+  <div class="container-site py-10 md:py-14">
+    <div class="grid grid-cols-1 xl:grid-cols-[1fr_280px] gap-12 xl:gap-16">
+
+      <!-- Article body -->
+      <main id="main-content">
+
+        <!-- TOC mobile (collapsible) -->
+        {toc.length > 0 && (
+          <details class="xl:hidden mb-10 card-base rounded-xl overflow-hidden group">
+            <summary class="flex items-center justify-between px-5 py-4 cursor-pointer
+                            text-sm font-medium text-brand-offwhite list-none">
+              <span>Sommaire de l'article</span>
+              <svg class="w-4 h-4 text-brand-gray-400 transition-transform group-open:rotate-180"
+                   viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </summary>
+            <nav class="px-5 pb-5 border-t border-brand-gray-800 pt-4" aria-label="Sommaire">
+              <ol class="flex flex-col gap-2" role="list">
+                {toc.map(item => (
+                  <li style={`padding-left: ${(item.level - 2) * 12}px`}>
+                    <a href={`#${item.id}`}
+                       class="text-sm text-brand-gray-300 hover:text-brand-orange transition-colors">
+                      {item.label}
+                    </a>
+                  </li>
+                ))}
+              </ol>
+            </nav>
+          </details>
+        )}
+
+        <!-- Content slot -->
+        <article class="prose-dark max-w-none">
+          <slot />
+        </article>
+
+        <!-- Tags -->
+        {article.tags && article.tags.length > 0 && (
+          <div class="mt-12 pt-8 border-t border-brand-gray-800">
+            <p class="text-xs text-brand-gray-500 mb-3">Tags :</p>
+            <div class="flex flex-wrap gap-2">
+              {article.tags.map(tag => (
+                <span class="badge badge-gray">{tag}</span>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <!-- Related guides -->
+        {relatedGuides.length > 0 && (
+          <section class="mt-12 pt-8 border-t border-brand-gray-800" aria-labelledby="related-heading">
+            <h2 id="related-heading" class="font-display font-semibold text-brand-offwhite text-xl mb-5">
+              Articles liés
+            </h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {relatedGuides.map(g => (
+                <a href={g.href} class="card-base p-4 card-hover group">
+                  {g.category && (
+                    <span class="badge badge-gray mb-2 inline-flex">{g.category}</span>
+                  )}
+                  <p class="text-sm font-medium text-brand-gray-200 group-hover:text-brand-orange transition-colors leading-snug">
+                    {g.title} →
+                  </p>
+                </a>
+              ))}
+            </div>
+          </section>
+        )}
+
+        <!-- Affiliate disclosure full -->
+        <div class="mt-10 p-4 bg-brand-gray-900 rounded-xl border border-brand-gray-800">
+          <p class="text-xs text-brand-gray-500 leading-relaxed">
+            <strong class="text-brand-gray-400">Divulgation :</strong> Cet article contient des liens d'affiliation Amazon.
+            Si vous achetez via ces liens, nous percevons une commission sans coût supplémentaire pour vous.
+            Nos recommandations restent indépendantes et basées sur nos tests.
+          </p>
+        </div>
+
+      </main>
+
+      <!-- Sidebar desktop -->
+      <aside class="hidden xl:flex flex-col gap-6 sticky-sidebar">
+
+        <!-- TOC desktop -->
+        {toc.length > 0 && (
+          <div class="card-base p-5 rounded-2xl" id="toc-desktop">
+            <p class="text-xs font-medium text-brand-gray-400 uppercase tracking-widest mb-4">
+              Sommaire
+            </p>
+            <nav aria-label="Table des matières">
+              <ol class="flex flex-col gap-1.5" role="list" id="toc-list">
+                {toc.map(item => (
+                  <li style={`padding-left: ${(item.level - 2) * 10}px`}>
+                    <a
+                      href={`#${item.id}`}
+                      class="toc-link text-xs text-brand-gray-400 hover:text-brand-orange
+                             transition-colors duration-150 block py-0.5 leading-relaxed"
+                      data-target={item.id}
+                    >
+                      {item.label}
+                    </a>
+                  </li>
+                ))}
+              </ol>
+            </nav>
+          </div>
+        )}
+
+        <!-- Quiz CTA -->
+        <div class="card-glass p-5 rounded-2xl">
+          <p class="text-xs font-medium text-brand-offwhite mb-2">🎯 Quiz personnalisé</p>
+          <p class="text-xs text-brand-gray-400 mb-4 leading-relaxed">
+            Trouve ton fatbike idéal en 2 minutes.
+          </p>
+          <a href="/quiz/" class="btn-primary btn-sm w-full justify-center">
+            Faire le quiz →
+          </a>
+        </div>
+
+        <!-- Amazon CTA -->
+        <div class="card-base p-5 rounded-2xl border-brand-orange/20">
+          <p class="text-xs font-medium text-brand-offwhite mb-3">Offres Amazon du moment</p>
+          <a
+            href="https://www.amazon.fr/s?k=fatbike+electrique&tag=trouveton-21"
+            target="_blank"
+            rel="noopener noreferrer nofollow"
+            class="affiliate-cta w-full justify-center text-sm"
+          >
+            Voir les prix →
+          </a>
+        </div>
+
+        <!-- Share -->
+        <div class="card-base p-5 rounded-2xl">
+          <p class="text-xs font-medium text-brand-gray-400 uppercase tracking-widest mb-4">
+            Partager
+          </p>
+          <div class="flex gap-2">
+            <a
+              href={`https://twitter.com/intent/tweet?url=${Astro.url.href}&text=${encodeURIComponent(article.title)}`}
+              target="_blank" rel="noopener noreferrer"
+              class="flex-1 flex items-center justify-center py-2.5 rounded-xl
+                     border border-brand-gray-700 text-xs text-brand-gray-300
+                     hover:border-brand-orange hover:text-brand-orange transition-all duration-200"
+              aria-label="Partager sur Twitter"
+            >
+              𝕏 Twitter
+            </a>
+            <button
+              id="copy-link"
+              class="flex-1 flex items-center justify-center py-2.5 rounded-xl
+                     border border-brand-gray-700 text-xs text-brand-gray-300
+                     hover:border-brand-orange hover:text-brand-orange transition-all duration-200"
+              aria-label="Copier le lien"
+            >
+              🔗 Copier
+            </button>
+          </div>
+        </div>
+
+      </aside>
+    </div>
+  </div>
+
+  <!-- ─── Affiliate bottom banner ───────────────────────────── -->
+  <div class="container-site pb-10">
+    <AffiliateBanner variant="amazon" />
+  </div>
+
+  <Newsletter variant="compact" />
+
+</Base>
+
+<style>
+  /* Sticky TOC */
+  .sticky-sidebar {
+    position: sticky;
+    top: calc(5rem + 1rem);
+    align-self: start;
+    max-height: calc(100vh - 7rem);
+    overflow-y: auto;
+    scrollbar-width: none;
+  }
+  .sticky-sidebar::-webkit-scrollbar { display: none; }
+
+  /* Active TOC link */
+  .toc-link.active {
+    color: var(--color-orange);
+  }
+</style>
+
+<script>
+  // ─── Active TOC tracking ─────────────────────────────────────────────────
+  const tocLinks = document.querySelectorAll<HTMLAnchorElement>('.toc-link');
+
+  if (tocLinks.length > 0) {
+    const headings = Array.from(tocLinks).map(l => document.getElementById(l.dataset.target!)).filter(Boolean);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            tocLinks.forEach(l => l.classList.remove('active'));
+            const active = document.querySelector(`.toc-link[data-target="${entry.target.id}"]`);
+            active?.classList.add('active');
+          }
+        });
+      },
+      { rootMargin: '0px 0px -70% 0px', threshold: 0 }
+    );
+
+    headings.forEach(h => h && observer.observe(h));
+  }
+
+  // ─── Copy link button ────────────────────────────────────────────────────
+  const copyBtn = document.getElementById('copy-link');
+  copyBtn?.addEventListener('click', async () => {
+    await navigator.clipboard.writeText(window.location.href);
+    if (copyBtn) copyBtn.textContent = '✓ Copié !';
+    setTimeout(() => { if (copyBtn) copyBtn.textContent = '🔗 Copier'; }, 2000);
+  });
+</script>

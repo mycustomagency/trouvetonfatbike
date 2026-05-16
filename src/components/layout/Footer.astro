@@ -1,0 +1,175 @@
+---
+import { SITE, AFFILIATE_DISCLAIMER } from '@utils/seo';
+import { AFFILIATE_DISCLAIMER as AFFIL_DISC } from '@utils/affiliate';
+
+const currentYear = new Date().getFullYear();
+
+const FOOTER_LINKS = {
+  fatbike: {
+    label: 'Fatbikes par usage',
+    links: [
+      { label: 'Fatbike montagne',  href: '/categorie/fatbike-montagne/' },
+      { label: 'Fatbike plage',     href: '/categorie/fatbike-plage/' },
+      { label: 'Fatbike neige',     href: '/categorie/fatbike-neige/' },
+      { label: 'Fatbike urbain',    href: '/categorie/fatbike-urbain/' },
+      { label: 'Fatbike débutant',  href: '/categorie/fatbike-debutant/' },
+      { label: 'Petit budget',      href: '/categorie/fatbike-petit-budget/' },
+    ]
+  },
+  guides: {
+    label: 'Guides & conseils',
+    links: [
+      { label: 'Meilleur fatbike 2026',  href: '/guide/meilleur-fatbike-electrique-2026/' },
+      { label: 'Guide d\'achat',          href: '/guide/guide-achat-fatbike/' },
+      { label: 'Autonomie batterie',      href: '/guide/autonomie-batterie-fatbike/' },
+      { label: 'Réglementation VAE',     href: '/guide/reglementation-vae-france/' },
+      { label: 'Entretien fatbike',      href: '/guide/entretien-fatbike/' },
+    ]
+  },
+  explore: {
+    label: 'Explorer',
+    links: [
+      { label: 'Accessoires',      href: '/accessoires/' },
+      { label: 'Cani-fatbike',     href: '/cani-fatbike/' },
+      { label: 'Quiz : quel vélo ?', href: '/quiz/' },
+      { label: 'Tous les guides',  href: '/guide/' },
+    ]
+  },
+  legal: {
+    label: 'Légal',
+    links: [
+      { label: 'Mentions légales',       href: '/mentions-legales/' },
+      { label: 'Politique de confidentialité', href: '/confidentialite/' },
+      { label: 'Affiliation',            href: '/affiliation/' },
+      { label: 'Contact',               href: '/contact/' },
+    ]
+  },
+};
+---
+
+<footer class="border-t border-brand-gray-800 mt-20" role="contentinfo">
+
+  <!-- ─── Newsletter band ──────────────────────────────────────── -->
+  <div class="bg-brand-gray-900">
+    <div class="container-site py-12 md:py-16">
+      <div class="flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-16">
+        <!-- Copy -->
+        <div class="flex-1 text-center md:text-left">
+          <div class="section-label justify-center md:justify-start mb-3">
+            Newsletter
+          </div>
+          <h2 class="font-display text-2xl font-bold text-brand-offwhite mb-2">
+            Les meilleurs deals fatbike,<br class="hidden sm:block"/>
+            <span class="text-brand-orange">directement dans ta boîte.</span>
+          </h2>
+          <p class="text-sm text-brand-gray-300">
+            Nouveaux modèles, comparatifs exclusifs, bons plans. Aucun spam, désinscription en un clic.
+          </p>
+        </div>
+        <!-- Form -->
+        <form
+          class="flex flex-col sm:flex-row gap-3 w-full md:w-auto md:min-w-[420px]"
+          action="https://send.brevo.com/t/..."
+          method="POST"
+          novalidate
+          aria-label="Formulaire newsletter"
+        >
+          <label class="sr-only" for="footer-email">Adresse email</label>
+          <input
+            id="footer-email"
+            type="email"
+            name="EMAIL"
+            placeholder="ton@email.com"
+            required
+            class="input-base flex-1"
+            autocomplete="email"
+          />
+          <button type="submit" class="btn-primary btn-md whitespace-nowrap flex-shrink-0">
+            S'inscrire
+            <svg class="w-4 h-4" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── Main footer ──────────────────────────────────────────── -->
+  <div class="bg-brand-black">
+    <div class="container-site py-14 md:py-16">
+
+      <!-- Logo + tagline -->
+      <div class="flex flex-col items-start gap-4 mb-12">
+        <a href="/" class="flex items-center gap-3 group">
+          <img
+            src="/logo.svg"
+            alt="TrouveTonFatBike"
+            width="178"
+            height="43"
+            class="h-9 w-auto"
+            loading="lazy"
+          />
+        </a>
+        <p class="text-sm text-brand-gray-300 max-w-md leading-relaxed">
+          Ton guide de référence pour trouver le fatbike électrique parfait. 
+          Comparatifs experts, guides d'achat et conseils outdoor depuis 2024.
+        </p>
+      </div>
+
+      <!-- Links grid -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-10 mb-12">
+        {Object.values(FOOTER_LINKS).map(section => (
+          <div>
+            <h3 class="text-xs font-semibold text-brand-gray-200 uppercase tracking-widest mb-4">
+              {section.label}
+            </h3>
+            <ul class="flex flex-col gap-2.5" role="list">
+              {section.links.map(link => (
+                <li>
+                  <a
+                    href={link.href}
+                    class="text-sm text-brand-gray-400 hover:text-brand-orange transition-colors duration-200"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+
+      <!-- Affiliate disclaimer -->
+      <div class="bg-brand-gray-900 rounded-xl px-5 py-4 mb-8">
+        <p class="text-xs text-brand-gray-400 leading-relaxed">
+          <span class="text-brand-gray-300 font-medium">Divulgation d'affiliation :</span>{' '}
+          {AFFIL_DISC}
+        </p>
+      </div>
+
+      <!-- Bottom bar -->
+      <div class="divider pt-6 flex flex-col sm:flex-row justify-between items-center gap-3">
+        <p class="text-xs text-brand-gray-500">
+          © {currentYear} {SITE.name}. Tous droits réservés.
+        </p>
+        <div class="flex items-center gap-4">
+          <a href="/mentions-legales/" class="text-xs text-brand-gray-500 hover:text-brand-gray-300 transition-colors">
+            Mentions légales
+          </a>
+          <a href="/confidentialite/" class="text-xs text-brand-gray-500 hover:text-brand-gray-300 transition-colors">
+            Confidentialité
+          </a>
+          <span class="text-brand-gray-700">·</span>
+          <span class="text-xs text-brand-gray-600 flex items-center gap-1">
+            <span>Fait avec</span>
+            <span class="text-brand-orange">♥</span>
+            <span>en France</span>
+          </span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</footer>

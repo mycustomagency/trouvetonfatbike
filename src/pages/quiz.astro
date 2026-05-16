@@ -1,0 +1,466 @@
+---
+import Base from '@layouts/Base.astro';
+---
+
+<Base
+  title="Quiz Fatbike — Quel Fatbike Électrique est Fait Pour Moi ?"
+  description="Réponds à 4 questions et découvre le fatbike électrique parfaitement adapté à ton usage, ton terrain et ton budget. Quiz gratuit, résultat immédiat."
+>
+
+  <section class="section-padding" aria-label="Quiz de recommandation fatbike">
+    <div class="container-narrow">
+
+      <!-- Header -->
+      <div class="text-center mb-12">
+        <div class="section-label justify-center mb-4">
+          <span aria-hidden="true">🎯</span>
+          Quiz personnalisé
+        </div>
+        <h1 class="heading-h1 mb-4">Quel fatbike est fait pour toi ?</h1>
+        <p class="text-brand-gray-300 text-lg max-w-md mx-auto">
+          4 questions. 2 minutes. Ta recommandation personnalisée parmi 50+ modèles.
+        </p>
+      </div>
+
+      <!-- ─── Quiz UI ──────────────────────────────────────────── -->
+      <div id="quiz-app" class="max-w-2xl mx-auto">
+
+        <!-- Progress bar -->
+        <div class="flex items-center gap-4 mb-8" id="quiz-progress" aria-label="Progression du quiz">
+          <div class="flex-1 h-1.5 bg-brand-gray-800 rounded-full overflow-hidden">
+            <div
+              id="progress-bar"
+              class="h-full bg-brand-orange rounded-full transition-all duration-500 ease-out"
+              style="width: 0%"
+              role="progressbar"
+              aria-valuenow="0"
+              aria-valuemin="0"
+              aria-valuemax="100"
+            ></div>
+          </div>
+          <span id="step-label" class="text-xs text-brand-gray-400 flex-shrink-0">0 / 4</span>
+        </div>
+
+        <!-- Question card -->
+        <div id="question-card" class="card-glass rounded-3xl p-6 md:p-10 overflow-hidden flex flex-col">
+
+          <!-- Step indicator -->
+          <p class="text-xs text-brand-orange uppercase tracking-widest font-medium mb-3" id="q-step">
+            Commençons
+          </p>
+
+          <!-- Question text -->
+          <h2 class="font-display font-bold text-brand-offwhite text-2xl mb-8 leading-snug" id="q-text">
+            Prêt à trouver ton fatbike idéal ?
+          </h2>
+
+          <!-- Options grid -->
+          <div id="q-options" class="grid grid-cols-2 gap-2 md:gap-3 mt-auto" role="group" aria-labelledby="q-text">
+            <!-- Filled by JS -->
+          </div>
+
+          <!-- Start button (visible only at step 0) -->
+          <div id="start-btn-wrap" class="mt-8">
+            <button
+              id="start-btn"
+              class="btn-primary btn-lg w-full justify-center group"
+            >
+              Démarrer le quiz
+              <svg class="w-5 h-5 transition-transform duration-200 group-hover:translate-x-1"
+                   viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+              </svg>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- Result card (hidden until complete) -->
+        <div id="result-card" class="hidden" aria-live="polite">
+          <!-- Filled by JS -->
+        </div>
+
+        <!-- Restart -->
+        <div id="restart-wrap" class="hidden text-center mt-8">
+          <button id="restart-btn" class="btn-ghost btn-md">
+            ← Recommencer le quiz
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Trust note -->
+      <p class="text-center text-xs text-brand-gray-500 mt-10">
+        Quiz gratuit • Sans inscription • Résultats basés sur 50+ modèles testés
+      </p>
+
+    </div>
+  </section>
+
+</Base>
+
+<script>
+// ─── Quiz Data ──────────────────────────────────────────────────────────────
+
+const QUESTIONS = [
+  {
+    id:      'budget',
+    label:   'Question 1 sur 4',
+    text:    'Quel est ton budget pour ce fatbike ?',
+    options: [
+      { id: 'budget-xs',  label: 'Moins de 800€',    icon: '💸' },
+      { id: 'budget-sm',  label: '800€ – 1 500€',    icon: '💰' },
+      { id: 'budget-md',  label: '1 500€ – 3 000€',  icon: '💳' },
+      { id: 'budget-lg',  label: 'Plus de 3 000€',   icon: '🏆' },
+    ],
+  },
+  {
+    id:      'terrain',
+    label:   'Question 2 sur 4',
+    text:    'Sur quel terrain vas-tu principalement rouler ?',
+    options: [
+      { id: 'terrain-mt',    label: 'Montagne / trails',   icon: '⛰️' },
+      { id: 'terrain-beach', label: 'Plage / sable',        icon: '🏖️' },
+      { id: 'terrain-city',  label: 'Ville / quotidien',    icon: '🏙️' },
+      { id: 'terrain-mixed', label: 'Mixte / partout',      icon: '🗺️' },
+    ],
+  },
+  {
+    id:      'usage',
+    label:   'Question 3 sur 4',
+    text:    'Quel sera ton usage principal ?',
+    options: [
+      { id: 'usage-sport',   label: 'Sport & aventure',      icon: '🚴' },
+      { id: 'usage-leisure', label: 'Loisir & balade',       icon: '😊' },
+      { id: 'usage-commute', label: 'Trajets quotidiens',    icon: '💼' },
+      { id: 'usage-cani',    label: 'Cani-fatbike / chien',  icon: '🐕' },
+    ],
+  },
+  {
+    id:      'experience',
+    label:   'Question 4 sur 4',
+    text:    'Quelle est ton expérience avec le vélo électrique ?',
+    options: [
+      { id: 'xp-none',  label: 'Aucune — c\'est nouveau',    icon: '🌱' },
+      { id: 'xp-some',  label: 'Quelques sorties par an',     icon: '🚲' },
+      { id: 'xp-reg',   label: 'Pratique régulière',          icon: '⭐' },
+      { id: 'xp-exp',   label: 'Rider expérimenté',           icon: '🔥' },
+    ],
+  },
+];
+
+// ─── Recommendation Engine ──────────────────────────────────────────────────
+
+interface Recommendation {
+  title:    string;
+  category: string;
+  href:     string;
+  budget:   string;
+  desc:     string;
+  badge:    string;
+  asin:     string;
+}
+
+function getRecommendations(answers: Record<string, string>): Recommendation[] {
+  const { budget, terrain, usage, experience } = answers;
+  const recs: Recommendation[] = [];
+
+  // ── Cani-fatbike specific ─────────────────────────────────────────────
+  if (usage === 'usage-cani') {
+    recs.push({
+      title:    'Cani-Fatbike : guide équipement',
+      category: 'Cani-Fatbike',
+      href:     '/cani-fatbike/',
+      budget:   '1 000 – 4 000€',
+      desc:     'Notre guide complet pour débuter le cani-fatbike avec ton chien en sécurité.',
+      badge:    '🐕 Recommandé pour toi',
+      asin:     'B09X4WNKG6',
+    });
+  }
+
+  // ── Budget-based primary ──────────────────────────────────────────────
+  if (budget === 'budget-xs') {
+    recs.push({
+      title:    'Fatbike Petit Budget',
+      category: 'Budget',
+      href:     '/categorie/fatbike-petit-budget/',
+      budget:   '400 – 800€',
+      desc:     'Notre sélection de fatbikes électriques fiables à moins de 800€. Rapport qualité/prix optimisé.',
+      badge:    '💰 Pour ton budget',
+      asin:     'B09N4GNHS2',
+    });
+  }
+
+  if (budget === 'budget-sm') {
+    if (terrain === 'terrain-beach' || terrain === 'terrain-city') {
+      recs.push({
+        title:    experience === 'xp-none' ? 'Fatbike Débutant' : 'Fatbike Plage',
+        category: experience === 'xp-none' ? 'Débutant' : 'Plage',
+        href:     experience === 'xp-none' ? '/categorie/fatbike-debutant/' : '/categorie/fatbike-plage/',
+        budget:   '800 – 1 500€',
+        desc:     'Des modèles faciles à prendre en main et parfaits pour ton terrain.',
+        badge:    '🎯 Adapté à ton profil',
+        asin:     'B09N4GNHS2',
+      });
+    } else {
+      recs.push({
+        title:    'Fatbike Montagne',
+        category: 'Montagne',
+        href:     '/categorie/fatbike-montagne/',
+        budget:   '1 500 – 2 500€',
+        desc:     'Les meilleurs fatbikes trail dans ta tranche de prix.',
+        badge:    '⛰️ Pour ton terrain',
+        asin:     'B09X4WNKG6',
+      });
+    }
+  }
+
+  if (budget === 'budget-md') {
+    recs.push({
+      title:    terrain === 'terrain-mt' ? 'Fatbike Montagne Premium' : 'Fatbike Grande Autonomie',
+      category: terrain === 'terrain-mt' ? 'Montagne' : 'Autonomie',
+      href:     terrain === 'terrain-mt' ? '/categorie/fatbike-montagne/' : '/categorie/fatbike-autonomie/',
+      budget:   '1 500 – 3 000€',
+      desc:     'Le sweet spot qualité/prix. Composants sérieux, moteur puissant, batterie longue durée.',
+      badge:    '⭐ Meilleur rapport qualité/prix',
+      asin:     'B09X4WNKG6',
+    });
+  }
+
+  if (budget === 'budget-lg') {
+    recs.push({
+      title:    'Fatbike Puissant Premium',
+      category: 'Premium',
+      href:     '/categorie/fatbike-puissant/',
+      budget:   '3 000 – 7 000€',
+      desc:     'Les meilleurs fatbikes électriques du marché. Moteurs 750W–1000W, composants haut de gamme.',
+      badge:    '🏆 Haut de gamme',
+      asin:     'B08ZYVMHF4',
+    });
+  }
+
+  // ── Pliant si mobilité / ville ─────────────────────────────────────────
+  if ((usage === 'usage-commute' || terrain === 'terrain-city') && budget !== 'budget-lg') {
+    recs.push({
+      title:    'Fatbike Pliant',
+      category: 'Pliant',
+      href:     '/categorie/fatbike-pliant/',
+      budget:   '700 – 2 500€',
+      desc:     'Compact, facile à garer, idéal pour les transports en commun et le quotidien.',
+      badge:    '🔀 Pratique pour toi',
+      asin:     'B09N4GNHS2',
+    });
+  }
+
+  // ── Comparatif général en fallback ────────────────────────────────────
+  if (recs.length === 0 || (recs.length === 1 && usage !== 'usage-cani')) {
+    recs.push({
+      title:    'Comparatif 2026 complet',
+      category: 'Guide',
+      href:     '/guide/meilleur-fatbike-electrique-2026/',
+      budget:   'Tous budgets',
+      desc:     'Notre guide complet avec les 15 meilleurs fatbikes de l\'année. Tous usages, tous budgets.',
+      badge:    '📖 Guide de référence',
+      asin:     'B09X4WNKG6',
+    });
+  }
+
+  return recs.slice(0, 3);
+}
+
+// ─── Quiz State ─────────────────────────────────────────────────────────────
+
+let currentStep = -1;
+const answers: Record<string, string> = {};
+
+// ─── DOM refs ────────────────────────────────────────────────────────────────
+
+const progressBar  = document.getElementById('progress-bar') as HTMLDivElement;
+const stepLabel    = document.getElementById('step-label') as HTMLSpanElement;
+const qStep        = document.getElementById('q-step') as HTMLParagraphElement;
+const qText        = document.getElementById('q-text') as HTMLHeadingElement;
+const qOptions     = document.getElementById('q-options') as HTMLDivElement;
+const startBtnWrap = document.getElementById('start-btn-wrap') as HTMLDivElement;
+const startBtn     = document.getElementById('start-btn') as HTMLButtonElement;
+const resultCard   = document.getElementById('result-card') as HTMLDivElement;
+const restartWrap  = document.getElementById('restart-wrap') as HTMLDivElement;
+const restartBtn   = document.getElementById('restart-btn') as HTMLButtonElement;
+
+// ─── Helpers ─────────────────────────────────────────────────────────────────
+
+function updateProgress(step: number) {
+  const pct = step <= 0 ? 0 : Math.round((step / QUESTIONS.length) * 100);
+  progressBar.style.width = `${pct}%`;
+  progressBar.setAttribute('aria-valuenow', String(pct));
+  stepLabel.textContent = step <= 0 ? '0 / 4' : `${step} / 4`;
+}
+
+function fadeTransition(fn: () => void) {
+  const card = document.getElementById('question-card')!;
+  card.style.opacity = '0';
+  card.style.transform = 'translateY(12px)';
+  card.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
+  setTimeout(() => {
+    fn();
+    card.style.opacity = '1';
+    card.style.transform = 'translateY(0)';
+  }, 220);
+}
+
+function renderQuestion(step: number) {
+  const q = QUESTIONS[step];
+  fadeTransition(() => {
+    qStep.textContent   = q.label;
+    qText.textContent   = q.text;
+    qOptions.innerHTML  = q.options.map(o => `
+      <button
+        class="quiz-option flex flex-col items-center justify-center gap-1.5 p-3 md:p-5
+               rounded-xl border border-brand-gray-700 bg-brand-gray-800/50
+               text-xs md:text-sm font-medium text-brand-gray-200
+               hover:border-brand-orange hover:bg-brand-orange/8 hover:text-brand-offwhite
+               transition-all duration-200 cursor-pointer text-center min-h-[72px] md:min-h-[88px]
+               overflow-hidden"
+        data-id="${o.id}"
+        data-question="${q.id}"
+        type="button"
+        aria-label="${o.label}"
+      >
+        <span class="text-2xl" aria-hidden="true">${o.icon}</span>
+        <span>${o.label}</span>
+      </button>
+    `).join('');
+
+    // Bind clicks
+    qOptions.querySelectorAll<HTMLButtonElement>('.quiz-option').forEach(btn => {
+      btn.addEventListener('click', () => handleAnswer(btn.dataset.question!, btn.dataset.id!), { once: true });
+    });
+  });
+}
+
+function handleAnswer(questionId: string, answerId: string) {
+  answers[questionId] = answerId;
+
+  // Visual feedback
+  const btn = qOptions.querySelector(`[data-id="${answerId}"]`) as HTMLButtonElement;
+  btn?.classList.add('border-brand-orange', 'bg-brand-orange/15', 'text-brand-orange');
+  qOptions.querySelectorAll<HTMLButtonElement>('.quiz-option').forEach(b => {
+    if (b !== btn) b.disabled = true;
+  });
+
+  setTimeout(() => {
+    currentStep++;
+    if (currentStep < QUESTIONS.length) {
+      updateProgress(currentStep);
+      renderQuestion(currentStep);
+    } else {
+      showResult();
+    }
+  }, 400);
+}
+
+function showResult() {
+  const recs = getRecommendations(answers);
+
+  // Hide question card, show result
+  document.getElementById('question-card')!.classList.add('hidden');
+  document.getElementById('quiz-progress')!.classList.add('hidden');
+  restartWrap.classList.remove('hidden');
+
+  const AMAZON_TAG = 'trouveton-21';
+  resultCard.innerHTML = `
+    <div class="text-center mb-8">
+      <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl
+                  bg-brand-orange/15 border border-brand-orange/25 mb-4 text-3xl">
+        🎯
+      </div>
+      <h2 class="font-display font-bold text-brand-offwhite text-2xl mb-2">
+        Tes recommandations personnalisées
+      </h2>
+      <p class="text-brand-gray-300 text-sm">
+        Basé sur tes réponses, voici les catégories qui correspondent parfaitement à ton profil.
+      </p>
+    </div>
+
+    <div class="flex flex-col gap-4 mb-8">
+      ${recs.map((rec, i) => `
+        <div class="card-base p-6 ${i === 0 ? 'border-brand-orange/30' : ''}">
+          <div class="flex items-start gap-4">
+            <div class="flex-shrink-0 w-10 h-10 rounded-xl
+                        ${i === 0 ? 'bg-brand-orange text-white' : 'bg-brand-gray-800 text-brand-gray-300'}
+                        flex items-center justify-center font-mono font-bold text-sm">
+              ${String(i + 1).padStart(2, '0')}
+            </div>
+            <div class="flex-1">
+              <div class="flex items-start justify-between gap-3 mb-1">
+                <h3 class="font-display font-semibold text-brand-offwhite text-base">${rec.title}</h3>
+                <span class="text-xs font-mono text-brand-orange flex-shrink-0">${rec.budget}</span>
+              </div>
+              <span class="badge badge-orange border border-brand-orange/25 mb-3 inline-flex text-2xs">${rec.badge}</span>
+              <p class="text-xs text-brand-gray-300 leading-relaxed mb-4">${rec.desc}</p>
+              <div class="flex flex-wrap gap-2">
+                <a href="${rec.href}"
+                   class="btn-primary btn-sm inline-flex">
+                  Voir la sélection →
+                </a>
+                <a href="https://www.amazon.fr/dp/${rec.asin}?tag=${AMAZON_TAG}"
+                   target="_blank" rel="noopener noreferrer nofollow"
+                   class="affiliate-cta text-xs py-2.5 px-4 inline-flex">
+                  Prix Amazon
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+
+    <div class="card-glass p-6 rounded-2xl text-center">
+      <p class="text-sm font-medium text-brand-offwhite mb-1">Tu veux affiner encore plus ?</p>
+      <p class="text-xs text-brand-gray-400 mb-4">Notre guide comparatif 2026 compare 50+ modèles selon 12 critères.</p>
+      <a href="/guide/meilleur-fatbike-electrique-2026/" class="btn-ghost btn-md inline-flex">
+        Lire le guide complet →
+      </a>
+    </div>
+  `;
+  resultCard.classList.remove('hidden');
+
+  // Smooth scroll to result
+  resultCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function resetQuiz() {
+  currentStep = -1;
+  Object.keys(answers).forEach(k => delete answers[k]);
+
+  resultCard.innerHTML = '';
+  resultCard.classList.add('hidden');
+  restartWrap.classList.add('hidden');
+  document.getElementById('question-card')!.classList.remove('hidden');
+  document.getElementById('quiz-progress')!.classList.remove('hidden');
+
+  qStep.textContent  = 'Commençons';
+  qText.textContent  = 'Prêt à trouver ton fatbike idéal ?';
+  qOptions.innerHTML = '';
+  startBtnWrap.classList.remove('hidden');
+  updateProgress(0);
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ─── Init ────────────────────────────────────────────────────────────────────
+
+startBtn.addEventListener('click', () => {
+  startBtnWrap.classList.add('hidden');
+  currentStep = 0;
+  updateProgress(0);
+  renderQuestion(0);
+});
+
+restartBtn.addEventListener('click', resetQuiz);
+</script>
+
+<style>
+  #question-card {
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+</style>

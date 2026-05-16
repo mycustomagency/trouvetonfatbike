@@ -1,0 +1,143 @@
+---
+interface Props {
+  variant?: 'full' | 'compact';
+  leadMagnet?: string;
+}
+
+const {
+  variant = 'full',
+  leadMagnet = 'Le guide "Top 10 Fatbikes 2026" offert à l\'inscription',
+} = Astro.props;
+---
+
+<section
+  class:list={[
+    'relative overflow-hidden',
+    variant === 'full' ? 'section-padding' : 'section-padding-sm',
+  ]}
+  aria-labelledby="newsletter-heading"
+>
+
+  <!-- Background accent -->
+  <div class="absolute inset-0 bg-brand-gray-900" aria-hidden="true">
+    <!-- Orange glow -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
+                w-[600px] h-[300px] bg-brand-orange/8 rounded-full blur-3xl"></div>
+    <!-- Grid pattern -->
+    <div class="absolute inset-0 opacity-[0.03]"
+         style="background-image: linear-gradient(var(--color-gray-300) 1px, transparent 1px), linear-gradient(90deg, var(--color-gray-300) 1px, transparent 1px); background-size: 40px 40px;"></div>
+  </div>
+
+  <div class="relative z-10 container-narrow">
+    <div class="text-center reveal">
+
+      <!-- Icon -->
+      <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl
+                  bg-brand-orange/15 border border-brand-orange/25 mb-6">
+        <svg class="w-7 h-7 text-brand-orange" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M3 8l9-5 9 5v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M3 8l9 5 9-5" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+        </svg>
+      </div>
+
+      <!-- Label -->
+      <div class="section-label justify-center mb-4">Newsletter gratuite</div>
+
+      <h2 id="newsletter-heading" class="heading-h2 mb-4 text-balance">
+        Reçois les meilleurs<br/>
+        <span class="text-gradient-orange">conseils fatbike</span>
+      </h2>
+
+      {variant === 'full' && (
+        <p class="text-brand-gray-300 text-lg mb-4 max-w-lg mx-auto text-pretty">
+          Comparatifs exclusifs, nouveaux modèles, bons plans et guides pratiques.
+          Directement dans ta boîte mail, chaque semaine.
+        </p>
+      )}
+
+      <!-- Lead magnet badge -->
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full
+                  bg-brand-orange/10 border border-brand-orange/20 mb-8">
+        <svg class="w-4 h-4 text-brand-orange flex-shrink-0" viewBox="0 0 16 16" fill="none">
+          <path d="M8 2l1.5 4.5H14L10.5 9l1.5 4.5L8 11l-4 2.5L5.5 9 2 6.5h4.5z" fill="currentColor"/>
+        </svg>
+        <span class="text-sm text-brand-orange font-medium">{leadMagnet}</span>
+      </div>
+
+      <!-- Form -->
+      <form
+        class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
+        action="https://send.brevo.com/t/..."
+        method="POST"
+        novalidate
+        aria-label="Inscription newsletter"
+        id="newsletter-form"
+      >
+        <div class="flex-1">
+          <label for="newsletter-email" class="sr-only">Adresse email</label>
+          <input
+            id="newsletter-email"
+            type="email"
+            name="EMAIL"
+            placeholder="ton@email.com"
+            required
+            class="input-base w-full"
+            autocomplete="email"
+          />
+        </div>
+        <button type="submit" class="btn-primary btn-md flex-shrink-0 whitespace-nowrap">
+          Je m'inscris
+          <svg class="w-4 h-4" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </form>
+
+      <!-- Success message (hidden) -->
+      <div id="newsletter-success" class="hidden mt-4 text-center">
+        <p class="text-emerald-400 text-sm flex items-center justify-center gap-2">
+          <svg class="w-4 h-4" viewBox="0 0 16 16" fill="none">
+            <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.25"/>
+            <path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/>
+          </svg>
+          Parfait ! Vérifie ta boîte mail pour confirmer.
+        </p>
+      </div>
+
+      <p class="text-xs text-brand-gray-500 mt-4">
+        Aucun spam. Désinscription en un clic. Données protégées (RGPD).
+      </p>
+
+    </div>
+  </div>
+
+</section>
+
+<script>
+  const form = document.getElementById('newsletter-form') as HTMLFormElement;
+  const successMsg = document.getElementById('newsletter-success');
+
+  if (form && successMsg) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      
+      try {
+        // Replace with your actual Brevo endpoint
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: data,
+          headers: { 'Accept': 'application/json' },
+        });
+
+        if (res.ok || res.status === 200) {
+          form.classList.add('hidden');
+          successMsg.classList.remove('hidden');
+        }
+      } catch {
+        // Fallback: still show success (form may redirect)
+        form.submit();
+      }
+    });
+  }
+</script>

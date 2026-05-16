@@ -1,0 +1,217 @@
+---
+import Base from './Base.astro';
+import AffiliateBanner from '@components/product/AffiliateBanner.astro';
+import Newsletter from '@components/sections/Newsletter.astro';
+import { buildBreadcrumbSchema, buildProductSchema, type SEOProps } from '@utils/seo';
+
+interface Props extends SEOProps {
+  // Category meta
+  category: {
+    title:       string;
+    slug:        string;
+    terrain:     string;
+    icon:        string;
+    coverImage?: string;
+    budgetMin:   number;
+    budgetMax:   number;
+    intro?:      string;
+    benefits?:   string[];
+  };
+  // Related categories for internal linking
+  related?: { title: string; href: string; icon: string }[];
+  // Breadcrumb
+  breadcrumb?: { name: string; url: string }[];
+}
+
+const {
+  category,
+  related = [],
+  breadcrumb = [],
+  ...seoProps
+} = Astro.props;
+
+const defaultBreadcrumb = [
+  { name: 'Accueil', url: '/' },
+  { name: 'Catégories', url: '/categorie/' },
+  { name: category.title, url: `/categorie/${category.slug}/` },
+];
+
+const crumbs = breadcrumb.length ? breadcrumb : defaultBreadcrumb;
+const schema = buildBreadcrumbSchema(crumbs);
+
+const priceRange = `${category.budgetMin.toLocaleString('fr-FR')}€ – ${category.budgetMax.toLocaleString('fr-FR')}€`;
+---
+
+<Base {...seoProps} schema={schema}>
+
+  <!-- ─── Hero catégorie ─────────────────────────────────────── -->
+  <section class="relative overflow-hidden" style="min-height: 400px;">
+
+    <!-- Background image -->
+    {category.coverImage && (
+      <div class="absolute inset-0 z-0" aria-hidden="true">
+        <img
+          src={category.coverImage}
+          alt=""
+          class="w-full h-full object-cover object-center"
+          loading="eager"
+          fetchpriority="high"
+          width="1920" height="600"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-brand-black via-brand-black/60 to-brand-black/20"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-brand-black/70 to-transparent"></div>
+      </div>
+    )}
+    {!category.coverImage && (
+      <div class="absolute inset-0 bg-brand-gray-900" aria-hidden="true">
+        <div class="absolute inset-0 bg-orange-radial opacity-50"></div>
+      </div>
+    )}
+
+    <!-- Breadcrumb -->
+    <div class="relative z-10 container-site pt-8">
+      <nav aria-label="Fil d'Ariane">
+        <ol class="flex items-center gap-2 text-xs text-brand-gray-400" role="list">
+          {crumbs.map((c, i) => (
+            <li class="flex items-center gap-2">
+              {i > 0 && <span aria-hidden="true">/</span>}
+              {i < crumbs.length - 1
+                ? <a href={c.url} class="hover:text-brand-orange transition-colors">{c.name}</a>
+                : <span class="text-brand-gray-200">{c.name}</span>
+              }
+            </li>
+          ))}
+        </ol>
+      </nav>
+    </div>
+
+    <!-- Content -->
+    <div class="relative z-10 container-site py-14 md:py-20">
+      <div class="max-w-2xl">
+        <div class="section-label mb-5">
+          <span class="text-lg" aria-hidden="true">{category.icon}</span>
+          Catégorie
+        </div>
+        <h1 class="heading-h1 mb-4">{category.title}</h1>
+        {category.intro && (
+          <p class="text-brand-gray-200 text-lg leading-relaxed mb-8 text-pretty">
+            {category.intro}
+          </p>
+        )}
+
+        <!-- Quick specs chips -->
+        <div class="flex flex-wrap gap-3">
+          <span class="badge badge-orange border border-brand-orange/25">
+            💰 {priceRange}
+          </span>
+          <span class="badge badge-gray">
+            🗺️ {category.terrain}
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Benefits strip ────────────────────────────────────── -->
+  {category.benefits && category.benefits.length > 0 && (
+    <div class="bg-brand-gray-900 border-y border-brand-gray-800">
+      <div class="container-site py-6">
+        <ul class="flex flex-wrap gap-x-8 gap-y-3" role="list">
+          {category.benefits.map(b => (
+            <li class="flex items-center gap-2 text-sm text-brand-gray-200">
+              <svg class="w-4 h-4 text-brand-orange flex-shrink-0" viewBox="0 0 16 16" fill="none">
+                <path d="M3 8l3.5 3.5L13 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+              {b}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  )}
+
+  <!-- ─── Main content slot ─────────────────────────────────── -->
+  <div class="container-site py-14 md:py-20">
+    <div class="grid grid-cols-1 xl:grid-cols-[1fr_320px] gap-12">
+
+      <!-- Main -->
+      <main id="main-content">
+        <slot />
+      </main>
+
+      <!-- Sidebar -->
+      <aside class="flex flex-col gap-6">
+
+        <!-- Quick buy CTA -->
+        <div class="card-glass p-6 rounded-2xl">
+          <p class="text-xs text-brand-orange uppercase tracking-widest font-medium mb-3">
+            Offres du moment
+          </p>
+          <h3 class="font-display font-semibold text-brand-offwhite text-base mb-1">
+            {category.title}
+          </h3>
+          <p class="text-xs text-brand-gray-400 mb-4">Budget : {priceRange}</p>
+          <a
+            href={`https://www.amazon.fr/s?k=${encodeURIComponent(category.title + ' électrique')}&tag=trouveton-21`}
+            target="_blank"
+            rel="noopener noreferrer nofollow"
+            class="affiliate-cta w-full justify-center"
+          >
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M6.97 2h10.06A2 2 0 0119 3.94v13.44A2 2 0 0117.03 19H6.97A2 2 0 015 17.38V3.94A2 2 0 016.97 2z"/>
+            </svg>
+            Voir sur Amazon
+          </a>
+          <p class="text-2xs text-brand-gray-600 text-center mt-2">Lien affilié — prix variables</p>
+        </div>
+
+        <!-- Quiz CTA -->
+        <div class="card-base p-6 border-brand-orange/20">
+          <p class="text-xs font-medium text-brand-offwhite mb-2">Pas sûr de ton choix ?</p>
+          <p class="text-xs text-brand-gray-400 mb-4 leading-relaxed">
+            Notre quiz te recommande le modèle parfait en 2 min.
+          </p>
+          <a href="/quiz/" class="btn-ghost btn-sm w-full justify-center">
+            Faire le quiz →
+          </a>
+        </div>
+
+        <!-- Related categories -->
+        {related.length > 0 && (
+          <div class="card-base p-5">
+            <p class="text-xs text-brand-gray-400 uppercase tracking-widest font-medium mb-4">
+              Autres catégories
+            </p>
+            <ul class="flex flex-col gap-2" role="list">
+              {related.map(r => (
+                <li>
+                  <a
+                    href={r.href}
+                    class="flex items-center gap-3 text-sm text-brand-gray-200
+                           hover:text-brand-orange transition-colors duration-150 py-1"
+                  >
+                    <span aria-hidden="true">{r.icon}</span>
+                    {r.title}
+                    <svg class="w-3.5 h-3.5 ml-auto text-brand-gray-600" viewBox="0 0 14 14" fill="none">
+                      <path d="M5 3l4 4-4 4" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/>
+                    </svg>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+      </aside>
+    </div>
+  </div>
+
+  <!-- ─── Affiliate banner ──────────────────────────────────── -->
+  <div class="container-site pb-10">
+    <AffiliateBanner variant="guide" />
+  </div>
+
+  <!-- ─── Newsletter ────────────────────────────────────────── -->
+  <Newsletter variant="compact" />
+
+</Base>

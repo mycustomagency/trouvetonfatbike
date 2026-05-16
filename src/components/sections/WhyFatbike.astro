@@ -1,0 +1,136 @@
+---
+const BENEFITS = [
+  {
+    icon: `<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M16 4C9.373 4 4 9.373 4 16s5.373 12 12 12 12-5.373 12-12S22.627 4 16 4z" stroke="currentColor" stroke-width="1.5"/>
+      <path d="M16 8v8l5 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="16" cy="26" r="2" fill="currentColor"/>
+    </svg>`,
+    title:   'Tous les terrains, une seule machine',
+    body:    'Sable, neige, boue, rocaille, pavés : les pneus ballons 4" à 5" du fatbike avalent tout. Là où les autres vélos s\'arrêtent, toi tu continues.',
+    stat:    '4–5"',
+    statLabel: 'largeur de pneus',
+  },
+  {
+    icon: `<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M6 16h4l3-9 5 18 3-12 3 6h2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>`,
+    title:   'Assistance électrique 250W–1000W',
+    body:    'Le moteur électrique efface les dénivelés, multiplie ton autonomie et transforme chaque sortie en aventure, même pour les débutants ou les gabarits costauds.',
+    stat:    '1000W',
+    statLabel: 'puissance max',
+  },
+  {
+    icon: `<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 24s4-8 12-8 12 8 12 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      <path d="M16 16V6M12 10l4-4 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>`,
+    title:   'Autonomie jusqu\'à 130 km',
+    body:    'Les batteries 48V modernes permettent de s\'aventurer loin sans craindre la panne. Bikepacking, randonnée côtière ou navette quotidienne : une seule charge suffit.',
+    stat:    '130km',
+    statLabel: 'autonomie maximale',
+  },
+  {
+    icon: `<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="10" cy="22" r="4" stroke="currentColor" stroke-width="1.5"/>
+      <circle cx="22" cy="22" r="4" stroke="currentColor" stroke-width="1.5"/>
+      <path d="M14 22h4M10 18l4-8h6l2 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M22 10h3l2 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>`,
+    title:   'Confort & stabilité exceptionnels',
+    body:    'Les gros pneus basse pression absorbent naturellement les vibrations. Résultat : un confort de roulement remarquable, même sur des chemins cassants ou des plages de galets.',
+    stat:    '0.8 bar',
+    statLabel: 'pression pneus typique',
+  },
+  {
+    icon: `<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M16 4l2 6h6l-5 4 2 6-5-4-5 4 2-6-5-4h6z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+      <path d="M8 26h16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>`,
+    title:   'Accessible à tous, dès le premier jour',
+    body:    'Large selle, stabilité naturelle, assistance modulable : le fatbike électrique est idéal pour débuter, se remettre en forme, ou partir avec enfants et seniors.',
+    stat:    '60 kg',
+    statLabel: 'poids supporté max (200 kg+)',
+  },
+  {
+    icon: `<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M6 8h20M6 12h16M6 16h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="22" cy="20" r="6" stroke="currentColor" stroke-width="1.5"/>
+      <path d="M22 17v3.5l2 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>`,
+    title:   'Sport, loisir & déplacement quotidien',
+    body:    'Le fatbike n\'est pas qu\'un jouet. Navette domicile-travail, courses en forêt avec ton chien, bikepacking côtier — un seul vélo pour tout faire, toute l\'année.',
+    stat:    '365 j',
+    statLabel: 'utilisable toute l\'année',
+  },
+];
+---
+
+<section class="section-padding relative overflow-hidden" aria-labelledby="why-heading">
+
+  <!-- Background texture -->
+  <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+    <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-orange/5 rounded-full blur-3xl translate-x-1/3 -translate-y-1/3"></div>
+    <div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-brand-orange/4 rounded-full blur-3xl -translate-x-1/3 translate-y-1/3"></div>
+  </div>
+
+  <div class="container-site relative z-10">
+
+    <!-- Header -->
+    <div class="max-w-2xl mb-16 reveal">
+      <div class="section-label mb-5">Pourquoi le fatbike électrique</div>
+      <h2 id="why-heading" class="heading-h2 mb-5 text-balance">
+        Le vélo qui efface<br/>
+        <span class="text-gradient-orange">toutes les limites</span>
+      </h2>
+      <p class="text-brand-gray-300 text-lg leading-relaxed text-pretty">
+        Conçu pour les aventuriers de tous niveaux, le fatbike électrique redéfinit ce qu'on peut faire à vélo. Terrain, météo, distance : plus d'excuses.
+      </p>
+    </div>
+
+    <!-- Benefits grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      {BENEFITS.map((benefit, i) => (
+        <div
+          class="group card-base p-6 hover:border-brand-gray-600 hover:-translate-y-1
+                 hover:shadow-card-hover transition-all duration-400 ease-out reveal"
+          style={`animation-delay: ${i * 0.08}s`}
+        >
+          <!-- Icon -->
+          <div class="w-11 h-11 rounded-xl bg-brand-orange/10 border border-brand-orange/20
+                      flex items-center justify-center mb-5 flex-shrink-0
+                      group-hover:bg-brand-orange/15 group-hover:border-brand-orange/35
+                      transition-all duration-300 text-brand-orange">
+            <div class="w-5 h-5" set:html={benefit.icon}></div>
+          </div>
+
+          <!-- Title -->
+          <h3 class="font-display font-semibold text-brand-offwhite text-base mb-2 leading-snug">
+            {benefit.title}
+          </h3>
+
+          <!-- Body -->
+          <p class="text-sm text-brand-gray-300 leading-relaxed mb-5">
+            {benefit.body}
+          </p>
+
+          <!-- Stat -->
+          <div class="flex items-baseline gap-2 pt-4 border-t border-brand-gray-800">
+            <span class="font-mono font-bold text-xl text-brand-orange">
+              {benefit.stat}
+            </span>
+            <span class="text-xs text-brand-gray-500">{benefit.statLabel}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Bottom link -->
+    <div class="mt-12 text-center reveal">
+      <a href="/guide/guide-achat-fatbike/" class="btn-ghost btn-md inline-flex">
+        Guide d'achat complet : tout comprendre avant d'acheter →
+      </a>
+    </div>
+
+  </div>
+</section>

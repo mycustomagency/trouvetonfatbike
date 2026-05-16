@@ -1,0 +1,54 @@
+---
+import Base from '@layouts/Base.astro';
+---
+
+<Base
+  title="Page introuvable"
+  description="Cette page n'existe pas. Retourne à l'accueil pour trouver ton fatbike idéal."
+  noIndex={true}
+>
+  <section class="min-h-[70vh] flex items-center justify-center section-padding">
+    <div class="container-narrow text-center">
+
+      <!-- Big 404 -->
+      <div class="font-display font-bold text-[8rem] md:text-[12rem] leading-none
+                  text-gradient-orange opacity-80 mb-4" aria-hidden="true">
+        404
+      </div>
+
+      <h1 class="heading-h2 mb-4">Page introuvable</h1>
+      <p class="text-brand-gray-300 text-lg mb-10 max-w-md mx-auto">
+        Cette page n'existe pas ou a été déplacée. Utilise le menu pour trouver ton fatbike idéal.
+      </p>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="/" class="btn-primary btn-lg">
+          Retour à l'accueil
+        </a>
+        <a href="/quiz/" class="btn-ghost btn-lg">
+          Trouver mon fatbike →
+        </a>
+      </div>
+
+      <!-- Quick links -->
+      <div class="mt-14 pt-10 border-t border-brand-gray-800">
+        <p class="text-sm text-brand-gray-400 mb-6">Raccourcis utiles</p>
+        <div class="flex flex-wrap justify-center gap-3">
+          {[
+            { label: 'Comparatif 2026', href: '/guide/meilleur-fatbike-electrique-2026/' },
+            { label: 'Fatbike montagne', href: '/categorie/fatbike-montagne/' },
+            { label: 'Fatbike plage',    href: '/categorie/fatbike-plage/' },
+            { label: 'Petit budget',     href: '/categorie/fatbike-petit-budget/' },
+            { label: 'Cani-fatbike',     href: '/cani-fatbike/' },
+            { label: 'Accessoires',      href: '/accessoires/' },
+          ].map(link => (
+            <a href={link.href} class="badge-gray badge hover:border-brand-orange hover:text-brand-orange transition-all duration-200">
+              {link.label}
+            </a>
+          ))}
+        </div>
+      </div>
+
+    </div>
+  </section>
+</Base>

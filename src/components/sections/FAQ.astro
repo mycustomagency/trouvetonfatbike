@@ -1,0 +1,183 @@
+---
+import { buildCanonical } from '@utils/seo';
+
+interface FAQItem {
+  question: string;
+  answer:   string;
+}
+
+interface Props {
+  items?: FAQItem[];
+  title?: string;
+}
+
+const {
+  title = 'Questions fréquentes sur le fatbike électrique',
+  items = [
+    {
+      question: 'Qu\'est-ce qu\'un fatbike électrique et en quoi est-il différent d\'un VTT ?',
+      answer:   'Un fatbike électrique combine les gros pneus ballons (4" à 5" de largeur) propres au fatbike avec un moteur électrique d\'assistance. Contrairement à un VTT, les pneus très larges offrent une traction et une stabilité exceptionnelles sur tous les terrains meubles — sable, neige, boue, gravier — sans nécessiter de suspension dans la plupart des cas. L\'assistance électrique permet d\'aborder les dénivelés sans effort excessif.',
+    },
+    {
+      question: 'Quel budget prévoir pour un bon fatbike électrique en 2026 ?',
+      answer:   'Les fatbikes électriques d\'entrée de gamme corrects commencent autour de 800–1 200€ pour des modèles comme l\'Engwe EP-2 Pro. Le milieu de gamme (1 500–3 000€) offre le meilleur rapport qualité/prix avec des marques comme Himiway, Eleglide ou Lankeleisi. Le haut de gamme (3 000–7 000€+) correspond aux marques premium comme Rambo, Bafang ou Specialized, avec des composants vélo de qualité professionnelle.',
+    },
+    {
+      question: 'Le fatbike électrique est-il légal en France ?',
+      answer:   'Oui, un fatbike électrique est légal en France s\'il respecte la réglementation VAE (Vélo à Assistance Électrique) : moteur plafonné à 250W nominal, assistance coupée au-delà de 25 km/h. Dans ce cas, aucun permis, assurance ni casque ne sont obligatoires. Les modèles dépassant ces limites (speed bikes, 750W+ non bridés) sont considérés comme des cyclomoteurs et soumis à une réglementation différente.',
+    },
+    {
+      question: 'Quelle autonomie espérer avec un fatbike électrique ?',
+      answer:   'L\'autonomie varie considérablement selon la batterie, le mode d\'assistance et le terrain. En mode Eco sur terrain plat, comptez 80 à 130 km pour les meilleures batteries (48V 20Ah+). En mode Turbo sur sentier vallonné, l\'autonomie tombe à 30–60 km. La plupart des fatbikes du marché oscillent entre 50 et 100 km en usage mixte. Notre guide autonomie détaille les calculs selon chaque usage.',
+    },
+    {
+      question: 'Le fatbike convient-il aux débutants ?',
+      answer:   'Absolument. La grande stabilité des pneus larges et la position de conduite naturelle font du fatbike l\'un des vélos les plus accessibles aux débutants. L\'assistance électrique permet de doser l\'effort et de ne jamais se retrouver à bout de souffle. Nous recommandons cependant de commencer par des chemins forestiers plats avant d\'aborder les sentiers de montagne. Notre sélection "Fatbike débutant" recense les modèles les plus simples à prendre en main.',
+    },
+    {
+      question: 'Quelle est la différence entre un moteur pédalier (mid-drive) et un moteur dans la roue (hub motor) ?',
+      answer:   'Le moteur pédalier (mid-drive, type Bafang M500/M600 ou Bosch) est placé au centre du cadre et entraîne la chaîne. Il offre un meilleur équilibre, un comportement naturel et plus de couple en côte. Il est cependant plus cher. Le moteur dans la roue (hub motor) est moins cher, plus simple à entretenir, mais moins performant en côte et alourdit la roue arrière. Pour la montagne, le mid-drive est recommandé. Pour la plage et le quotidien, le hub motor suffit.',
+    },
+    {
+      question: 'Peut-on utiliser un fatbike électrique en cani-vélo (avec un chien) ?',
+      answer:   'Oui, c\'est même une pratique en plein essor en France sous le nom "cani-fatbike". Le fatbike est idéal pour cette pratique grâce à sa stabilité et sa largeur de pneus qui absorbent les coups de laisse. Il faut néanmoins un équipement adapté : harnais de traction pour le chien (type Canicross), fixation de laisse sur la tige de selle ou le cadre, et une vitesse maîtrisée. Notre guide cani-fatbike recense l\'équipement recommandé selon la race et le gabarit du chien.',
+    },
+    {
+      question: 'Comment entretenir un fatbike électrique ?',
+      answer:   'L\'entretien d\'un fatbike électrique est similaire à celui d\'un VTT avec quelques spécificités. Côté mécanique : lubrification de chaîne après chaque sortie humide, contrôle de la pression des pneus (0.5 à 1.5 bar selon terrain), freins à disque à régler tous les 300–500 km. Côté électronique : ne jamais stocker la batterie chargée à 100% sur le long terme (viser 50–80%), recharger à température ambiante, nettoyer les connecteurs régulièrement. Notre guide entretien détaille chaque opération avec les fréquences recommandées.',
+    },
+  ],
+} = Astro.props;
+
+// JSON-LD schema for FAQ
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: items.map(item => ({
+    '@type': 'Question',
+    name:    item.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text:    item.answer,
+    },
+  })),
+};
+---
+
+<section class="section-padding bg-brand-gray-900/30" aria-labelledby="faq-heading">
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+  <div class="container-narrow">
+
+    <!-- Header -->
+    <div class="text-center mb-12 reveal">
+      <div class="section-label justify-center mb-4">FAQ</div>
+      <h2 id="faq-heading" class="heading-h2 text-balance">
+        {title}
+      </h2>
+    </div>
+
+    <!-- FAQ items -->
+    <div class="flex flex-col gap-3" role="list">
+      {items.map((item, i) => (
+        <div
+          class="faq-item card-base overflow-hidden reveal"
+          style={`animation-delay: ${i * 0.05}s`}
+          role="listitem"
+        >
+          <button
+            class="faq-trigger w-full flex items-start justify-between gap-4 p-6 text-left
+                   hover:bg-white/[0.02] transition-colors duration-200"
+            aria-expanded="false"
+            aria-controls={`faq-answer-${i}`}
+            id={`faq-trigger-${i}`}
+          >
+            <span class="font-display font-semibold text-brand-offwhite text-base leading-snug pr-2">
+              {item.question}
+            </span>
+            <span class="flex-shrink-0 w-6 h-6 rounded-full border border-brand-gray-700
+                         flex items-center justify-center mt-0.5
+                         group-hover:border-brand-orange transition-all duration-200">
+              <svg
+                class="faq-icon w-3 h-3 text-brand-gray-400 transition-transform duration-300"
+                viewBox="0 0 12 12" fill="none" aria-hidden="true"
+              >
+                <path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </span>
+          </button>
+
+          <div
+            id={`faq-answer-${i}`}
+            class="faq-answer overflow-hidden"
+            style="max-height: 0;"
+            role="region"
+            aria-labelledby={`faq-trigger-${i}`}
+          >
+            <div class="px-6 pb-6">
+              <div class="h-px bg-brand-gray-800 mb-5"></div>
+              <p class="text-brand-gray-300 text-sm leading-relaxed">
+                {item.answer}
+              </p>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Bottom CTA -->
+    <div class="text-center mt-10 reveal">
+      <p class="text-sm text-brand-gray-400 mb-4">
+        D'autres questions ? Notre guide complet répond à tout.
+      </p>
+      <a href="/guide/guide-achat-fatbike/" class="btn-ghost btn-md inline-flex">
+        Lire le guide d'achat complet →
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  // ─── FAQ Accordion ───────────────────────────────────────────────────────
+  document.querySelectorAll<HTMLButtonElement>('.faq-trigger').forEach(trigger => {
+    trigger.addEventListener('click', () => {
+      const expanded = trigger.getAttribute('aria-expanded') === 'true';
+      const item     = trigger.closest('.faq-item')!;
+      const answer   = item.querySelector<HTMLElement>('.faq-answer')!;
+      const icon     = trigger.querySelector<SVGElement>('.faq-icon')!;
+
+      if (expanded) {
+        // Close
+        answer.style.maxHeight = answer.scrollHeight + 'px';
+        requestAnimationFrame(() => {
+          answer.style.transition = 'max-height 0.3s ease-out';
+          answer.style.maxHeight  = '0';
+        });
+        trigger.setAttribute('aria-expanded', 'false');
+        icon.style.transform = '';
+        item.classList.remove('border-brand-gray-600');
+      } else {
+        // Close all others
+        document.querySelectorAll<HTMLButtonElement>('.faq-trigger').forEach(other => {
+          if (other === trigger) return;
+          const otherAnswer = other.closest('.faq-item')!.querySelector<HTMLElement>('.faq-answer')!;
+          const otherIcon   = other.querySelector<SVGElement>('.faq-icon')!;
+          otherAnswer.style.maxHeight = '0';
+          other.setAttribute('aria-expanded', 'false');
+          otherIcon.style.transform = '';
+          other.closest('.faq-item')!.classList.remove('border-brand-gray-600');
+        });
+
+        // Open this one
+        answer.style.transition = 'max-height 0.4s ease-out';
+        answer.style.maxHeight  = answer.scrollHeight + 'px';
+        trigger.setAttribute('aria-expanded', 'true');
+        icon.style.transform = 'rotate(180deg)';
+        item.classList.add('border-brand-gray-600');
+      }
+    });
+  });
+</script>

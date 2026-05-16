@@ -1,0 +1,181 @@
+---
+interface Category {
+  title:    string;
+  href:     string;
+  icon:     string;
+  terrain:  string;
+  budget:   string;
+  image?:   string;
+  featured?: boolean;
+}
+
+interface Props {
+  categories?: Category[];
+  title?: string;
+  subtitle?: string;
+}
+
+const {
+  title    = 'Explore par usage',
+  subtitle = 'Chaque terrain, chaque aventure mérite le bon fatbike. Lequel est fait pour toi ?',
+  categories = [
+    {
+      title:    'Fatbike Montagne',
+      href:     '/categorie/fatbike-montagne/',
+      icon:     '⛰️',
+      terrain:  'Trails, sentiers, single tracks',
+      budget:   '1 800 – 6 000 €',
+      featured: true,
+      // Fatbike électrique sur sentier de montagne — gros pneus visibles
+      image:    'https://images.unsplash.com/photo-1609862609989-fb86099e0432?w=700&q=80',
+    },
+    {
+      title:   'Fatbike Plage',
+      href:    '/categorie/fatbike-plage/',
+      icon:    '🏖️',
+      terrain: 'Sable mou, côtes, dunes',
+      budget:  '800 – 3 000 €',
+      // Fatbike sur plage avec pneus sable — ambiance littorale
+      image:   'https://images.unsplash.com/photo-1544191696-102dbdaeeaa0?w=600&q=75',
+    },
+    {
+      title:   'Fatbike Neige',
+      href:    '/categorie/fatbike-neige/',
+      icon:    '❄️',
+      terrain: 'Neige, glace, chemins hivernaux',
+      budget:  '1 200 – 5 000 €',
+      // Paysage hivernal cyclisme
+      image:   'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=600&q=75',
+    },
+    {
+      title:   'Fatbike Urbain',
+      href:    '/categorie/fatbike-urbain/',
+      icon:    '🏙️',
+      terrain: 'Ville, pavés, quotidien',
+      budget:  '700 – 2 500 €',
+    },
+    {
+      title:   'Fatbike Pliant',
+      href:    '/categorie/fatbike-pliant/',
+      icon:    '🔀',
+      terrain: 'Compact, transport facile',
+      budget:  '700 – 2 500 €',
+    },
+    {
+      title:   'Vélo avec son chien',
+      href:    '/cani-fatbike/',
+      icon:    '🐕',
+      terrain: 'Balade & plaisir avec ton chien',
+      budget:  '1 000 – 4 000 €',
+    },
+    {
+      title:   'Fatbike Débutant',
+      href:    '/categorie/fatbike-debutant/',
+      icon:    '🚴',
+      terrain: 'Polyvalent, facile à prendre en main',
+      budget:  '600 – 2 000 €',
+    },
+    {
+      title:   'Longue autonomie',
+      href:    '/categorie/fatbike-autonomie/',
+      icon:    '⚡',
+      terrain: 'Bikepacking, grandes distances',
+      budget:  '2 000 – 7 000 €',
+    },
+  ],
+} = Astro.props;
+---
+
+<section class="section-padding" aria-labelledby="categories-heading">
+  <div class="container-site">
+
+    <!-- Header -->
+    <div class="text-center mb-12 md:mb-16 reveal">
+      <div class="section-label justify-center mb-4">Catégories</div>
+      <h2 id="categories-heading" class="heading-h2 mb-4 text-balance">{title}</h2>
+      <p class="text-brand-gray-300 text-lg max-w-xl mx-auto text-pretty">{subtitle}</p>
+    </div>
+
+    <!-- Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
+      {categories.map((cat, i) => (
+        <a
+          href={cat.href}
+          class:list={[
+            'group card-base card-hover p-0 overflow-hidden flex flex-col no-underline',
+            cat.featured ? 'sm:col-span-2' : '',
+          ]}
+          style={`animation-delay: ${i * 0.07}s`}
+        >
+          <!-- Image -->
+          <div class:list={[
+            'relative overflow-hidden flex-shrink-0 bg-brand-gray-800',
+            cat.featured ? 'h-52 sm:h-60' : 'h-36',
+          ]}>
+            {cat.image ? (
+              <img
+                src={cat.image}
+                alt={`${cat.title} — fatbike électrique`}
+                class="w-full h-full object-cover object-center
+                       transition-transform duration-700 ease-out
+                       group-hover:scale-105"
+                loading="lazy"
+                decoding="async"
+                width="700"
+                height="400"
+              />
+            ) : (
+              <div class="w-full h-full bg-gradient-to-br from-brand-gray-800 to-brand-gray-900
+                          flex items-center justify-center">
+                <span class="text-5xl opacity-25 group-hover:opacity-40 group-hover:scale-110
+                             transition-all duration-300" aria-hidden="true">
+                  {cat.icon}
+                </span>
+              </div>
+            )}
+            {cat.image && (
+              <div class="absolute inset-0 bg-gradient-to-t from-brand-gray-900/75 via-transparent to-transparent"></div>
+            )}
+            <div class="absolute top-3 left-3">
+              <span class="text-lg leading-none" aria-hidden="true">{cat.icon}</span>
+            </div>
+          </div>
+
+          <!-- Content -->
+          <div class="flex flex-col flex-1 p-5">
+            <h3 class="font-display font-semibold text-brand-offwhite text-base mb-1
+                       group-hover:text-brand-orange transition-colors duration-200">
+              {cat.title}
+            </h3>
+            <p class="text-xs text-brand-gray-400 mb-3 leading-relaxed flex-1">
+              {cat.terrain}
+            </p>
+            <div class="flex items-center justify-between">
+              <span class="font-mono text-xs text-brand-orange font-medium">
+                {cat.budget}
+              </span>
+              <span class="flex items-center gap-1 text-xs text-brand-gray-400
+                           group-hover:text-brand-orange group-hover:gap-2 transition-all duration-200">
+                Voir
+                <svg class="w-3.5 h-3.5" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                  <path d="M2.5 7h9M8 3.5L11.5 7 8 10.5" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/>
+                </svg>
+              </span>
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+
+    <!-- CTA bas -->
+    <div class="text-center mt-10 reveal reveal-delay-3">
+      <a href="/categorie/" class="btn-ghost btn-md inline-flex">
+        Voir toutes les catégories
+        <svg class="w-4 h-4" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+
+  </div>
+</section>
