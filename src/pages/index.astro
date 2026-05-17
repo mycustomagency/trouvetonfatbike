@@ -57,67 +57,164 @@ const localBusinessSchema = {
        1. HERO — Cinématique, immersif, plein écran
   ════════════════════════════════════════════════════════════ -->
   <Hero />
+  <hr class="orange-rule" />
 
   <!-- ═══════════════════════════════════════════════════════════
-       2. TRUST STRIP — Chiffres clés, social proof
+       2. TRUST STRIP — fond légèrement plus clair
   ════════════════════════════════════════════════════════════ -->
-  <TrustStrip />
+  <div class="section-alt">
+    <TrustStrip />
+  </div>
 
   <!-- ═══════════════════════════════════════════════════════════
-       3. CATÉGORIES — Grille immersive par usage / terrain
+       3. CATÉGORIES — fond noir pur
   ════════════════════════════════════════════════════════════ -->
   <CategoryGrid />
+  <hr class="orange-rule" />
 
   <!-- ═══════════════════════════════════════════════════════════
-       4. POURQUOI FATBIKE — Bénéfices avec statistiques
+       4. POURQUOI FATBIKE — fond alt
   ════════════════════════════════════════════════════════════ -->
-  <WhyFatbike />
+  <div class="section-alt">
+    <WhyFatbike />
+  </div>
 
   <!-- ═══════════════════════════════════════════════════════════
-       5. MEILLEURS MODÈLES — Sélection affiliation
+       5. MEILLEURS MODÈLES — fond noir
   ════════════════════════════════════════════════════════════ -->
   <FeaturedProducts />
 
   <!-- ═══════════════════════════════════════════════════════════
-       6. AFFILIATE BANNER — CTA Amazon élégant
+       6. GALERIE LIFESTYLE — scroll horizontal
+       → Ajouter vos photos dans /public/images/lifestyle-*.jpg
+  ════════════════════════════════════════════════════════════ -->
+  <section class="section-alt py-16 md:py-20 overflow-hidden" aria-label="L'univers fatbike en images">
+    <div class="container-site mb-8 md:mb-10">
+      <div class="section-label">Univers fatbike</div>
+      <h2 class="heading-h2 mt-3">
+        Rouler partout,
+        <span class="text-gradient-orange">explorer sans limites</span>
+      </h2>
+    </div>
+    <div class="flex gap-4 overflow-x-auto scrollbar-hide pl-5 sm:pl-8 md:pl-12 lg:pl-16 pr-5 pb-3">
+
+      <a href="/categorie/fatbike-montagne/"
+         class="relative flex-shrink-0 w-56 sm:w-72 h-80 rounded-2xl overflow-hidden border border-brand-gray-700
+                bg-gradient-to-b from-slate-700 to-brand-gray-900 group">
+        <img src="/images/lifestyle-montagne.jpg" alt="Fatbike en montagne"
+             class="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
+             loading="lazy" />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+        <div class="absolute bottom-0 left-0 right-0 p-5">
+          <span class="text-brand-orange text-2xs font-semibold uppercase tracking-widest">Terrain</span>
+          <p class="font-display font-bold text-xl text-white mt-1">Montagne</p>
+        </div>
+      </a>
+
+      <a href="/categorie/fatbike-plage/"
+         class="relative flex-shrink-0 w-56 sm:w-72 h-80 rounded-2xl overflow-hidden border border-brand-gray-700
+                bg-gradient-to-b from-blue-900 to-brand-gray-900 group">
+        <img src="/images/lifestyle-plage.jpg" alt="Fatbike sur la plage"
+             class="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
+             loading="lazy" />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+        <div class="absolute bottom-0 left-0 right-0 p-5">
+          <span class="text-brand-orange text-2xs font-semibold uppercase tracking-widest">Terrain</span>
+          <p class="font-display font-bold text-xl text-white mt-1">Plage</p>
+        </div>
+      </a>
+
+      <a href="/categorie/fatbike-neige/"
+         class="relative flex-shrink-0 w-56 sm:w-72 h-80 rounded-2xl overflow-hidden border border-brand-gray-700
+                bg-gradient-to-b from-sky-900 to-brand-gray-900 group">
+        <img src="/images/lifestyle-neige.jpg" alt="Fatbike dans la neige"
+             class="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
+             loading="lazy" />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+        <div class="absolute bottom-0 left-0 right-0 p-5">
+          <span class="text-brand-orange text-2xs font-semibold uppercase tracking-widest">Terrain</span>
+          <p class="font-display font-bold text-xl text-white mt-1">Neige</p>
+        </div>
+      </a>
+
+      <a href="/cani-fatbike/"
+         class="relative flex-shrink-0 w-56 sm:w-72 h-80 rounded-2xl overflow-hidden border border-brand-gray-700
+                bg-gradient-to-b from-emerald-900 to-brand-gray-900 group">
+        <img src="/images/lifestyle-canicross.jpg" alt="Cani-fatbike"
+             class="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
+             loading="lazy" />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+        <div class="absolute bottom-0 left-0 right-0 p-5">
+          <span class="text-brand-orange text-2xs font-semibold uppercase tracking-widest">Sport</span>
+          <p class="font-display font-bold text-xl text-white mt-1">Cani-fatbike</p>
+        </div>
+      </a>
+
+      <a href="/categorie/fatbike-urbain/"
+         class="relative flex-shrink-0 w-56 sm:w-72 h-80 rounded-2xl overflow-hidden border border-brand-gray-700
+                bg-gradient-to-b from-zinc-700 to-brand-gray-900 group">
+        <img src="/images/lifestyle-urbain.jpg" alt="Fatbike en ville"
+             class="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
+             loading="lazy" />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+        <div class="absolute bottom-0 left-0 right-0 p-5">
+          <span class="text-brand-orange text-2xs font-semibold uppercase tracking-widest">Terrain</span>
+          <p class="font-display font-bold text-xl text-white mt-1">Urbain</p>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       7. AFFILIATE BANNER — CTA Amazon élégant
   ════════════════════════════════════════════════════════════ -->
   <section class="section-padding-sm" aria-label="Offres du moment">
     <div class="container-site">
       <AffiliateBanner variant="amazon" />
     </div>
   </section>
+  <hr class="orange-rule" />
 
   <!-- ═══════════════════════════════════════════════════════════
-       7. UNIVERS AVENTURE — Terrain tabs lifestyle
+       8. UNIVERS AVENTURE — fond alt
   ════════════════════════════════════════════════════════════ -->
-  <AdventureUniverse />
+  <div class="section-alt">
+    <AdventureUniverse />
+  </div>
 
   <!-- ═══════════════════════════════════════════════════════════
-       8. QUIZ TEASER — Quel fatbike pour moi ?
+       9. QUIZ TEASER — fond noir
   ════════════════════════════════════════════════════════════ -->
   <QuizTeaser />
+  <hr class="orange-rule" />
 
   <!-- ═══════════════════════════════════════════════════════════
-       9. GUIDES — Derniers articles SEO
+       10. GUIDES — fond alt
   ════════════════════════════════════════════════════════════ -->
-  <LatestGuides />
+  <div class="section-alt">
+    <LatestGuides />
+  </div>
 
   <!-- ═══════════════════════════════════════════════════════════
-       10. AFFILIATE GUIDE BANNER
+       11. AFFILIATE GUIDE BANNER
   ════════════════════════════════════════════════════════════ -->
   <section class="section-padding-sm" aria-label="Guide complet 2026">
     <div class="container-site">
       <AffiliateBanner variant="guide" />
     </div>
   </section>
+  <hr class="orange-rule" />
 
   <!-- ═══════════════════════════════════════════════════════════
-       11. FAQ SEO — Optimisée rich snippets Google
+       12. FAQ SEO — fond alt
   ════════════════════════════════════════════════════════════ -->
-  <FAQ />
+  <div class="section-alt">
+    <FAQ />
+  </div>
 
   <!-- ═══════════════════════════════════════════════════════════
-       12. NEWSLETTER — Capture email avec lead magnet
+       13. NEWSLETTER — fond noir
   ════════════════════════════════════════════════════════════ -->
   <Newsletter />
 

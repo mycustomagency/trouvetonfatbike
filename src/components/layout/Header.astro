@@ -28,7 +28,7 @@ const currentPath = Astro.url.pathname;
   <!-- Blur background (JS adds class 'scrolled') -->
   <div
     id="header-bg"
-    class="absolute inset-0 bg-brand-black/0 backdrop-blur-0 border-b border-transparent
+    class="absolute inset-0 bg-brand-black border-b border-brand-orange/20
            transition-all duration-300"
   ></div>
 
@@ -44,13 +44,10 @@ const currentPath = Astro.url.pathname;
         class="flex items-center gap-3 group"
         aria-label="TrouveTonFatBike — Accueil"
       >
-        <!-- Logo SVG inline optimisé -->
         <img
-          src="/logo.svg"
+          src="/logo-header.png"
           alt="TrouveTonFatBike — Explore sans limites"
-          width="178"
-          height="43"
-          class="h-9 md:h-10 w-auto transition-opacity duration-200 group-hover:opacity-90"
+          class="h-10 md:h-12 w-auto transition-opacity duration-200 group-hover:opacity-90"
           loading="eager"
         />
       </a>
@@ -232,21 +229,7 @@ const currentPath = Astro.url.pathname;
   const headerBg = document.getElementById('header-bg')!;
 
   const handleScroll = () => {
-    if (window.scrollY > 20) {
-      headerBg.classList.add(
-        'bg-brand-black/90', 'backdrop-blur-md', 'border-brand-gray-800/60'
-      );
-      headerBg.classList.remove(
-        'bg-brand-black/0', 'backdrop-blur-0', 'border-transparent'
-      );
-    } else {
-      headerBg.classList.remove(
-        'bg-brand-black/90', 'backdrop-blur-md', 'border-brand-gray-800/60'
-      );
-      headerBg.classList.add(
-        'bg-brand-black/0', 'backdrop-blur-0', 'border-transparent'
-      );
-    }
+    headerBg.classList.toggle('backdrop-blur-md', window.scrollY > 20);
   };
 
   window.addEventListener('scroll', handleScroll, { passive: true });

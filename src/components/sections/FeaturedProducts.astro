@@ -1,5 +1,6 @@
 ---
 import ProductCard from '@components/product/ProductCard.astro';
+import { BIKES } from '@data/bikes';
 
 interface Props {
   title?: string;
@@ -11,64 +12,16 @@ const {
   subtitle = 'Sélection 2026 — testés, comparés et recommandés par notre équipe.',
 } = Astro.props;
 
-// Sample products — will be replaced with dynamic data from collections
-const FEATURED_PRODUCTS = [
-  {
-    name:        'Himiway Cobra Pro',
-    brand:       'Himiway',
-    asin:        'B09X4WNKG6',
-    price:       2199,
-    priceOld:    2499,
-    image:       'https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=400&q=75',
-    rating:      4.7,
-    reviewCount: 324,
-    badge:       'Meilleur choix',
-    badgeType:   'best' as const,
-    motor:       '750W Bafang',
-    battery:     '48V 20Ah',
-    autonomy:    '80–130 km',
-    weight:      '34 kg',
-    pros:        ['Moteur puissant 750W', 'Grande autonomie 130km', 'Pneus 26" × 4'],
-  },
-  {
-    name:        'Engwe EP-2 Pro',
-    brand:       'Engwe',
-    asin:        'B09N4GNHS2',
-    price:       899,
-    image:       'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=75',
-    rating:      4.4,
-    reviewCount: 1240,
-    badge:       'Meilleur rapport qualité/prix',
-    badgeType:   'budget' as const,
-    motor:       '500W',
-    battery:     '48V 12.8Ah',
-    autonomy:    '60–120 km',
-    weight:      '31 kg',
-    pros:        ['Pliant et pratique', 'Prix excellent', 'Polyvalent tous terrains'],
-  },
-  {
-    name:        'Rambo The Nomad',
-    brand:       'Rambo',
-    asin:        'B08ZYVMHF4',
-    price:       3499,
-    image:       'https://images.unsplash.com/photo-1624366573671-4685b51e0558?w=400&q=75',
-    rating:      4.8,
-    reviewCount: 89,
-    badge:       'Premium',
-    badgeType:   'editor' as const,
-    motor:       '1000W Bafang',
-    battery:     '48V 21Ah',
-    autonomy:    '50–90 km',
-    weight:      '39 kg',
-    pros:        ['Moteur 1000W ultra puissant', 'Fourche suspendue', 'Tous terrains extrêmes'],
-  },
-];
+type BadgeType = 'best' | 'deal' | 'new' | 'editor' | 'budget';
+
+const featuredBikes = BIKES.slice(0, 3);
+const gridBikes     = BIKES.slice(3);
 ---
 
-<section class="section-padding bg-brand-gray-900/40" aria-labelledby="featured-heading">
+<section class="section-padding" aria-labelledby="featured-heading">
   <div class="container-site">
 
-    <!-- Header -->
+    <!-- ─── Header ──────────────────────────────────────────────── -->
     <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 reveal">
       <div>
         <div class="section-label mb-4">Sélection de la rédaction</div>
@@ -80,19 +33,66 @@ const FEATURED_PRODUCTS = [
       </a>
     </div>
 
-    <!-- Products grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {FEATURED_PRODUCTS.map((product, i) => (
+    <!-- ─── Top 3 featured ──────────────────────────────────────── -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+      {featuredBikes.map((bike, i) => (
         <div class="reveal" style={`animation-delay: ${i * 0.12}s`}>
-          <ProductCard {...product} />
+          <ProductCard
+            name={bike.name}
+            brand={bike.brand}
+            asin={bike.asin}
+            price={bike.price}
+            image={bike.image}
+            motor={bike.motor}
+            battery={bike.battery}
+            autonomy={bike.autonomy}
+            weight={bike.weight}
+            badge={bike.badge || undefined}
+            badgeType={bike.badgeType as BadgeType}
+            pros={bike.pros}
+            rating={bike.rating}
+            reviewCount={bike.reviewCount}
+          />
         </div>
       ))}
     </div>
 
-    <!-- Bottom CTA -->
-    <div class="text-center mt-12 reveal">
-      <div class="inline-flex flex-col sm:flex-row items-center gap-4 p-6
-                  card-glass rounded-2xl">
+    <!-- ─── Séparateur "Voir aussi" ─────────────────────────────── -->
+    <div class="flex items-center gap-4 mb-8 reveal">
+      <div class="flex-1 h-px bg-brand-gray-800"></div>
+      <span class="text-xs font-semibold text-brand-gray-400 uppercase tracking-widest whitespace-nowrap">
+        Voir aussi
+      </span>
+      <div class="flex-1 h-px bg-brand-gray-800"></div>
+    </div>
+
+    <!-- ─── Grille secondaire ───────────────────────────────────── -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+      {gridBikes.map((bike, i) => (
+        <div class="reveal" style={`animation-delay: ${i * 0.08}s`}>
+          <ProductCard
+            name={bike.name}
+            brand={bike.brand}
+            asin={bike.asin}
+            price={bike.price}
+            image={bike.image}
+            motor={bike.motor}
+            battery={bike.battery}
+            autonomy={bike.autonomy}
+            weight={bike.weight}
+            badge={bike.badge || undefined}
+            badgeType={bike.badgeType as BadgeType}
+            pros={bike.pros}
+            rating={bike.rating}
+            reviewCount={bike.reviewCount}
+          />
+        </div>
+      ))}
+    </div>
+
+    <!-- ─── Bottom CTA ──────────────────────────────────────────── -->
+    <div class="text-center reveal">
+      <div class="inline-flex flex-col sm:flex-row items-center gap-4 p-6 card-glass rounded-2xl">
         <div class="text-left">
           <p class="text-sm font-medium text-brand-offwhite">Pas sûr de ton choix ?</p>
           <p class="text-xs text-brand-gray-400">Notre quiz te guide en 2 minutes</p>

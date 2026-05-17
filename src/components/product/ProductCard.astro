@@ -19,6 +19,7 @@ interface Props {
   autonomy?:    string;
   weight?:      string;
   pros?:        string[];
+  ctaLabel?:    string;
 }
 
 const {
@@ -30,6 +31,7 @@ const {
   features = [],
   motor, battery, autonomy, weight,
   pros = [],
+  ctaLabel = 'Voir le fatbike',
 } = Astro.props;
 
 const affiliateUrl = asin ? amazonLink(asin) : href ?? '#';
@@ -46,14 +48,31 @@ const badgeColors = {
 const stars = Array.from({ length: 5 }, (_, i) => i < Math.floor(rating));
 ---
 
-<article class="card-base card-hover flex flex-col group" aria-label={`${brand} ${name}`}>
+<article
+  class="card-base card-hover flex flex-col group relative cursor-pointer"
+  aria-label={`${brand} ${name}`}
+>
 
-  <!-- ─── Image ──────────────────────────────────────────────────── -->
-  <div class="relative overflow-hidden bg-brand-gray-800 rounded-t-2xl aspect-card flex-shrink-0">
+  <!-- ─── Overlay : rend toute la card cliquable ──────────────── -->
+  <!-- z-[1] capture tous les clics sauf le bouton CTA (z-[2]) -->
+  <a
+    href={affiliateUrl}
+    target="_blank"
+    rel="noopener noreferrer nofollow"
+    class="absolute inset-0 z-[1] rounded-2xl
+           focus-visible:outline-none focus-visible:ring-2
+           focus-visible:ring-brand-orange focus-visible:ring-offset-2
+           focus-visible:ring-offset-brand-black"
+    aria-label={`${ctaLabel} — ${brand} ${name}`}
+    data-affiliate-product={name}
+  ></a>
+
+  <!-- ─── Image ──────────────────────────────────────────────── -->
+  <div class="relative overflow-hidden bg-white rounded-t-2xl h-52 flex-shrink-0">
     <img
       src={image}
       alt={`${brand} ${name} — fatbike électrique`}
-      class="w-full h-full object-cover object-center
+      class="w-full h-full object-contain object-top
              transition-transform duration-500 ease-out group-hover:scale-105"
       loading="lazy"
       decoding="async"
@@ -61,7 +80,6 @@ const stars = Array.from({ length: 5 }, (_, i) => i < Math.floor(rating));
       height="300"
     />
 
-    <!-- Badge -->
     {badge && (
       <div class="absolute top-3 left-3">
         <span class:list={['badge border', badgeColors[badgeType]]}>
@@ -75,7 +93,6 @@ const stars = Array.from({ length: 5 }, (_, i) => i < Math.floor(rating));
       </div>
     )}
 
-    <!-- Discount badge -->
     {discount > 0 && (
       <div class="absolute top-3 right-3">
         <span class="badge badge-green border border-emerald-500/25">
@@ -85,7 +102,7 @@ const stars = Array.from({ length: 5 }, (_, i) => i < Math.floor(rating));
     )}
   </div>
 
-  <!-- ─── Content ───────────────────────────────────────────────── -->
+  <!-- ─── Content ─────────────────────────────────────────────── -->
   <div class="flex flex-col flex-1 p-5">
 
     <!-- Brand + Name -->
@@ -162,12 +179,12 @@ const stars = Array.from({ length: 5 }, (_, i) => i < Math.floor(rating));
       </ul>
     )}
 
-    <!-- Spacer -->
     <div class="flex-1"></div>
 
     <!-- Price + CTA -->
     <div class="mt-4 pt-4 border-t border-brand-gray-800">
       <div class="flex items-end justify-between gap-3">
+
         <div>
           {price ? (
             <div class="flex items-baseline gap-2">
@@ -185,19 +202,25 @@ const stars = Array.from({ length: 5 }, (_, i) => i < Math.floor(rating));
           )}
         </div>
 
+        <!-- z-[2] : au-dessus de l'overlay, cliquable indépendamment -->
         <a
           href={affiliateUrl}
           target="_blank"
           rel="noopener noreferrer nofollow"
-          class="affiliate-cta flex-shrink-0"
-          aria-label={`Voir ${brand} ${name} sur Amazon`}
+          class="relative z-[2] inline-flex items-center gap-2
+                 bg-brand-orange text-white font-semibold rounded-full
+                 px-5 py-2.5 text-sm hover:bg-brand-orange-light
+                 transition-all duration-200 active:scale-[0.98] flex-shrink-0"
+          aria-hidden="true"
+          tabindex="-1"
           data-affiliate-product={name}
         >
-          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M6.97 2h10.06A2 2 0 0119 3.94v13.44A2 2 0 0117.03 19H6.97A2 2 0 015 17.38V3.94A2 2 0 016.97 2zM12 14l5-3.5L12 7v3H7v2h5v2z"/>
+          <svg class="w-4 h-4" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          Voir sur Amazon
+          {ctaLabel}
         </a>
+
       </div>
     </div>
 
@@ -205,7 +228,6 @@ const stars = Array.from({ length: 5 }, (_, i) => i < Math.floor(rating));
 </article>
 
 <script>
-  // Track affiliate clicks
   document.querySelectorAll('[data-affiliate-product]').forEach(el => {
     el.addEventListener('click', () => {
       const product = (el as HTMLElement).dataset.affiliateProduct ?? '';

@@ -4,8 +4,8 @@ import tailwind from '@astrojs/tailwind';
 import mdx from '@astrojs/mdx';
 
 export default defineConfig({
-  site: 'https://mycustomagency.github.io',
-  base: '/trouvetonfatbike/',
+  site: 'https://trouvetonfatbike.com',
+  base: '/',
   integrations: [
     tailwind({ applyBaseStyles: false }),
     

@@ -2,7 +2,7 @@
 import Base from '@layouts/Base.astro';
 import AffiliateBanner from '@components/product/AffiliateBanner.astro';
 import Newsletter from '@components/sections/Newsletter.astro';
-import { amazonSearch } from '@utils/affiliate';
+import { amazonSearch, amazonLink } from '@utils/affiliate';
 
 const CATEGORIES = [
   {
@@ -172,12 +172,12 @@ const CATEGORIES = [
                 </span>
               </div>
               <a
-                href={`https://www.amazon.fr/dp/${p.asin}?tag=trouveton-21`}
+                href={amazonLink(p.asin)}
                 target="_blank"
                 rel="noopener noreferrer nofollow"
                 class="affiliate-cta w-full justify-center text-xs py-2.5 mt-2"
               >
-                Voir sur Amazon
+                Voir le produit
               </a>
             </div>
           ))}

@@ -13,28 +13,6 @@ const {
   ctaSecondary = { label: 'Top 10 fatbikes 2026',    href: '/guide/top-10-fatbikes-2026/' },
 } = Astro.props;
 
-/**
- * Images Unsplash vérifées — fatbikes réels en contexte outdoor
- * Toutes ces URLs affichent bien des fatbikes (gros pneus) en extérieur
- * Rotation aléatoire côté CSS pour varier l'ambiance
- */
-const HERO_IMAGES = [
-  {
-    // Fatbike sur sentier montagne — pneus larges visibles
-    url:  'https://images.unsplash.com/photo-1609862609989-fb86099e0432?w=1920&q=85&fm=webp',
-    mob:  'https://images.unsplash.com/photo-1609862609989-fb86099e0432?w=900&q=80',
-    alt:  'Fatbike électrique sur sentier de montagne, pneus larges sur terrain rocheux',
-  },
-  {
-    // Rider vélo tout-terrain paysage hivernal
-    url:  'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=1920&q=85&fm=webp',
-    mob:  'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=900&q=80',
-    alt:  'Cycliste en fatbike dans la neige, paysage hivernal immersif',
-  },
-];
-
-// On prend la première image par défaut — pas de JS pour le hero (performance)
-const img = HERO_IMAGES[0];
 ---
 
 <section
@@ -42,36 +20,31 @@ const img = HERO_IMAGES[0];
   aria-label="Bannière principale"
 >
 
-  <!-- ─── Image de fond fatbike outdoor ──────────────────────── -->
+  <!-- ─── Image de fond hero ─────────────────────────────────── -->
   <div class="absolute inset-0 z-0" aria-hidden="true">
-    <picture>
-      <source
-        srcset={img.url}
-        type="image/webp"
-        media="(min-width: 768px)"
-      />
-      <img
-        src={img.mob}
-        alt={img.alt}
-        class="w-full h-full object-cover object-center"
-        style="object-position: center 35%;"
-        loading="eager"
-        fetchpriority="high"
-        decoding="async"
-        width="1920"
-        height="1080"
-      />
-    </picture>
+    <img
+      src="/images/hero.jpg"
+      alt="Fatbike électrique en pleine aventure outdoor"
+      class="w-full h-full object-cover"
+      style="object-position: center 35%;"
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
+      width="1920"
+      height="1080"
+    />
   </div>
 
-  <!-- ─── Overlays ────────────────────────────────────────────── -->
+  <!-- ─── Overlays lisibilité texte ───────────────────────────── -->
   <div class="absolute inset-0 z-[1]" aria-hidden="true">
-    <!-- Gradient principal bas→haut -->
-    <div class="absolute inset-0 bg-gradient-to-t from-brand-black via-brand-black/55 to-brand-black/10"></div>
-    <!-- Gradient gauche pour lisibilité du texte -->
-    <div class="absolute inset-0 bg-gradient-to-r from-brand-black/85 via-brand-black/40 to-transparent"></div>
-    <!-- Liseré haut -->
-    <div class="absolute top-0 inset-x-0 h-28 bg-gradient-to-b from-brand-black to-transparent"></div>
+    <!-- Voile général pour photos claires -->
+    <div class="absolute inset-0 bg-brand-black/30"></div>
+    <!-- Gradient bas→haut : accroche le texte au fond -->
+    <div class="absolute inset-0 bg-gradient-to-t from-brand-black via-brand-black/65 to-transparent"></div>
+    <!-- Gradient gauche : lisibilité du bloc texte -->
+    <div class="absolute inset-0 bg-gradient-to-r from-brand-black/90 via-brand-black/50 to-transparent"></div>
+    <!-- Liseré haut : raccord avec le header -->
+    <div class="absolute top-0 inset-x-0 h-32 bg-gradient-to-b from-brand-black to-transparent"></div>
   </div>
 
   <!-- ─── Glow orange ambiance ────────────────────────────────── -->
