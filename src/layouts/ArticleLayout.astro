@@ -10,6 +10,7 @@ interface Props extends SEOProps {
     description:  string;
     pubDate:      Date;
     updatedDate?: Date;
+    dateLabel?:   string;
     author?:      string;
     category?:    string;
     tags?:        string[];
@@ -87,21 +88,32 @@ const updatedFormatted = article.updatedDate?.toLocaleDateString('fr-FR', { year
 
       <!-- Meta bar -->
       <div class="flex flex-wrap items-center gap-4 text-xs text-brand-gray-400">
-        <span class="flex items-center gap-1.5">
-          <svg class="w-3.5 h-3.5" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-            <rect x="1.5" y="2.5" width="11" height="10" rx="1.5" stroke="currentColor" stroke-width="1.25"/>
-            <path d="M1.5 6h11M5 1.5v2M9 1.5v2" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/>
-          </svg>
-          Publié le <time datetime={article.pubDate.toISOString()}>{pubFormatted}</time>
-        </span>
-
-        {updatedFormatted && (
+        {article.dateLabel ? (
           <span class="flex items-center gap-1.5">
             <svg class="w-3.5 h-3.5" viewBox="0 0 14 14" fill="none" aria-hidden="true">
               <path d="M12 7A5 5 0 112 7M12 7V4M12 7H9" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/>
             </svg>
-            Mis à jour le <time datetime={article.updatedDate?.toISOString()}>{updatedFormatted}</time>
+            {article.dateLabel}
           </span>
+        ) : (
+          <>
+            <span class="flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <rect x="1.5" y="2.5" width="11" height="10" rx="1.5" stroke="currentColor" stroke-width="1.25"/>
+                <path d="M1.5 6h11M5 1.5v2M9 1.5v2" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/>
+              </svg>
+              Publié le <time datetime={article.pubDate.toISOString()}>{pubFormatted}</time>
+            </span>
+
+            {updatedFormatted && (
+              <span class="flex items-center gap-1.5">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                  <path d="M12 7A5 5 0 112 7M12 7V4M12 7H9" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/>
+                </svg>
+                Mis à jour le <time datetime={article.updatedDate?.toISOString()}>{updatedFormatted}</time>
+              </span>
+            )}
+          </>
         )}
 
         {article.readingTime && (
@@ -267,7 +279,7 @@ const updatedFormatted = article.updatedDate?.toLocaleDateString('fr-FR', { year
         <div class="card-base p-5 rounded-2xl border-brand-orange/20">
           <p class="text-xs font-medium text-brand-offwhite mb-3">Offres Amazon du moment</p>
           <a
-            href="https://www.amazon.fr/s?k=fatbike+electrique&tag=trouveton-21"
+            href="https://www.amazon.fr/s?k=fatbike+electrique&tag=customdeal-21"
             target="_blank"
             rel="noopener noreferrer nofollow"
             class="affiliate-cta w-full justify-center text-sm"
