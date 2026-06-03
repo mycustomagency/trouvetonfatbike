@@ -18,6 +18,14 @@ const { fullWidth = false, ...seoProps } = Astro.props;
 <html lang="fr" class="dark">
   <head>
     <SEOHead {...seoProps} path={Astro.url.pathname} />
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XSW0CJQWE3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XSW0CJQWE3');
+    </script>
   </head>
   <body class="min-h-screen bg-brand-black text-brand-gray-100 font-sans">
     <!-- Skip to content (accessibility) -->
