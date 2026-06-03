@@ -1,0 +1,237 @@
+---
+import ArticleLayout from '@layouts/ArticleLayout.astro';
+import ProductCard from '@components/product/ProductCard.astro';
+import AffiliateBanner from '@components/product/AffiliateBanner.astro';
+import { BIKES } from '@data/bikes';
+
+const article = {
+  title:       "Réglementation VAE en France 2026 : ce qu'il faut savoir",
+  description: "Tout sur la réglementation des vélos à assistance électrique en France : limite 250W, 25 km/h, assurance, casque, âge minimum et sanctions en 2026.",
+  pubDate:     new Date('2026-01-05'),
+  updatedDate: new Date('2026-06-01'),
+  dateLabel:   'Mis à jour 2026',
+  category:    'Légal',
+  author:      'Équipe TrouveTonFatBike',
+  readingTime: 6,
+  ogImage:     'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&q=80',
+  tags:        ['réglementation VAE France', 'fatbike légal', 'VAE 250W 25km/h', 'vélo électrique loi France 2026'],
+};
+
+const toc = [
+  { id: 'definition',     label: "Qu'est-ce qu'un VAE légal ?",             level: 2 },
+  { id: 'criteres',       label: "Les 3 critères légaux obligatoires",       level: 2 },
+  { id: 'permis-assurance', label: "Permis et assurance",                    level: 2 },
+  { id: 'casque-age',     label: "Casque et âge minimum",                   level: 2 },
+  { id: 'depasse',        label: "Que faire si le vélo dépasse 250W ?",     level: 2 },
+  { id: 'sanctions',      label: "Sanctions en cas d'infraction",           level: 2 },
+  { id: 'modeles-legaux', label: "Modèles conformes VAE sélectionnés",       level: 2 },
+];
+
+const relatedGuides = [
+  { title: "Guide d'achat fatbike électrique 2026",          href: '/guide/guide-achat-fatbike/',             category: "Guide d'achat" },
+  { title: "Autonomie batterie : comment l'optimiser",        href: '/guide/autonomie-batterie-fatbike/',      category: 'Technique' },
+  { title: 'Fatbike électrique pour débutants',               href: '/categorie/fatbike-debutant/',            category: 'Catégorie' },
+  { title: 'Meilleur fatbike électrique 2026',               href: '/guide/meilleur-fatbike-electrique-2026/', category: 'Comparatif' },
+];
+
+const picks = BIKES.filter(b => ['B0CH9LJVC3', 'B0GX9MT2F2', 'B0C7VDRXXP'].includes(b.asin));
+---
+
+<ArticleLayout
+  title={article.title}
+  description={article.description}
+  ogImage={article.ogImage}
+  type="article"
+  pubDate={article.pubDate}
+  updatedDate={article.updatedDate}
+  tags={article.tags}
+  article={article}
+  toc={toc}
+  relatedGuides={relatedGuides}
+>
+
+  <p>
+    Avant d'acheter un fatbike électrique, il est essentiel de connaître le cadre légal en vigueur en France.
+    La réglementation sur les vélos à assistance électrique (VAE) est précise : certains modèles sont
+    utilisables sans permis ni assurance, d'autres non. Voici tout ce que tu dois savoir en 2026.
+  </p>
+
+  <h2 id="definition">Qu'est-ce qu'un VAE légal en France ?</h2>
+
+  <p>
+    Un <strong>vélo à assistance électrique (VAE)</strong> est défini par le Code de la Route français
+    (article R311-1) et la directive européenne 2002/24/CE comme un cycle équipé d'un moteur auxiliaire
+    électrique dont la puissance nominale <strong>ne dépasse pas 250 watts</strong> et dont l'assistance
+    <strong>se coupe automatiquement à 25 km/h</strong>.
+  </p>
+
+  <p>
+    Un fatbike électrique respectant ces deux critères est juridiquement identique à un vélo classique.
+    Il peut circuler partout où les vélos sont autorisés, sans aucune démarche administrative spécifique.
+  </p>
+
+  <h2 id="criteres">Les 3 critères légaux obligatoires</h2>
+
+  <div class="not-prose my-6 rounded-2xl border border-brand-gray-800 overflow-hidden">
+    <div class="bg-brand-gray-800 px-5 py-4">
+      <p class="text-sm font-semibold text-brand-offwhite">Pour qu'un fatbike soit légalement un VAE :</p>
+    </div>
+    <div class="divide-y divide-brand-gray-800">
+      {[
+        ['✅', 'Puissance moteur', '≤ 250 W nominaux', 'La puissance de crête peut être plus élevée, c\'est la puissance nominale qui compte.'],
+        ['✅', 'Coupure automatique', 'À 25 km/h', "L'assistance doit cesser lorsque le vélo atteint 25 km/h. Pédaler au-delà est possible musculairement."],
+        ['✅', 'Assistance au pédalage', 'Pédalage requis', "Le moteur ne doit assister qu'à condition que le rider pédale. Un accélérateur seul (throttle) sans pédalage rend le vélo illégal comme VAE."],
+      ].map(([icon, crit, val, detail]) => (
+        <div class="flex items-start gap-4 px-5 py-4">
+          <span class="text-xl shrink-0">{icon}</span>
+          <div>
+            <p class="text-sm font-semibold text-brand-offwhite">{crit} : <span class="text-brand-orange">{val}</span></p>
+            <p class="text-xs text-brand-gray-400 mt-1">{detail}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <p>
+    <strong>Point important sur le throttle :</strong> certains fatbikes proposent un mode « accélérateur »
+    (throttle) qui permet de rouler sans pédaler. En France, ce mode rend techniquement le vélo non conforme
+    à la norme VAE. Certains modèles permettent de désactiver le throttle — préfère cette option ou n'utilise
+    pas cette fonction sur voie publique.
+  </p>
+
+  <h2 id="permis-assurance">Permis et assurance : ce qui est obligatoire</h2>
+
+  <p>Pour un VAE conforme (≤ 250W nominal, assistance coupée à 25 km/h) :</p>
+
+  <ul>
+    <li><strong>Permis de conduire :</strong> non requis</li>
+    <li><strong>Assurance responsabilité civile :</strong> non obligatoire mais fortement recommandée — elle est souvent incluse dans les assurances habitation multirisques</li>
+    <li><strong>Immatriculation :</strong> non requise</li>
+    <li><strong>Contrôle technique :</strong> non requis</li>
+  </ul>
+
+  <blockquote>
+    <p>
+      Même si l'assurance n'est pas obligatoire pour un VAE, un accident sans assurance peut engager
+      ta responsabilité civile personnelle pour des montants importants. Vérifie ta multirisque habitation.
+    </p>
+  </blockquote>
+
+  <h2 id="casque-age">Casque et âge minimum</h2>
+
+  <p>
+    <strong>Port du casque :</strong> non obligatoire pour les adultes sur un VAE conforme. Cependant,
+    il est <strong>obligatoire pour les enfants de moins de 12 ans</strong> (passager ou conducteur).
+    Pour les adultes, le casque reste fortement recommandé — un fatbike peut atteindre 25 km/h
+    avec assistance, plus avec l'effort musculaire.
+  </p>
+
+  <p>
+    <strong>Âge minimum :</strong> aucun âge minimum légal n'est fixé pour conduire un VAE conforme
+    sur les voies où les vélos sont autorisés. En pratique, un enfant doit être capable de maîtriser
+    le vélo et de respecter le Code de la Route.
+  </p>
+
+  <p>
+    <strong>Équipements obligatoires (identiques aux vélos) :</strong>
+  </p>
+  <ul>
+    <li>Éclairage avant blanc et arrière rouge (obligatoire de nuit et par faible visibilité)</li>
+    <li>Avertisseur sonore (sonnette ou klaxon)</li>
+    <li>Freins fonctionnels</li>
+    <li>Catadioptres (réflecteurs) latéraux, avant et arrière</li>
+  </ul>
+
+  <h2 id="depasse">Que faire si le fatbike dépasse 250W ou 25 km/h ?</h2>
+
+  <p>
+    Un fatbike avec un moteur de puissance nominale supérieure à 250W ou dont l'assistance ne se coupe
+    pas à 25 km/h est juridiquement classé comme <strong>cyclomoteur</strong> (L1e-A), pas comme un vélo.
+    Il est soumis aux règles suivantes :
+  </p>
+
+  <ul>
+    <li><strong>Immatriculation obligatoire</strong> (plaque d'immatriculation)</li>
+    <li><strong>Assurance responsabilité civile obligatoire</strong></li>
+    <li><strong>Casque homologué obligatoire</strong></li>
+    <li><strong>Permis AM</strong> (ex-BSR, accessible dès 14 ans) ou permis B</li>
+    <li>Interdit sur les pistes cyclables</li>
+  </ul>
+
+  <p>
+    Certains modèles de fatbike "puissants" permettent de <strong>brider le moteur à 250W/25 km/h</strong>
+    via le tableau de bord — dans ce mode bridé, ils redeviennent légalement des VAE.
+    Vérifier cette option avant l'achat si tu prévois de rouler sur voie publique.
+  </p>
+
+  <h2 id="sanctions">Sanctions en cas d'infraction</h2>
+
+  <p>
+    Rouler avec un cyclomoteur non immatriculé ou sans assurance expose à :
+  </p>
+
+  <ul>
+    <li>Amende jusqu'à <strong>3 750€</strong> pour conduite sans assurance</li>
+    <li>Amende de <strong>135€</strong> pour défaut de plaque d'immatriculation</li>
+    <li>Suspension ou annulation du permis de conduire si tu en as un</li>
+    <li><strong>Confiscation du véhicule</strong> possible en cas de récidive</li>
+  </ul>
+
+  <p>
+    En cas d'accident avec un cyclomoteur non assuré, tu es personnellement responsable des dommages
+    causés à autrui, sans plafond légal. La précaution s'impose.
+  </p>
+
+  <h2 id="modeles-legaux">Modèles conformes VAE : notre sélection</h2>
+
+  <p>
+    Les modèles ci-dessous sont tous conformes à la norme VAE française : moteur 250W nominal,
+    assistance coupée à 25 km/h. Tu peux les utiliser sans permis sur toutes les voies accessibles aux vélos.
+    Pour les <a href="/categorie/fatbike-debutant/">débutants</a>, c'est la sélection idéale.
+  </p>
+
+  <div class="not-prose my-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+      {picks.map(b => (
+        <ProductCard
+          name={b.name}
+          brand={b.brand}
+          asin={b.asin}
+          price={b.price}
+          image={b.image}
+          badge={b.badge}
+          badgeType={b.badgeType as any}
+          motor={b.motor}
+          battery={b.battery}
+          autonomy={b.autonomy}
+          weight={b.weight}
+          pros={b.pros}
+          rating={b.rating}
+          reviewCount={b.reviewCount}
+        />
+      ))}
+    </div>
+  </div>
+
+  <div class="not-prose my-6">
+    <AffiliateBanner variant="amazon" />
+  </div>
+
+  <p>
+    Tu ne sais pas quel modèle choisir ? Consulte notre
+    <a href="/guide/guide-achat-fatbike/">guide d'achat complet</a> ou
+    fais notre <strong><a href="/quiz/">quiz personnalisé en 2 minutes</a></strong>
+    pour trouver le fatbike adapté à ton usage et à ton budget.
+  </p>
+
+  <div class="not-prose mt-8 p-4 bg-brand-gray-900 rounded-xl border border-brand-orange/20">
+    <p class="text-xs text-brand-gray-400 leading-relaxed">
+      <strong class="text-brand-gray-300">Note légale :</strong> Ce guide est fourni à titre informatif.
+      La réglementation peut évoluer. Pour toute question juridique précise, consultez le Code de la Route
+      officiel ou un professionnel du droit. TrouveTonFatBike ne peut être tenu responsable des interprétations
+      basées sur ce contenu.
+    </p>
+  </div>
+
+</ArticleLayout>

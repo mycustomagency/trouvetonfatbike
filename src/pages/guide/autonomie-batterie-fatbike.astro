@@ -1,0 +1,239 @@
+---
+import ArticleLayout from '@layouts/ArticleLayout.astro';
+import ProductCard from '@components/product/ProductCard.astro';
+import AffiliateBanner from '@components/product/AffiliateBanner.astro';
+import { BIKES } from '@data/bikes';
+
+const article = {
+  title:       "Autonomie fatbike électrique : comment maximiser sa batterie",
+  description: "Découvrez tous les facteurs qui influencent l'autonomie d'un fatbike électrique et nos conseils pratiques pour aller plus loin sur une seule charge.",
+  pubDate:     new Date('2026-01-20'),
+  updatedDate: new Date('2026-06-01'),
+  dateLabel:   'Mis à jour 2026',
+  category:    'Technique',
+  author:      'Équipe TrouveTonFatBike',
+  readingTime: 7,
+  ogImage:     'https://images.unsplash.com/photo-1624366573671-4685b51e0558?w=1200&q=80',
+  tags:        ['autonomie fatbike', 'batterie fatbike électrique', 'maximiser autonomie VAE', 'bikepacking fatbike'],
+};
+
+const toc = [
+  { id: 'facteurs',    label: "Facteurs qui influencent l'autonomie",       level: 2 },
+  { id: 'modes',       label: "Modes d'assistance : lequel choisir ?",      level: 2 },
+  { id: 'comparatif',  label: "Comparatif capacités de batteries",          level: 2 },
+  { id: 'terrain',     label: "Conseils par type de terrain",               level: 2 },
+  { id: 'entretien',   label: "Entretien batterie pour la préserver",       level: 2 },
+  { id: 'selection',   label: "Nos modèles grande autonomie",               level: 2 },
+];
+
+const relatedGuides = [
+  { title: "Guide d'achat fatbike électrique 2026",          href: '/guide/guide-achat-fatbike/',             category: "Guide d'achat" },
+  { title: 'Réglementation VAE en France 2026',               href: '/guide/reglementation-vae-france/',        category: 'Légal' },
+  { title: 'Meilleur fatbike grande autonomie',               href: '/categorie/fatbike-autonomie/',            category: 'Catégorie' },
+  { title: 'Top 10 fatbikes électriques 2026',               href: '/guide/top-10-fatbikes-2026/',            category: 'Comparatif' },
+];
+
+const picks = BIKES.filter(b => ['B0H1BRC2QN', 'B0GT567L3J'].includes(b.asin));
+---
+
+<ArticleLayout
+  title={article.title}
+  description={article.description}
+  ogImage={article.ogImage}
+  type="article"
+  pubDate={article.pubDate}
+  updatedDate={article.updatedDate}
+  tags={article.tags}
+  article={article}
+  toc={toc}
+  relatedGuides={relatedGuides}
+>
+
+  <p>
+    L'autonomie est souvent la première question que se pose un futur acheteur de fatbike électrique.
+    Les fabricants annoncent des chiffres qui font rêver — 150, voire 200 km — mais la réalité dépend
+    de nombreux facteurs. Ce guide t'explique tout ce qui influence réellement ton autonomie et comment
+    l'optimiser au quotidien.
+  </p>
+
+  <h2 id="facteurs">Les 5 facteurs qui influencent l'autonomie</h2>
+
+  <h3>1. La capacité de la batterie (Wh)</h3>
+  <p>
+    C'est le réservoir de ton fatbike. Pour calculer les Wh : <strong>Wh = Volts × Ampères-heure</strong>.
+    Une batterie <strong>48V 20Ah = 960 Wh</strong>. Une batterie <strong>60V 35Ah = 2 100 Wh</strong>.
+    Plus les Wh sont élevés, plus l'autonomie potentielle est grande. En mode Eco sur terrain plat,
+    compte environ <strong>80–120 Wh pour 100 km</strong>.
+  </p>
+
+  <h3>2. Le mode d'assistance utilisé</h3>
+  <p>
+    C'est le levier le plus puissant. Rouler en mode Turbo consomme 3 à 5 fois plus qu'en mode Eco.
+    La gestion intelligente des modes est la clé pour atteindre les grandes distances.
+  </p>
+
+  <h3>3. Le terrain et le dénivelé</h3>
+  <p>
+    Une montée à 10% consomme 3 à 5 fois plus d'énergie que le plat.
+    Sur terrain montagneux, l'autonomie annoncée est à diviser par 2 à 3.
+    Le sable et la neige augmentent aussi la consommation de 30 à 50% par rapport à une piste dure.
+  </p>
+
+  <h3>4. Le poids total (rider + vélo + équipement)</h3>
+  <p>
+    Chaque 10 kg supplémentaires réduit l'autonomie d'environ 8 à 12%.
+    Un rider de 90 kg + un fatbike de 35 kg + 5 kg de sacoches = 130 kg à propulser.
+    Le moteur travaille significativement plus que pour un ensemble à 100 kg.
+  </p>
+
+  <h3>5. La pression des pneus</h3>
+  <p>
+    Un pneu sous-gonflé augmente la résistance au roulement et réduit l'autonomie.
+    Sur asphalte ou chemin dur, gonfle à <strong>1.5–2.5 bar</strong> pour minimiser les pertes.
+    Ne dégonfle à 0.3–0.8 bar que sur sable ou neige, quand c'est nécessaire pour la traction.
+  </p>
+
+  <h2 id="modes">Modes d'assistance : la stratégie gagnante</h2>
+
+  <p>
+    Le secret des riders qui "font de longs trajets" n'est pas une batterie magique :
+    c'est la gestion intelligente des modes d'assistance.
+  </p>
+
+  <div class="not-prose my-6 overflow-x-auto rounded-2xl border border-brand-gray-800">
+    <table class="w-full text-sm">
+      <thead>
+        <tr class="bg-brand-gray-800">
+          <th class="text-left px-5 py-3.5 text-brand-gray-200 font-medium">Mode</th>
+          <th class="text-left px-5 py-3.5 text-brand-gray-200 font-medium">Consommation</th>
+          <th class="text-left px-5 py-3.5 text-brand-gray-200 font-medium">Autonomie (960 Wh)</th>
+          <th class="text-left px-5 py-3.5 text-brand-gray-200 font-medium">Quand l'utiliser</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-brand-gray-800">
+        {[
+          ['Eco',   '80–120 Wh/100km',  '80–120 km',  'Terrain plat, longues distances'],
+          ['Tour',  '150–200 Wh/100km', '50–65 km',   'Mixte plat et légères montées'],
+          ['Sport', '250–350 Wh/100km', '30–40 km',   'Montées modérées, bon rythme'],
+          ['Turbo', '400–500 Wh/100km', '20–25 km',   'Montées raides, démarrages seulement'],
+        ].map(([mode, conso, range, use]) => (
+          <tr class="hover:bg-brand-gray-900/40 transition-colors">
+            <td class="px-5 py-4 font-medium text-brand-offwhite">{mode}</td>
+            <td class="px-5 py-4 text-brand-orange font-mono">{conso}</td>
+            <td class="px-5 py-4 text-brand-gray-300">{range}</td>
+            <td class="px-5 py-4 text-brand-gray-400">{use}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <p>
+    <strong>Stratégie recommandée :</strong> démarre en mode Eco, passe en Sport uniquement pour les côtes,
+    utilise Turbo uniquement pour les démarrages ou les passages très raides. Reviens en Eco en descente
+    — le moteur ne consomme rien et ton inertie suffit.
+  </p>
+
+  <h2 id="comparatif">Comparatif des capacités de batteries 2026</h2>
+
+  <p>
+    Voici une référence rapide pour comprendre ce que représente chaque capacité de batterie
+    en autonomie réelle (rider 80 kg, terrain mixte, mode Eco/Tour alterné) :
+  </p>
+
+  <ul>
+    <li><strong>48V 10Ah (480 Wh) :</strong> 35–55 km — usage urbain quotidien, trajets courts</li>
+    <li><strong>48V 14Ah (672 Wh) :</strong> 50–75 km — usage régulier polyvalent</li>
+    <li><strong>48V 20Ah (960 Wh) :</strong> 75–110 km — sorties longues, bikepacking léger</li>
+    <li><strong>48V 24Ah (1 152 Wh) :</strong> 90–130 km — grande autonomie, montagne modérée</li>
+    <li><strong>60V 35Ah (2 100 Wh) :</strong> 130–180 km — bikepacking intensif, terrains exigeants</li>
+  </ul>
+
+  <p>
+    Pour aller plus loin, notre sélection complète :
+    <a href="/categorie/fatbike-autonomie/">meilleur fatbike grande autonomie 2026</a>.
+  </p>
+
+  <h2 id="terrain">Conseils pratiques par type de terrain</h2>
+
+  <h3>Sur la plage et le sable</h3>
+  <p>
+    Le sable mou augmente la consommation de 40 à 70%. Dégonfle les pneus à 0.3–0.5 bar pour améliorer
+    la traction, mais accepte de perdre de l'autonomie. Sur sable humide et compacté, reste à 0.6–0.8 bar
+    pour équilibrer traction et efficacité.
+  </p>
+
+  <h3>En montagne</h3>
+  <p>
+    Gère l'assistance à la montée (Eco si tu peux, Sport/Turbo pour les passages raides)
+    et coupe ou minimise l'assistance en descente. Si ton fatbike a une récupération d'énergie au freinage,
+    active-la — elle peut récupérer 5 à 10% d'énergie sur des descentes longues.
+  </p>
+
+  <h3>En ville</h3>
+  <p>
+    Les démarrages fréquents sont très consommateurs. Évite le mode Turbo en ville — le mode Tour suffit
+    et réduit la consommation de 50%. Anticipe les ralentissements pour ne pas freiner et redémarrer.
+  </p>
+
+  <h2 id="entretien">Entretien de la batterie pour la préserver longtemps</h2>
+
+  <ul>
+    <li>
+      <strong>Ne pas décharger complètement.</strong> Idéalement, recharge la batterie avant qu'elle
+      descende sous 20%. Les cycles de décharge complète (0%) réduisent la durée de vie des cellules.
+    </li>
+    <li>
+      <strong>Ne pas charger à 100% pour le stockage.</strong> Pour stocker la batterie plusieurs semaines,
+      laisse-la entre 40 et 60% de charge. Une batterie stockée pleine ou vide se dégrade plus vite.
+    </li>
+    <li>
+      <strong>Protéger du froid.</strong> En dessous de 0°C, les batteries Li-Ion perdent 20–40% de capacité.
+      Stocke-la à température ambiante et ne charge jamais une batterie gelée.
+    </li>
+    <li>
+      <strong>Utiliser le chargeur fourni.</strong> Un chargeur tiers incompatible peut endommager les cellules.
+      Si tu achètes un chargeur rapide, vérifie la compatibilité ampérage avec le BMS de ta batterie.
+    </li>
+    <li>
+      <strong>Faire des cycles complets régulièrement.</strong> Une fois par mois, fais un cycle complet
+      (charge 100% → décharge ~20%) pour calibrer le BMS et maintenir les cellules actives.
+    </li>
+  </ul>
+
+  <h2 id="selection">Nos modèles grande autonomie recommandés</h2>
+
+  <div class="not-prose my-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+      {picks.map(b => (
+        <ProductCard
+          name={b.name}
+          brand={b.brand}
+          asin={b.asin}
+          price={b.price}
+          image={b.image}
+          badge={b.badge}
+          badgeType={b.badgeType as any}
+          motor={b.motor}
+          battery={b.battery}
+          autonomy={b.autonomy}
+          weight={b.weight}
+          pros={b.pros}
+          rating={b.rating}
+          reviewCount={b.reviewCount}
+        />
+      ))}
+    </div>
+  </div>
+
+  <div class="not-prose my-6">
+    <AffiliateBanner variant="amazon" />
+  </div>
+
+  <p>
+    Tu veux trouver le fatbike avec la meilleure autonomie pour ton usage ?
+    <strong><a href="/quiz/">Fais notre quiz personnalisé</a></strong> — il prend en compte ton terrain,
+    ton gabarit et tes distances habituelles pour te recommander le bon modèle.
+  </p>
+
+</ArticleLayout>

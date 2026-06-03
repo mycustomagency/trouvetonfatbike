@@ -1,0 +1,278 @@
+---
+import ArticleLayout from '@layouts/ArticleLayout.astro';
+import ProductCard from '@components/product/ProductCard.astro';
+import AffiliateBanner from '@components/product/AffiliateBanner.astro';
+import { BIKES } from '@data/bikes';
+
+const article = {
+  title:       "Guide d'achat fatbike électrique 2026 : tout savoir avant d'acheter",
+  description: "Budget, moteur, batterie, pneus, freins, autonomie : notre guide complet pour choisir le bon fatbike électrique en 2026 sans se tromper.",
+  pubDate:     new Date('2026-01-10'),
+  updatedDate: new Date('2026-06-01'),
+  dateLabel:   'Mis à jour 2026',
+  category:    "Guide d'achat",
+  author:      'Équipe TrouveTonFatBike',
+  readingTime: 10,
+  ogImage:     'https://images.unsplash.com/photo-1544191696-102dbdaeeaa0?w=1200&q=80',
+  tags:        ["guide achat fatbike", "choisir fatbike électrique", "fatbike 2026", "comparatif fatbike"],
+};
+
+const toc = [
+  { id: 'introduction',    label: 'Pourquoi choisir un fatbike électrique ?', level: 2 },
+  { id: 'budget',          label: 'Quel budget prévoir ?',                    level: 2 },
+  { id: 'moteur',          label: 'Moteur : hub ou mid-drive ?',              level: 2 },
+  { id: 'batterie',        label: 'Batterie et autonomie',                    level: 2 },
+  { id: 'pneus',           label: 'Pneus : largeur et pression',              level: 2 },
+  { id: 'freins',          label: 'Freins : hydrauliques obligatoires ?',     level: 2 },
+  { id: 'marques',         label: 'Marques fiables en 2026',                  level: 2 },
+  { id: 'selection',       label: 'Notre sélection par budget',               level: 2 },
+  { id: 'conseils',        label: 'Conseils avant l\'achat',                  level: 2 },
+];
+
+const relatedGuides = [
+  { title: "Autonomie batterie : comment l'optimiser",          href: '/guide/autonomie-batterie-fatbike/', category: 'Technique' },
+  { title: 'Réglementation VAE en France 2026',                  href: '/guide/reglementation-vae-france/',  category: 'Légal' },
+  { title: 'Meilleur fatbike électrique 2026 : comparatif',     href: '/guide/meilleur-fatbike-electrique-2026/', category: 'Comparatif' },
+  { title: 'Top 10 fatbikes électriques 2026',                  href: '/guide/top-10-fatbikes-2026/',       category: 'Sélection' },
+];
+
+const picks = BIKES.filter(b => ['B0GFCX4SXQ', 'B0C7VDRXXP', 'B0H1BRC2QN'].includes(b.asin));
+---
+
+<ArticleLayout
+  title={article.title}
+  description={article.description}
+  ogImage={article.ogImage}
+  type="article"
+  pubDate={article.pubDate}
+  updatedDate={article.updatedDate}
+  tags={article.tags}
+  article={article}
+  toc={toc}
+  relatedGuides={relatedGuides}
+>
+
+  <h2 id="introduction">Pourquoi choisir un fatbike électrique ?</h2>
+
+  <p>
+    Le fatbike électrique est aujourd'hui l'un des vélos à assistance électrique les plus polyvalents du marché.
+    Ses <strong>pneus extra-larges (4 à 5 pouces)</strong> lui permettent de rouler sur des surfaces où tout autre VAE
+    resterait bloqué : sable mou, neige, sentiers boueux, chemins forestiers empierrés. Associés à un moteur
+    électrique, ces pneus XL rendent chaque sortie accessible quel que soit ton niveau de condition physique.
+  </p>
+
+  <p>
+    Mais acheter un fatbike électrique sans préparation, c'est risquer de se retrouver avec un modèle
+    sous-dimensionné pour son terrain, une batterie trop faible ou des composants qui lâchent après 6 mois.
+    Ce guide t'aide à faire le bon choix dès la première fois.
+  </p>
+
+  <h2 id="budget">Quel budget prévoir pour un fatbike électrique ?</h2>
+
+  <p>Le prix d'un fatbike électrique de qualité se situe entre <strong>800€ et 3 000€</strong> pour la grande majorité des usages. Voici comment se répartissent les gammes :</p>
+
+  <div class="not-prose my-6 overflow-x-auto rounded-2xl border border-brand-gray-800">
+    <table class="w-full text-sm">
+      <thead>
+        <tr class="bg-brand-gray-800">
+          <th class="text-left px-5 py-3.5 text-brand-gray-200 font-medium">Budget</th>
+          <th class="text-left px-5 py-3.5 text-brand-gray-200 font-medium">Ce que tu obtiens</th>
+          <th class="text-left px-5 py-3.5 text-brand-gray-200 font-medium">Idéal pour</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-brand-gray-800">
+        {[
+          ['500–800€',   'Moteur hub 250W, batterie basique, freins mécaniques',             'Loisir occasionnel, terrain plat'],
+          ['800–1 500€', 'Moteur 250–500W, batterie 20–24Ah, freins hydrauliques possibles', 'Quotidien, plage, chemins forestiers'],
+          ['1 500–3 000€','Moteur 500W+, batterie 20–35Ah, composants vélo sérieux',          'Montagne, longues distances, usage intensif'],
+          ['3 000€+',    'Mid-drive premium, batterie 35Ah+, full suspendu',                 'Riders exigeants, tout-terrain, bikepacking'],
+        ].map(([budget, content, for_]) => (
+          <tr class="hover:bg-brand-gray-900/40 transition-colors">
+            <td class="px-5 py-4 font-mono text-brand-orange font-medium whitespace-nowrap">{budget}</td>
+            <td class="px-5 py-4 text-brand-gray-300">{content}</td>
+            <td class="px-5 py-4 text-brand-gray-400">{for_}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <p>
+    <strong>Conseil :</strong> évite les modèles sous 600€ sans marque connue. Les économies sur les composants
+    (batterie bas de gamme, freins mécaniques défaillants, cadre acier lourd) se font rapidement sentir.
+    Le sweet spot qualité/prix se situe entre <strong>900€ et 1 500€</strong> pour un usage polyvalent.
+  </p>
+
+  <h2 id="moteur">Moteur : hub ou mid-drive ?</h2>
+
+  <p>
+    Le type de motorisation est le critère technique le plus important. Deux technologies s'affrontent :
+  </p>
+
+  <ul>
+    <li>
+      <strong>Moteur hub (dans la roue arrière) :</strong> moins cher, plus simple à entretenir, silencieux.
+      Parfait pour la <a href="/categorie/fatbike-plage/">plage</a>, la <a href="/categorie/fatbike-urbain/">ville</a>
+      et les terrains plats. Moins efficace en côte car il n'utilise pas les vitesses du vélo.
+    </li>
+    <li>
+      <strong>Moteur mid-drive (au pédalier, type Bafang) :</strong> plus cher mais offre un couple supérieur
+      en côte, utilise la transmission du vélo et se comporte de façon plus naturelle. Indispensable pour la
+      <a href="/categorie/fatbike-montagne/">montagne</a> et les terrains exigeants.
+    </li>
+  </ul>
+
+  <p>
+    En couple, vise <strong>80 Nm minimum</strong> pour un usage polyvalent, <strong>150 Nm+</strong>
+    pour la montagne ou les gabarits lourds. Le couple est plus important que la puissance brute (watts)
+    pour l'off-road.
+  </p>
+
+  <h2 id="batterie">Batterie et autonomie : les chiffres clés</h2>
+
+  <p>
+    L'autonomie réelle d'un fatbike électrique dépend de 4 facteurs : la capacité de la batterie (en Wh),
+    le mode d'assistance, le terrain et le poids du rider. Pour calculer les Wh d'une batterie :
+    <strong>Wh = Volts × Ampères-heure</strong>. Exemple : 48V × 20Ah = 960 Wh.
+  </p>
+
+  <ul>
+    <li><strong>Mode Eco, terrain plat, 75 kg :</strong> environ 100–120 Wh/100 km → 960 Wh ≈ 80–95 km</li>
+    <li><strong>Mode Sport, montagne, 85 kg :</strong> environ 250–350 Wh/100 km → 960 Wh ≈ 30–40 km</li>
+    <li><strong>Mode Turbo, tout-terrain, 95 kg :</strong> environ 400–500 Wh/100 km → 960 Wh ≈ 20–25 km</li>
+  </ul>
+
+  <p>
+    Pour des sorties de 50 km : vise au moins <strong>48V 14Ah (672 Wh)</strong>.
+    Pour du bikepacking ou des sorties montagne : <strong>48V 20Ah+ (960 Wh+)</strong> minimum.
+    Voir notre guide complet <a href="/guide/autonomie-batterie-fatbike/">comment maximiser l'autonomie</a>.
+  </p>
+
+  <h2 id="pneus">Pneus : largeur et pression selon l'usage</h2>
+
+  <p>
+    Le pneu est l'élément qui définit le fatbike. Plus il est large, plus il flotte sur les surfaces meubles
+    (sable, neige, boue) mais plus il résiste à l'avancement sur asphalte.
+  </p>
+
+  <ul>
+    <li><strong>3.5–4.0 pouces :</strong> polyvalent ville + chemins, bon compromis asphalte/nature</li>
+    <li><strong>4.0–4.5 pouces :</strong> sable compacté, neige damée, sentiers boueux — la largeur idéale</li>
+    <li><strong>4.8–5.0 pouces :</strong> sable mou, neige fraîche, conditions extrêmes</li>
+  </ul>
+
+  <p>
+    La pression joue un rôle crucial : <strong>0.3–0.8 bar pour le sable et la neige</strong>,
+    <strong>1.5–2.5 bar pour la route et les chemins</strong>. Un pneu large gonflé à basse pression
+    absorbe les chocs et offre une traction incomparable sans suspension.
+  </p>
+
+  <h2 id="freins">Freins : hydrauliques obligatoires ?</h2>
+
+  <p>
+    Sur un fatbike qui peut peser 30–40 kg et transporter un rider de 80–100 kg, la capacité de freinage
+    est vitale. La distinction essentielle :
+  </p>
+
+  <ul>
+    <li>
+      <strong>Freins mécaniques à disque :</strong> moins chers, suffisants en ville et sur terrain plat.
+      Se dégradent par temps humide et nécessitent des réglages fréquents.
+    </li>
+    <li>
+      <strong>Freins hydrauliques à disque :</strong> indispensables en montagne, neige, pluie et pour les
+      gabarits lourds. Puissance constante quelles que soient les conditions, entretien minimal.
+      À partir de 1 000€, c'est le standard à exiger.
+    </li>
+  </ul>
+
+  <blockquote>
+    <p>En descente avec 35 kg de vélo et 85 kg de rider, les freins hydrauliques peuvent littéralement sauver la mise.</p>
+  </blockquote>
+
+  <h2 id="marques">Marques fiables de fatbike électrique en 2026</h2>
+
+  <p>
+    Le marché est inondé de modèles sans marque. Voici les fabricants qui ont prouvé leur fiabilité
+    avec un SAV accessible en Europe :
+  </p>
+
+  <ul>
+    <li><strong>Engwe :</strong> rapport qualité/prix excellent, SAV réactif, très répandu en France</li>
+    <li><strong>YVY :</strong> montée en gamme rapide, double motorisation, excellent couple</li>
+    <li><strong>Ankeleisi :</strong> spécialiste du fatbike tout suspendu accessible</li>
+    <li><strong>Ranger :</strong> cadres aluminium légers, freins hydrauliques en standard</li>
+    <li><strong>H20 :</strong> leader du fatbike pliant avec double moteur</li>
+  </ul>
+
+  <p>
+    Tu ne sais pas quel terrain te correspond le mieux ?
+    <strong><a href="/quiz/">Fais notre quiz en 2 minutes</a></strong> pour obtenir une recommandation personnalisée.
+  </p>
+
+  <h2 id="selection">Notre sélection par budget</h2>
+
+  <div class="not-prose my-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+      {picks.map(b => (
+        <ProductCard
+          name={b.name}
+          brand={b.brand}
+          asin={b.asin}
+          price={b.price}
+          image={b.image}
+          badge={b.badge}
+          badgeType={b.badgeType as any}
+          motor={b.motor}
+          battery={b.battery}
+          autonomy={b.autonomy}
+          weight={b.weight}
+          pros={b.pros}
+          rating={b.rating}
+          reviewCount={b.reviewCount}
+        />
+      ))}
+    </div>
+  </div>
+
+  <div class="not-prose my-6">
+    <AffiliateBanner variant="amazon" />
+  </div>
+
+  <h2 id="conseils">Conseils avant l'achat : les pièges à éviter</h2>
+
+  <ol>
+    <li>
+      <strong>Ne te fie pas à l'autonomie annoncée.</strong> Les fabricants mesurent l'autonomie en conditions
+      idéales (terrain plat, mode Eco, 70 kg). En conditions réelles, divise par 1.5 à 2.
+    </li>
+    <li>
+      <strong>Vérifie la charge maximale totale</strong> (rider + équipement). Beaucoup de modèles sont
+      limités à 120–130 kg. Pour les gabarits lourds, voir notre sélection
+      <a href="/categorie/fatbike-gros-gabarit/">fatbike gros gabarit</a>.
+    </li>
+    <li>
+      <strong>Exige 2 ans de garantie</strong> sur le cadre et la batterie (droit européen).
+      Méfie-toi des vendeurs qui ne mentionnent pas la garantie ou qui renvoient uniquement vers un SAV en Chine.
+    </li>
+    <li>
+      <strong>Renseigne-toi sur la disponibilité des pièces</strong> : plaquettes de frein, chambre à air
+      adaptée (4 pouces), câbles spécifiques. Les modèles sans marque sont souvent orphelins après 18 mois.
+    </li>
+    <li>
+      <strong>Vérifie la conformité VAE</strong> : pour rouler légalement sur voie publique sans permis,
+      le moteur doit être de 250W nominal maximum et l'assistance doit se couper à 25 km/h.
+      Lire notre guide <a href="/guide/reglementation-vae-france/">réglementation VAE France 2026</a>.
+    </li>
+  </ol>
+
+  <p>
+    Besoin d'aide pour choisir entre plusieurs catégories ? Consulte nos guides spécialisés :
+    <a href="/categorie/fatbike-debutant/">fatbike débutant</a>,
+    <a href="/categorie/fatbike-pliant/">fatbike pliant</a>,
+    <a href="/categorie/fatbike-montagne/">fatbike montagne</a> ou
+    <a href="/categorie/fatbike-petit-budget/">fatbike pas cher</a>.
+    Ou laisse notre <strong><a href="/quiz/">quiz te guider en 2 minutes</a></strong>.
+  </p>
+
+</ArticleLayout>
