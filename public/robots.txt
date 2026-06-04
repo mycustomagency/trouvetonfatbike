@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemaps
-Sitemap: https://trouveton-fatbike.com/sitemap-index.xml
+Sitemap: https://trouvetonfatbike.com/sitemap-index.xml
 
 # Disallow admin paths
 Disallow: /api/

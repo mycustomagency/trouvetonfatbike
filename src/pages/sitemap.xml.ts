@@ -1,4 +1,4 @@
-const SITE_URL = 'https://trouveton-fatbike.com';
+const SITE_URL = 'https://trouvetonfatbike.com';
 const now = new Date().toISOString().split('T')[0];
 
 const PAGES = [

@@ -3,7 +3,7 @@
 export const SITE = {
   name:        'TrouveTonFatBike',
   tagline:     'Explore sans limites.',
-  url:         'https://trouveton-fatbike.com',
+  url:         'https://trouvetonfatbike.com',
   description: 'Comparateur et guide d\'achat fatbike électrique. Trouve le fatbike parfait pour ton terrain, ton budget et ton aventure.',
   locale:      'fr_FR',
   lang:        'fr',

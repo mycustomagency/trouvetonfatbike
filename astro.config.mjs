@@ -17,7 +17,7 @@ export default defineConfig({
   },
   image: {
     // Optimisation images WebP auto
-    domains: ['images.unsplash.com', 'cdn.trouveton-fatbike.com'],
+    domains: ['images.unsplash.com', 'cdn.trouvetonfatbike.com'],
   },
   markdown: {
     shikiConfig: {
