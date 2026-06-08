@@ -1,9 +1,9 @@
 ---
-const QUIZ_STEPS = [
-  { q: 'Quel est ton budget ?',      options: ['< 800€', '800–2000€', '2000–4000€', '4000€+'] },
-  { q: 'Ton terrain principal ?',    options: ['Montagne', 'Plage', 'Ville', 'Mixte'] },
-  { q: 'Ton niveau d\'expérience ?', options: ['Débutant', 'Intermédiaire', 'Expert'] },
-  { q: 'L\'autonomie voulue ?',      options: ['< 50 km', '50–80 km', '80–120 km', '120 km+'] },
+const QUIZ_QUESTIONS = [
+  { emoji: '🚴', label: 'Niveau d\'expérience', hint: 'Débutant → Expert' },
+  { emoji: '⛰️', label: 'Terrain principal',   hint: 'Montagne, plage, ville…' },
+  { emoji: '💰', label: 'Budget',               hint: '< 800€ → 4000€+' },
+  { emoji: '⚡', label: 'Autonomie voulue',     hint: '< 50 km → 120 km+' },
 ];
 ---
 
@@ -13,12 +13,10 @@ const QUIZ_STEPS = [
   style="background: linear-gradient(135deg, #111111 0%, #1a1a1a 50%, #111111 100%);"
 >
 
-  <!-- Decorative elements -->
+  <!-- Decorative background -->
   <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
-    <!-- Orange radial glow -->
     <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
                 w-[700px] h-[400px] bg-brand-orange/8 rounded-full blur-3xl"></div>
-    <!-- Grid pattern -->
     <div class="absolute inset-0 opacity-[0.025]"
          style="background-image: radial-gradient(circle, #888 1px, transparent 1px); background-size: 28px 28px;"></div>
   </div>
@@ -65,55 +63,50 @@ const QUIZ_STEPS = [
         <p class="text-xs text-brand-gray-500 mt-3">2 minutes • Gratuit • Sans inscription</p>
       </div>
 
-      <!-- ─── Right: quiz preview card ────────────────────────────── -->
+      <!-- ─── Right: static quiz card ─────────────────────────────── -->
       <div class="reveal reveal-delay-2">
         <div class="card-glass p-6 md:p-8 relative">
 
-          <!-- Progress bar -->
-          <div class="flex items-center gap-3 mb-6">
-            <div class="flex-1 h-1.5 bg-brand-gray-700 rounded-full overflow-hidden">
-              <div class="h-full bg-brand-orange rounded-full" style="width: 25%"></div>
+          <!-- Header -->
+          <div class="flex items-center justify-between mb-6">
+            <div>
+              <p class="text-xs text-brand-orange uppercase tracking-widest font-medium mb-1">Quiz personnalisé</p>
+              <h3 class="font-display font-bold text-brand-offwhite text-lg">4 questions pour trouver ton vélo</h3>
             </div>
-            <span class="text-xs text-brand-gray-400 flex-shrink-0">1 / 4</span>
-          </div>
-
-          <!-- Question -->
-          <div id="quiz-preview" class="min-h-[260px] flex flex-col">
-            <p class="text-xs text-brand-orange uppercase tracking-widest font-medium mb-3">
-              Question 1
-            </p>
-            <h3 class="font-display font-semibold text-brand-offwhite text-xl mb-6" id="quiz-q">
-              {QUIZ_STEPS[0].q}
-            </h3>
-
-            <!-- Options -->
-            <div class="grid grid-cols-2 gap-3 flex-1" id="quiz-options">
-              {QUIZ_STEPS[0].options.map((opt, i) => (
-                <button
-                  class="quiz-opt group px-4 py-3.5 rounded-xl border border-brand-gray-700
-                         bg-brand-gray-800/50 text-sm text-brand-gray-200
-                         hover:border-brand-orange hover:bg-brand-orange/10 hover:text-brand-orange
-                         transition-all duration-200 text-left font-medium"
-                  data-index={i}
-                  aria-label={`Répondre : ${opt}`}
-                >
-                  {opt}
-                </button>
-              ))}
+            <div class="w-10 h-10 rounded-xl bg-brand-orange/15 flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-brand-orange" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" fill="currentColor"/>
+                <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" fill-rule="evenodd" fill="currentColor"/>
+              </svg>
             </div>
           </div>
 
-          <!-- Bottom -->
-          <div class="mt-6 pt-5 border-t border-white/10 flex items-center justify-between">
-            <p class="text-xs text-brand-gray-500">
-              Quiz interactif complet sur la page dédiée
-            </p>
-            <a href="/quiz/" class="text-xs text-brand-orange hover:underline font-medium">
-              Ouvrir →
-            </a>
-          </div>
+          <!-- Questions list -->
+          <ul class="flex flex-col gap-3 mb-7" role="list">
+            {QUIZ_QUESTIONS.map((q, i) => (
+              <li class="flex items-center gap-4 p-3.5 rounded-xl bg-brand-gray-800/60 border border-brand-gray-700/60">
+                <span class="text-2xl flex-shrink-0 w-9 text-center" aria-hidden="true">{q.emoji}</span>
+                <div class="flex-1 min-w-0">
+                  <p class="text-sm font-semibold text-brand-gray-100">{q.label}</p>
+                  <p class="text-xs text-brand-gray-400 mt-0.5">{q.hint}</p>
+                </div>
+                <span class="text-xs font-bold text-brand-orange/60 flex-shrink-0">Q{i + 1}</span>
+              </li>
+            ))}
+          </ul>
 
-          <!-- Floating label -->
+          <!-- CTA button -->
+          <a
+            href="/quiz/"
+            class="btn-primary btn-md w-full justify-center group"
+          >
+            Faire le quiz →
+          </a>
+
+          <!-- Bottom note -->
+          <p class="text-xs text-brand-gray-500 text-center mt-3">2 minutes • Résultat immédiat</p>
+
+          <!-- Floating badge -->
           <div class="absolute -top-3 -right-3 badge-orange badge border shadow-orange-sm">
             Gratuit
           </div>
@@ -123,79 +116,3 @@ const QUIZ_STEPS = [
     </div>
   </div>
 </section>
-
-<script>
-  // ─── Quiz preview animation ──────────────────────────────────────────────
-  const STEPS = [
-    { q: 'Quel est ton budget ?',      options: ['< 800€', '800–2000€', '2000–4000€', '4000€+'] },
-    { q: 'Ton terrain principal ?',    options: ['Montagne', 'Plage', 'Ville', 'Mixte'] },
-    { q: "Ton niveau d'expérience ?",  options: ['Débutant', 'Intermédiaire', 'Expert', 'Peu importe'] },
-    { q: "L'autonomie voulue ?",       options: ['< 50 km', '50–80 km', '80–120 km', '120 km+'] },
-  ];
-
-  let currentStep = 0;
-  const qEl      = document.getElementById('quiz-q');
-  const optsEl   = document.getElementById('quiz-options');
-
-  function renderStep(step: number) {
-    if (!qEl || !optsEl) return;
-    const s = STEPS[step];
-
-    // Update progress
-    const bar = document.querySelector('#quiz-preview ~ div .bg-brand-orange') as HTMLElement | null;
-    const label = document.querySelector('#quiz-preview ~ div .text-xs.text-brand-gray-400') as HTMLElement | null;
-    if (bar) bar.style.width = `${((step + 1) / STEPS.length) * 100}%`;
-    if (label) label.textContent = `${step + 1} / ${STEPS.length}`;
-
-    // Fade out
-    qEl.style.opacity = '0';
-    optsEl.style.opacity = '0';
-    qEl.style.transform = 'translateY(8px)';
-
-    setTimeout(() => {
-      if (!qEl || !optsEl) return;
-      qEl.textContent = s.q;
-      optsEl.innerHTML = s.options.map((opt, i) => `
-        <button
-          class="quiz-opt px-4 py-3.5 rounded-xl border border-brand-gray-700
-                 bg-brand-gray-800/50 text-sm text-brand-gray-200
-                 hover:border-brand-orange hover:bg-brand-orange/10 hover:text-brand-orange
-                 transition-all duration-200 text-left font-medium"
-          data-index="${i}"
-        >${opt}</button>
-      `).join('');
-
-      // Re-bind events
-      bindOptions();
-
-      // Fade in
-      qEl.style.opacity = '1';
-      optsEl.style.opacity = '1';
-      qEl.style.transform = 'translateY(0)';
-    }, 200);
-  }
-
-  function bindOptions() {
-    document.querySelectorAll('.quiz-opt').forEach(btn => {
-      btn.addEventListener('click', () => {
-        // Visual feedback
-        btn.classList.add('border-brand-orange', 'bg-brand-orange/20', 'text-brand-orange');
-
-        setTimeout(() => {
-          currentStep = (currentStep + 1) % STEPS.length;
-          renderStep(currentStep);
-        }, 400);
-      }, { once: true });
-    });
-  }
-
-  // Add transitions to q
-  if (qEl) {
-    qEl.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
-  }
-  if (optsEl) {
-    optsEl.style.transition = 'opacity 0.2s ease';
-  }
-
-  bindOptions();
-</script>
