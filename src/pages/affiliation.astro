@@ -1,0 +1,113 @@
+---
+import Base from '@layouts/Base.astro';
+---
+
+<Base
+  title="Politique d'affiliation — TrouveTonFatBike"
+  description="Transparence sur les liens d'affiliation du site TrouveTonFatBike : comment ça fonctionne et pourquoi nos recommandations restent indépendantes."
+  noIndex={true}
+>
+  <section class="section-padding">
+    <div class="container-narrow max-w-3xl">
+
+      <div class="mb-10">
+        <div class="section-label mb-3">Transparence</div>
+        <h1 class="heading-h2 mb-4">Politique d'affiliation</h1>
+        <p class="text-brand-gray-400 text-sm">Dernière mise à jour : juin 2026</p>
+      </div>
+
+      <!-- Notice principale -->
+      <div class="bg-brand-orange/10 border border-brand-orange/30 rounded-2xl p-6 md:p-8 mb-10">
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-xl bg-brand-orange/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+            <svg class="w-5 h-5 text-brand-orange" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div>
+            <p class="text-sm font-semibold text-brand-orange mb-2">Information importante</p>
+            <p class="text-sm text-brand-gray-200 leading-relaxed">
+              Ce site contient des liens d'affiliation. En cliquant sur certains liens, tu peux être redirigé vers des sites partenaires (Amazon, revendeurs spécialisés, etc.). Si tu effectues un achat via ces liens, nous pouvons percevoir une commission — <strong>sans aucun surcoût pour toi</strong>.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-10">
+
+        <!-- Comment ça fonctionne -->
+        <div class="bg-brand-gray-900 rounded-2xl p-6 md:p-8 border border-brand-gray-800">
+          <h2 class="font-display text-xl font-bold text-brand-offwhite mb-4">Comment ça fonctionne ?</h2>
+          <div class="flex flex-col gap-4">
+            <div class="flex items-start gap-3">
+              <span class="w-6 h-6 rounded-full bg-brand-orange/20 text-brand-orange text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">1</span>
+              <p class="text-brand-gray-300 text-sm leading-relaxed">Tu cliques sur un lien produit ou "Voir le prix" sur notre site.</p>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="w-6 h-6 rounded-full bg-brand-orange/20 text-brand-orange text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">2</span>
+              <p class="text-brand-gray-300 text-sm leading-relaxed">Tu es redirigé vers la boutique partenaire (Amazon, revendeur vélo, etc.).</p>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="w-6 h-6 rounded-full bg-brand-orange/20 text-brand-orange text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">3</span>
+              <p class="text-brand-gray-300 text-sm leading-relaxed">Si tu finalises un achat, nous pouvons recevoir une petite commission sur la vente. Le prix que tu paies reste exactement le même.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Indépendance éditoriale -->
+        <div class="bg-brand-gray-900 rounded-2xl p-6 md:p-8 border border-brand-gray-800">
+          <h2 class="font-display text-xl font-bold text-brand-offwhite mb-4">Indépendance de nos recommandations</h2>
+          <p class="text-brand-gray-300 text-sm leading-relaxed mb-4">
+            Nos comparatifs et recommandations sont élaborés de manière indépendante, sur la base de critères objectifs : rapport qualité/prix, fiabilité, retours utilisateurs, caractéristiques techniques.
+          </p>
+          <p class="text-brand-gray-300 text-sm leading-relaxed mb-4">
+            Le montant des commissions perçues n'influence jamais le classement ni les avis publiés. Un produit mal noté reste mal noté, qu'il soit affilié ou non.
+          </p>
+          <p class="text-brand-gray-300 text-sm leading-relaxed">
+            L'affiliation nous permet de maintenir le site gratuitement accessible, sans publicité intrusive ni abonnement payant.
+          </p>
+        </div>
+
+        <!-- Programmes partenaires -->
+        <div class="bg-brand-gray-900 rounded-2xl p-6 md:p-8 border border-brand-gray-800">
+          <h2 class="font-display text-xl font-bold text-brand-offwhite mb-4">Programmes partenaires</h2>
+          <p class="text-brand-gray-300 text-sm leading-relaxed mb-4">
+            Nous participons notamment aux programmes d'affiliation suivants :
+          </p>
+          <ul class="flex flex-col gap-2 text-sm text-brand-gray-300">
+            <li class="flex items-center gap-2">
+              <span class="w-1.5 h-1.5 rounded-full bg-brand-orange flex-shrink-0"></span>
+              Amazon Partenaires (Amazon Associates Europe)
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="w-1.5 h-1.5 rounded-full bg-brand-orange flex-shrink-0"></span>
+              Revendeurs vélos et fatbikes en ligne
+            </li>
+          </ul>
+        </div>
+
+        <!-- Questions -->
+        <div class="bg-brand-gray-900 rounded-2xl p-6 md:p-8 border border-brand-gray-800">
+          <h2 class="font-display text-xl font-bold text-brand-offwhite mb-3">Une question ?</h2>
+          <p class="text-brand-gray-300 text-sm leading-relaxed mb-4">
+            Pour toute question sur notre politique d'affiliation ou nos partenariats, contacte-nous :
+          </p>
+          <a
+            href="mailto:trouvetonfatbike@protonmail.com"
+            class="inline-flex items-center gap-2 text-sm font-medium text-brand-orange hover:underline"
+          >
+            trouvetonfatbike@protonmail.com
+          </a>
+        </div>
+
+      </div>
+
+      <div class="mt-10 pt-8 divider">
+        <a href="/" class="text-sm text-brand-gray-400 hover:text-brand-orange transition-colors">
+          ← Retour à l'accueil
+        </a>
+      </div>
+
+    </div>
+  </section>
+</Base>
