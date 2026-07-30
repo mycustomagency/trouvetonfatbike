@@ -1,5 +1,5 @@
 // ─── Affiliate System — Multi-partner architecture ───────────────────────────
-// Partenaire actif : Amazon (tag customdeal-21)
+// Partenaire actif : Amazon (tag customdeal00-21)
 // Architecture prête pour Décathlon, Cyclable, Alltricks, etc.
 
 export type PartnerKey = 'amazon' | 'decathlon' | 'cyclable' | 'alltricks' | 'ref_sport';
@@ -20,9 +20,9 @@ export const PARTNERS: Record<PartnerKey, Partner> = {
     active:     true,
     baseUrl:    'https://www.amazon.fr',
     commission: '3–8%',
-    tag:        'customdeal-21',
-    buildLink:   (asin)  => `https://www.amazon.fr/dp/${asin}?tag=customdeal-21&linkCode=ogi&th=1&psc=1`,
-    buildSearch: (query) => `https://www.amazon.fr/s?k=${encodeURIComponent(query)}&tag=customdeal-21`,
+    tag:        'customdeal00-21',
+    buildLink:   (asin)  => `https://www.amazon.fr/dp/${asin}?tag=customdeal00-21&linkCode=ogi&th=1&psc=1`,
+    buildSearch: (query) => `https://www.amazon.fr/s?k=${encodeURIComponent(query)}&tag=customdeal00-21`,
   },
   decathlon: {
     name:       'Décathlon',
