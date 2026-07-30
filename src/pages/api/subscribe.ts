@@ -3,7 +3,7 @@ import type { APIRoute } from 'astro';
 export const prerender = false;
 
 export const GET: APIRoute = () =>
-  json({ error: 'Method not allowed', fn: 'reached' }, 405);
+  json({ error: 'Method not allowed' }, 405);
 
 export const POST: APIRoute = async ({ request, locals }) => {
   const apiKey = locals.runtime.env.BREVO_API_KEY;
@@ -28,12 +28,10 @@ export const POST: APIRoute = async ({ request, locals }) => {
     body: JSON.stringify({ email, listIds: [3], updateEnabled: true }),
   });
 
-  if (!contactRes.ok && contactRes.status !== 204) {
-    const brevoDetail = await contactRes.text().catch(() => '(no body)');
-    return json({ error: 'Brevo contacts error', brevoStatus: contactRes.status, brevoDetail }, 502);
-  }
+  if (!contactRes.ok && contactRes.status !== 204)
+    return json({ error: 'Inscription impossible, réessaie.' }, 502);
 
-  const smtpRes = await fetch('https://api.brevo.com/v3/smtp/email', {
+  await fetch('https://api.brevo.com/v3/smtp/email', {
     method: 'POST',
     headers,
     body: JSON.stringify({
@@ -44,11 +42,6 @@ export const POST: APIRoute = async ({ request, locals }) => {
       sender: { name: 'TrouveTonFatBike', email: 'contact@trouvetonfatbike.com' },
     }),
   });
-
-  if (!smtpRes.ok) {
-    const brevoDetail = await smtpRes.text().catch(() => '(no body)');
-    return json({ error: 'Brevo SMTP error', brevoStatus: smtpRes.status, brevoDetail }, 502);
-  }
 
   return json({ success: true }, 200);
 };
