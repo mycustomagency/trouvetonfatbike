@@ -41,7 +41,7 @@ export async function onRequestPost(context) {
       subject: 'Bienvenue sur TrouveTonFatBike !',
       htmlContent:
         "<h1>Merci pour ton inscription !</h1><p>Tu recevras bientôt nos meilleurs guides et bons plans fatbike.</p><a href='https://trouvetonfatbike.com'>Visiter le site</a>",
-      sender: { name: 'TrouveTonFatBike', email: 'trouvetonfatbike@protonmail.com' },
+      sender: { name: 'TrouveTonFatBike', email: 'contact@trouvetonfatbike.com' },
     }),
   });
 
