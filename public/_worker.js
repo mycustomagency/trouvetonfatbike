@@ -1,8 +1,18 @@
-export async function onRequest(context) {
-  const { request, env } = context;
+export default {
+  async fetch(request, env) {
+    const url = new URL(request.url);
 
+    if (url.pathname === '/api/subscribe') {
+      return handleSubscribe(request, env);
+    }
+
+    return env.ASSETS.fetch(request);
+  },
+};
+
+async function handleSubscribe(request, env) {
   if (request.method !== 'POST') {
-    return Response.json({ error: 'Method not allowed', fn: 'reached' }, { status: 405 });
+    return json({ error: 'Method not allowed', fn: 'reached' }, 405);
   }
 
   let email;
@@ -10,16 +20,16 @@ export async function onRequest(context) {
     const body = await request.json();
     email = body.email;
   } catch {
-    return Response.json({ error: 'Corps de requête invalide' }, { status: 400 });
+    return json({ error: 'Corps de requête invalide' }, 400);
   }
 
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    return Response.json({ error: 'Email invalide' }, { status: 400 });
+    return json({ error: 'Email invalide' }, 400);
   }
 
   const apiKey = env.BREVO_API_KEY;
   if (!apiKey) {
-    return Response.json({ error: 'Configuration serveur manquante' }, { status: 500 });
+    return json({ error: 'Configuration serveur manquante' }, 500);
   }
 
   const headers = {
@@ -35,10 +45,7 @@ export async function onRequest(context) {
 
   if (!contactRes.ok && contactRes.status !== 204) {
     const brevoDetail = await contactRes.text().catch(() => '(no body)');
-    return Response.json(
-      { error: 'Brevo contacts error', brevoStatus: contactRes.status, brevoDetail },
-      { status: 502 }
-    );
+    return json({ error: 'Brevo contacts error', brevoStatus: contactRes.status, brevoDetail }, 502);
   }
 
   const smtpRes = await fetch('https://api.brevo.com/v3/smtp/email', {
@@ -55,11 +62,15 @@ export async function onRequest(context) {
 
   if (!smtpRes.ok) {
     const brevoDetail = await smtpRes.text().catch(() => '(no body)');
-    return Response.json(
-      { error: 'Brevo SMTP error', brevoStatus: smtpRes.status, brevoDetail },
-      { status: 502 }
-    );
+    return json({ error: 'Brevo SMTP error', brevoStatus: smtpRes.status, brevoDetail }, 502);
   }
 
-  return Response.json({ success: true });
+  return json({ success: true }, 200);
+}
+
+function json(data, status) {
+  return new Response(JSON.stringify(data), {
+    status,
+    headers: { 'Content-Type': 'application/json' },
+  });
 }
