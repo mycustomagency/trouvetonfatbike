@@ -1,5 +1,9 @@
-export async function onRequestPost(context) {
+export async function onRequest(context) {
   const { request, env } = context;
+
+  if (request.method !== 'POST') {
+    return Response.json({ error: 'Method not allowed', fn: 'reached' }, { status: 405 });
+  }
 
   let email;
   try {
