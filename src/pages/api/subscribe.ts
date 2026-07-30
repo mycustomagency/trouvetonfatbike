@@ -1,21 +1,15 @@
-export default {
-  async fetch(request, env) {
-    const url = new URL(request.url);
+import type { APIRoute } from 'astro';
 
-    if (url.pathname === '/api/subscribe') {
-      return handleSubscribe(request, env);
-    }
+export const prerender = false;
 
-    return env.ASSETS.fetch(request);
-  },
-};
+export const GET: APIRoute = () =>
+  json({ error: 'Method not allowed', fn: 'reached' }, 405);
 
-async function handleSubscribe(request, env) {
-  if (request.method !== 'POST') {
-    return json({ error: 'Method not allowed', fn: 'reached' }, 405);
-  }
+export const POST: APIRoute = async ({ request, locals }) => {
+  const apiKey = locals.runtime.env.BREVO_API_KEY;
+  if (!apiKey) return json({ error: 'Configuration serveur manquante' }, 500);
 
-  let email;
+  let email: string;
   try {
     const body = await request.json();
     email = body.email;
@@ -23,19 +17,10 @@ async function handleSubscribe(request, env) {
     return json({ error: 'Corps de requête invalide' }, 400);
   }
 
-  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
     return json({ error: 'Email invalide' }, 400);
-  }
 
-  const apiKey = env.BREVO_API_KEY;
-  if (!apiKey) {
-    return json({ error: 'Configuration serveur manquante' }, 500);
-  }
-
-  const headers = {
-    'api-key': apiKey,
-    'Content-Type': 'application/json',
-  };
+  const headers = { 'api-key': apiKey, 'Content-Type': 'application/json' };
 
   const contactRes = await fetch('https://api.brevo.com/v3/contacts', {
     method: 'POST',
@@ -66,9 +51,9 @@ async function handleSubscribe(request, env) {
   }
 
   return json({ success: true }, 200);
-}
+};
 
-function json(data, status) {
+function json(data: object, status: number) {
   return new Response(JSON.stringify(data), {
     status,
     headers: { 'Content-Type': 'application/json' },
