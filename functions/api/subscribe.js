@@ -30,10 +30,14 @@ export async function onRequestPost(context) {
   });
 
   if (!contactRes.ok && contactRes.status !== 204) {
-    return Response.json({ error: 'Impossible de créer le contact' }, { status: 502 });
+    const brevoDetail = await contactRes.text().catch(() => '(no body)');
+    return Response.json(
+      { error: 'Brevo contacts error', brevoStatus: contactRes.status, brevoDetail },
+      { status: 502 }
+    );
   }
 
-  await fetch('https://api.brevo.com/v3/smtp/email', {
+  const smtpRes = await fetch('https://api.brevo.com/v3/smtp/email', {
     method: 'POST',
     headers,
     body: JSON.stringify({
@@ -44,6 +48,14 @@ export async function onRequestPost(context) {
       sender: { name: 'TrouveTonFatBike', email: 'contact@trouvetonfatbike.com' },
     }),
   });
+
+  if (!smtpRes.ok) {
+    const brevoDetail = await smtpRes.text().catch(() => '(no body)');
+    return Response.json(
+      { error: 'Brevo SMTP error', brevoStatus: smtpRes.status, brevoDetail },
+      { status: 502 }
+    );
+  }
 
   return Response.json({ success: true });
 }
