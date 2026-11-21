@@ -1,93 +1,16 @@
 ---
-import Base from '@layouts/Base.astro';
+import Prose from '@layouts/Prose.astro';
 ---
-
-<Base
-  title="Mentions légales — TrouveTonFatBike"
-  description="Mentions légales du site TrouveTonFatBike : éditeur, hébergeur, propriété intellectuelle et responsabilité."
-  noIndex={true}
->
-  <section class="section-padding">
-    <div class="container-narrow max-w-3xl">
-
-      <div class="mb-10">
-        <div class="section-label mb-3">Légal</div>
-        <h1 class="heading-h2 mb-4">Mentions légales</h1>
-        <p class="text-brand-gray-400 text-sm">Dernière mise à jour : juin 2026</p>
-      </div>
-
-      <div class="flex flex-col gap-10">
-
-        <!-- Éditeur -->
-        <div class="bg-brand-gray-900 rounded-2xl p-6 md:p-8 border border-brand-gray-800">
-          <h2 class="font-display text-xl font-bold text-brand-offwhite mb-4">Éditeur du site</h2>
-          <dl class="flex flex-col gap-3 text-sm">
-            <div class="flex flex-col sm:flex-row sm:gap-4">
-              <dt class="text-brand-gray-400 sm:w-40 flex-shrink-0">Nom</dt>
-              <dd class="text-brand-gray-100 font-medium">TrouveTonFatBike</dd>
-            </div>
-            <div class="flex flex-col sm:flex-row sm:gap-4">
-              <dt class="text-brand-gray-400 sm:w-40 flex-shrink-0">Pays</dt>
-              <dd class="text-brand-gray-100">France</dd>
-            </div>
-            <div class="flex flex-col sm:flex-row sm:gap-4">
-              <dt class="text-brand-gray-400 sm:w-40 flex-shrink-0">Contact</dt>
-              <dd class="text-brand-gray-100">
-                <a href="mailto:contact@trouvetonfatbike.com" class="text-brand-orange hover:underline">
-                  contact@trouvetonfatbike.com
-                </a>
-              </dd>
-            </div>
-          </dl>
-        </div>
-
-        <!-- Hébergement -->
-        <div class="bg-brand-gray-900 rounded-2xl p-6 md:p-8 border border-brand-gray-800">
-          <h2 class="font-display text-xl font-bold text-brand-offwhite mb-4">Hébergement</h2>
-          <dl class="flex flex-col gap-3 text-sm">
-            <div class="flex flex-col sm:flex-row sm:gap-4">
-              <dt class="text-brand-gray-400 sm:w-40 flex-shrink-0">Service</dt>
-              <dd class="text-brand-gray-100 font-medium">Cloudflare Pages</dd>
-            </div>
-            <div class="flex flex-col sm:flex-row sm:gap-4">
-              <dt class="text-brand-gray-400 sm:w-40 flex-shrink-0">Société</dt>
-              <dd class="text-brand-gray-100">Cloudflare, Inc.</dd>
-            </div>
-            <div class="flex flex-col sm:flex-row sm:gap-4">
-              <dt class="text-brand-gray-400 sm:w-40 flex-shrink-0">Adresse</dt>
-              <dd class="text-brand-gray-100">101 Townsend Street, San Francisco, CA 94107, États-Unis</dd>
-            </div>
-            <div class="flex flex-col sm:flex-row sm:gap-4">
-              <dt class="text-brand-gray-400 sm:w-40 flex-shrink-0">Site</dt>
-              <dd class="text-brand-gray-100">cloudflare.com</dd>
-            </div>
-          </dl>
-        </div>
-
-        <!-- Propriété intellectuelle -->
-        <div class="bg-brand-gray-900 rounded-2xl p-6 md:p-8 border border-brand-gray-800">
-          <h2 class="font-display text-xl font-bold text-brand-offwhite mb-4">Propriété intellectuelle</h2>
-          <p class="text-brand-gray-300 text-sm leading-relaxed">
-            L'ensemble des contenus présents sur ce site (textes, images, comparatifs, guides) est la propriété exclusive de TrouveTonFatBike, sauf mention contraire. Toute reproduction, distribution ou utilisation, même partielle, est strictement interdite sans autorisation écrite préalable.
-          </p>
-        </div>
-
-        <!-- Responsabilité -->
-        <div class="bg-brand-gray-900 rounded-2xl p-6 md:p-8 border border-brand-gray-800">
-          <h2 class="font-display text-xl font-bold text-brand-offwhite mb-4">Limitation de responsabilité</h2>
-          <p class="text-brand-gray-300 text-sm leading-relaxed">
-            TrouveTonFatBike est un site d'information, de comparatifs et de guides d'achat. Nous ne vendons pas directement de produits. Les informations publiées sont fournies à titre indicatif et peuvent évoluer. Nous ne saurions être tenus responsables des décisions d'achat prises sur la base des contenus de ce site.
-          </p>
-        </div>
-
-      </div>
-
-      <div class="mt-10 pt-8 divider">
-        <a href="/" class="text-sm text-brand-gray-400 hover:text-brand-orange transition-colors">
-          ← Retour à l'accueil
-        </a>
-      </div>
-
-    </div>
-  </section>
-</Base>
+<Prose title="Mentions légales" h1="Mentions légales" description="Mentions légales du site TrouveTonFatbike : éditeur, hébergeur, propriété intellectuelle et responsabilité." eyebrow="Légal" noIndex>
+  <p class="text-sm">Dernière mise à jour : novembre 2026</p>
+  <h2>Éditeur du site</h2>
+  <p>Site : TrouveTonFatbike (trouvetonfatbike.com)<br />Pays : France<br />Contact : <a href="mailto:contact@trouvetonfatbike.com">contact@trouvetonfatbike.com</a></p>
+  <h2>Hébergement</h2>
+  <p>Cloudflare Pages, Cloudflare, Inc., 101 Townsend Street, San Francisco, CA 94107, États-Unis (cloudflare.com).</p>
+  <h2>Propriété intellectuelle</h2>
+  <p>Les textes, comparatifs, outils et photographies personnelles de ce site sont protégés. Toute reproduction, même partielle, est interdite sans autorisation écrite. Certaines photos proviennent de banques d'images libres de droits (Unsplash, Pexels). Certains visuels d'illustration ont été générés par intelligence artificielle et sont signalés comme tels.</p>
+  <h2>Limitation de responsabilité</h2>
+  <p>TrouveTonFatbike est un site d'information et de comparaison. Aucun produit n'y est vendu directement. Les informations réglementaires et les prix sont donnés à titre indicatif, vérifiés à la date de mise à jour, et peuvent évoluer. Ils ne constituent pas un conseil juridique.</p>
+  <h2>Liens d'affiliation</h2>
+  <p>Certains liens sont affiliés. Voir la page <a href="/affiliation/">affiliation</a>.</p>
+</Prose>

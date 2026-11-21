@@ -1,0 +1,38 @@
+---
+import Base from '@layouts/Base.astro';
+const items = [
+  ['Puissance nominale de 250 W maximum', 'Lis la fiche en entier : le titre dit parfois 250 W et le descriptif 750 ou 1 000 W.'],
+  ['Assistance coupée à 25 km/h', 'Mention « vitesse maximale assistée : 25 km/h ». Fuis « 32 », « 45 km/h » ou « vitesse illimitée ».'],
+  ['Pas d\'accélérateur au-delà de 6 km/h', 'Une gâchette n\'est tolérée que comme aide au démarrage jusqu\'à 6 km/h.'],
+  ['Aucun « mode off-road », « débridable » ou « unlock »', 'Ces mots signifient un débridage : illégal sur la voie publique.'],
+  ['Un seul moteur', 'Les fatbikes « double moteur » ne sont pas des vélos à assistance électrique.'],
+  ['Norme EN 15194 indiquée', 'Sur la fiche, la notice ou la plaque du cadre.'],
+  ['Déclaration UE de conformité disponible', 'Demande-la au vendeur avant l\'achat : un vendeur sérieux l\'envoie sans problème.'],
+  ['Vendeur ou représentant établi dans l\'UE', 'En cas de problème de conformité ou de garantie, il doit pouvoir répondre.'],
+  ['Batterie de marque, avec SAV et pièces disponibles', 'Une batterie de remplacement introuvable, c\'est un vélo à la poubelle.'],
+  ['Facture conservée', 'Elle prouve la version achetée en cas de contrôle, de vol ou d\'accident.'],
+];
+---
+<Base title="Checklist : 10 points pour acheter un fatbike 100 % légal" description="La checklist gratuite pour vérifier qu'un fatbike électrique est légal en France avant de l'acheter : puissance, vitesse, accélérateur, norme EN 15194, vendeur." noIndex>
+  <section class="wrap-prose py-12 md:py-16">
+    <p class="eyebrow">Ta checklist · à imprimer ou garder sur ton téléphone</p>
+    <h1 class="h-lg mt-4">Fatbike 100 % légal : les 10 points à vérifier avant d'acheter</h1>
+    <p class="lead mt-4">Coche chaque case. S'il en manque une seule, passe ton chemin.</p>
+    <ol class="mt-10 space-y-3">
+      {items.map(([t, d], i) => (
+        <li class="card flex gap-4 p-5">
+          <label class="flex cursor-pointer gap-4">
+            <input type="checkbox" class="mt-1 h-6 w-6 shrink-0 accent-orange" />
+            <span><span class="font-display text-lg font-extrabold">{i + 1}. {t}</span><br /><span class="text-ink-soft">{d}</span></span>
+          </label>
+        </li>
+      ))}
+    </ol>
+    <div class="mt-10 flex flex-wrap gap-3 print:hidden">
+      <button onclick="window.print()" class="btn-dark">Imprimer la checklist</button>
+      <a href="/simulateur-fatbike-legal/" class="btn-primary">Tester un fatbike précis</a>
+      <a href="/guide/meilleur-fatbike-electrique-2026/" class="btn-ghost">Voir les modèles conformes</a>
+    </div>
+    <p class="mt-10 text-sm text-ink-mute">TrouveTonFatbike · trouvetonfatbike.com · Règles vérifiées en novembre 2026 (Code de la route, art. R311-1). Information non juridique.</p>
+  </section>
+</Base>

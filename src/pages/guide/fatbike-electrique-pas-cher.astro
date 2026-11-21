@@ -1,0 +1,50 @@
+---
+import Article from '@layouts/Article.astro';
+import BikeCard from '@components/BikeCard.astro';
+import Faq from '@components/Faq.astro';
+import { byId } from '@data/bikes';
+import { buildFaqSchema } from '@utils/seo';
+
+const picks = ['colorway-bk29', 'fiido-m1-pro', 'engwe-l20-boost', 'engwe-ep2-3-boost'].map(byId);
+const faq = [
+  { q: 'Quel est le fatbike électrique légal le moins cher ?', a: "En 2026, on trouve des fatbikes 250 W conformes autour de 800 € en promotion, comme le Colorway BK29. En dessous, méfie-toi : soit l'équipement est très basique, soit le vélo n'est pas conforme." },
+  { q: 'Un fatbike à 800 € est-il fiable ?', a: "Il fait le travail pour des balades et des trajets courts, à condition d'accepter un cadre en acier lourd, un capteur de rotation et des composants simples. Vérifie le SAV et la disponibilité des pièces, surtout de la batterie." },
+  { q: 'Faut-il acheter un fatbike d\'occasion ?', a: "Pourquoi pas, mais un fatbike d'occasion a parfois été débridé. Demande la facture d'origine, vérifie la puissance et la vitesse dans les réglages, et préfère le reconditionné avec garantie." },
+  { q: 'Existe-t-il des aides pour acheter un fatbike électrique ?', a: "Certaines collectivités proposent des aides à l'achat de vélo à assistance électrique, sous conditions. Elles exigent un vélo conforme (et donc jamais un modèle 750 ou 1 000 W). Renseigne-toi auprès de ta commune, de ton département ou de ta région." },
+];
+---
+<Article
+  title="Fatbike électrique pas cher et légal : les meilleurs à moins de 1 200 €"
+  h1="Fatbike électrique pas cher : les modèles légaux à moins de 1 200 €"
+  description="Les meilleurs fatbikes électriques pas chers ET légaux (250 W, 25 km/h) à moins de 1 200 € en 2026. Mon avis de propriétaire d'un fatbike à moins de 800 €."
+  intro="Mon propre fatbike légal m'a coûté moins de 800 €. Voici ce qu'on peut vraiment attendre d'un petit budget, et les modèles qui valent le coup."
+  image="/img/vanessa-fatbike-campagne.webp"
+  imageAlt="Fatbike Colorway BK29 garé dans l'herbe au bord d'un champ"
+  crumb="Fatbike pas cher"
+  pubDate={new Date('2026-11-22')}
+  toc={[{ id: 'attendre', label: 'Ce qu\'on peut attendre' }, { id: 'modeles', label: 'Les 4 modèles' }, { id: 'economiser', label: 'Économiser sans risque' }]}
+  schema={[buildFaqSchema(faq)]}
+>
+  <h2 id="attendre">Ce qu'on peut attendre d'un fatbike à moins de 1 200 €</h2>
+  <p>Le prix bas n'est pas un problème en soi. Le vrai piège, c'est le fatbike « pas cher » de 1 000 W vendu sur une marketplace : il n'a pas le droit de rouler et c'est toi qui prends le risque. Un fatbike légal et abordable, lui, fait très bien le travail pour des balades, des trajets courts et des chemins faciles.</p>
+  <p><strong>Ce que tu auras :</strong> un moteur 250 W dans la roue arrière, 7 vitesses, des freins à disque, une batterie amovible et de gros pneus confortables.</p>
+  <p><strong>Ce que tu n'auras pas (ou rarement) :</strong> un cadre léger (compte 30 à 35 kg), un capteur de couple sur les tout premiers prix, des suspensions sophistiquées et un réseau de magasins pour le SAV.</p>
+  <div class="callout-ok not-prose">
+    <p class="font-bold">Mon expérience</p>
+    <p class="mt-1 text-ink-soft">Je roule sur un Colorway BK29 acheté moins de 800 €. Pour des balades tranquilles avec mes chiens sur les chemins de campagne, il remplit son rôle. Mes premières impressions détaillées sont dans <a href="/guide/avis-colorway-bk29/" class="font-bold text-orange-dark">mon avis sur le Colorway BK29</a>, que je compléterai au printemps avec plus de kilomètres.</p>
+  </div>
+
+  <h2 id="modeles">Les 4 fatbikes légaux à petit prix</h2>
+  <div class="not-prose space-y-8">
+    {picks.map((b, i) => <BikeCard bike={b} rank={i + 1} />)}
+  </div>
+
+  <h2 id="economiser">Économiser sans prendre de risque</h2>
+  <ul>
+    <li><strong>Vise les grandes périodes de promo</strong> (soldes, Black Friday, fin de saison en automne) : les fatbikes perdent souvent 15 à 30 %.</li>
+    <li><strong>Regarde le reconditionné</strong> avec garantie, chez des spécialistes qui vérifient que le vélo n'est pas débridé.</li>
+    <li><strong>Garde une marge pour l'équipement :</strong> antivol agréé, casque et pompe basse pression, soit environ 150 à 250 €. Voir la <a href="/accessoires/">liste des accessoires utiles</a>.</li>
+    <li><strong>Ne rogne jamais sur la batterie :</strong> évite les batteries de remplacement sans marque. Une batterie bas de gamme est la première cause d'incendie de vélo électrique.</li>
+  </ul>
+  <div class="not-prose"><Faq items={faq} /></div>
+</Article>

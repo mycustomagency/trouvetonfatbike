@@ -1,102 +1,30 @@
-// ─── Affiliate System — Multi-partner architecture ───────────────────────────
-// Partenaire actif : Amazon (tag customdeal00-21)
-// Architecture prête pour Décathlon, Cyclable, Alltricks, etc.
+// ─── Liens partenaires ──────────────────────────────────────────────────────
+// Un seul endroit à modifier quand un nouveau programme d'affiliation est accepté.
+// Amazon : actif (tag customdeal00-21).
+// ENGWE (Awin, jusqu'à 6 %), Alltricks, Upway : à activer dès validation,
+// en remplissant les champs ci-dessous. Les liens du site basculent automatiquement.
 
-export type PartnerKey = 'amazon' | 'decathlon' | 'cyclable' | 'alltricks' | 'ref_sport';
+export const AMAZON_TAG = 'customdeal00-21';
 
-export interface Partner {
-  name:        string;
-  active:      boolean;
-  baseUrl:     string;
-  commission:  string;
-  tag?:        string;
-  buildLink:   (id: string) => string;
-  buildSearch: (query: string) => string;
-}
-
-export const PARTNERS: Record<PartnerKey, Partner> = {
-  amazon: {
-    name:       'Amazon',
-    active:     true,
-    baseUrl:    'https://www.amazon.fr',
-    commission: '3–8%',
-    tag:        'customdeal00-21',
-    buildLink:   (asin)  => `https://www.amazon.fr/dp/${asin}?tag=customdeal00-21&linkCode=ogi&th=1&psc=1`,
-    buildSearch: (query) => `https://www.amazon.fr/s?k=${encodeURIComponent(query)}&tag=customdeal00-21`,
-  },
-  decathlon: {
-    name:       'Décathlon',
-    active:     false,
-    baseUrl:    'https://www.decathlon.fr',
-    commission: '5%',
-    buildLink:   (id)    => `https://www.decathlon.fr/p/_/${id}`,
-    buildSearch: (query) => `https://www.decathlon.fr/search?Ntt=${encodeURIComponent(query)}`,
-  },
-  cyclable: {
-    name:       'Cyclable',
-    active:     false,
-    baseUrl:    'https://www.cyclable.com',
-    commission: '6%',
-    buildLink:   (id)    => `https://www.cyclable.com/products/${id}`,
-    buildSearch: (query) => `https://www.cyclable.com/search?q=${encodeURIComponent(query)}`,
-  },
-  alltricks: {
-    name:       'Alltricks',
-    active:     false,
-    baseUrl:    'https://www.alltricks.fr',
-    commission: '5%',
-    buildLink:   (id)    => `https://www.alltricks.fr/F-${id}`,
-    buildSearch: (query) => `https://www.alltricks.fr/Acheter/${encodeURIComponent(query)}`,
-  },
-  ref_sport: {
-    name:       'Ref Sport',
-    active:     false,
-    baseUrl:    'https://www.ref.sport',
-    commission: '4%',
-    buildLink:   (id)    => `https://www.ref.sport/product/${id}`,
-    buildSearch: (query) => `https://www.ref.sport/search?q=${encodeURIComponent(query)}`,
-  },
+export const PARTNER_URLS: Record<string, string | null> = {
+  // Exemple une fois accepté : 'engwe': 'https://www.awin1.com/cread.php?awinmid=XXXX&awinaffid=YYYY&ued='
+  engwe: null,
+  alltricks: null,
+  upway: null,
 };
 
-/** Lien produit Amazon par ASIN */
-export function amazonLink(asin: string): string {
-  return PARTNERS.amazon.buildLink(asin);
+export const amazonSearch = (query: string) =>
+  `https://www.amazon.fr/s?k=${encodeURIComponent(query)}&tag=${AMAZON_TAG}`;
+
+export const amazonProduct = (asin: string) =>
+  `https://www.amazon.fr/dp/${asin}?tag=${AMAZON_TAG}`;
+
+/** Lien partenaire si le programme est actif, sinon lien Amazon de secours. */
+export function buyLink(opts: { partner?: string; partnerTarget?: string; amazon: string }) {
+  const base = opts.partner ? PARTNER_URLS[opts.partner] : null;
+  if (base && opts.partnerTarget) return base + encodeURIComponent(opts.partnerTarget);
+  return amazonSearch(opts.amazon);
 }
 
-/** Recherche Amazon affiliée */
-export function amazonSearch(query: string): string {
-  return PARTNERS.amazon.buildSearch(query);
-}
-
-/** Lien affilié générique avec fallback Amazon */
-export function affiliateLink(asin: string, partner: PartnerKey = 'amazon'): string {
-  const p = PARTNERS[partner];
-  if (!p.active) return PARTNERS.amazon.buildLink(asin);
-  return p.buildLink(asin);
-}
-
-/** Recherche affiliée générique avec fallback Amazon */
-export function affiliateSearch(query: string, partner: PartnerKey = 'amazon'): string {
-  const p = PARTNERS[partner];
-  if (!p.active) return PARTNERS.amazon.buildSearch(query);
-  return p.buildSearch(query);
-}
-
-/** Tracking analytics */
-export function trackAffiliateClick(product: string, source: string, partner: PartnerKey = 'amazon'): void {
-  if (typeof window !== 'undefined' && (window as any).gtag) {
-    (window as any).gtag('event', 'affiliate_click', {
-      product_name:      product,
-      click_source:      source,
-      affiliate_partner: partner,
-    });
-  }
-}
-
-export const AFFILIATE_DISCLAIMER =
-  "Ce site utilise des liens d'affiliation. En tant que Partenaire Amazon, " +
-  "nous percevons une commission sur les achats éligibles, sans coût supplémentaire pour vous.";
-
-export const ACTIVE_PARTNERS = Object.entries(PARTNERS)
-  .filter(([, p]) => p.active)
-  .map(([key, p]) => ({ key: key as PartnerKey, ...p }));
+/** Attributs à mettre sur tous les liens affiliés (obligatoire pour Google). */
+export const AFF_REL = 'sponsored nofollow noopener';

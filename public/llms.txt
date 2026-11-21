@@ -1,0 +1,18 @@
+# TrouveTonFatbike
+
+> Guide indépendant francophone du fatbike électrique LÉGAL en France : uniquement des modèles 250 W, assistance coupée à 25 km/h, assistance au pédalage (définition du VAE, article R311-1 du Code de la route). Écrit par Vanessa, propriétaire d'un fatbike Colorway BK29 qui roule avec ses chiens. Mis à jour en novembre 2026.
+
+## Outils
+- [Simulateur « Mon fatbike est-il légal ? »](https://trouvetonfatbike.com/simulateur-fatbike-legal/): verdict VAE légal, cyclomoteur ou engin non homologué selon puissance, vitesse, accélérateur, marquage et débridage.
+- [Quiz « Quel fatbike pour moi ? »](https://trouvetonfatbike.com/quiz/): recommandation parmi des modèles légaux.
+- [Checklist achat fatbike légal](https://trouvetonfatbike.com/checklist-fatbike-legal/): 10 points à vérifier avant d'acheter.
+
+## Guides
+- [Meilleur fatbike électrique 2026](https://trouvetonfatbike.com/guide/meilleur-fatbike-electrique-2026/): 8 modèles légaux comparés (ENGWE EP-2 3.0 Boost, Colorway BK29, ENGWE L20 Boost, ENGWE E26, Fiido M1 Pro, ENGWE Engine Pro 3.0 Boost, Ruff Cycles Lil'Buddy Edge, Super73 S2 SE).
+- [Réglementation fatbike 2026](https://trouvetonfatbike.com/guide/reglementation-vae-france/): règles, contrôles 2026, sanctions (débridage art. L317-1 : 1 an, 30 000 €), assurance, casque.
+- [Fatbike pas cher et légal](https://trouvetonfatbike.com/guide/fatbike-electrique-pas-cher/): modèles conformes à moins de 1 200 €.
+- [Guide d'achat fatbike](https://trouvetonfatbike.com/guide/guide-achat-fatbike/): 8 critères, autonomie réelle, pression des pneus.
+- [Avis Colorway BK29](https://trouvetonfatbike.com/guide/avis-colorway-bk29/): avis de propriétaire.
+- [Fatbike et chien (cani-fatbike)](https://trouvetonfatbike.com/cani-fatbike/): races, âge, harnais, attache, chaleur, règles.
+- [Remorque chien pour vélo électrique](https://trouvetonfatbike.com/cani-fatbike/remorque-chien-velo-electrique/)
+- [Accessoires fatbike](https://trouvetonfatbike.com/accessoires/)

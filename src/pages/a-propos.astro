@@ -1,0 +1,46 @@
+---
+import Base from '@layouts/Base.astro';
+import Newsletter from '@components/Newsletter.astro';
+import { SITE } from '@utils/seo';
+const person = {
+  '@context': 'https://schema.org', '@type': 'AboutPage', url: `${SITE.url}/a-propos/`,
+  mainEntity: { '@type': 'Person', name: 'Vanessa', jobTitle: 'Fondatrice de TrouveTonFatbike', knowsAbout: ['fatbike électrique', 'réglementation des vélos à assistance électrique', 'cani-vtt', 'éducation canine'] },
+};
+---
+<Base title="À propos : qui se cache derrière TrouveTonFatbike ?" description="Je m'appelle Vanessa : rideuse en fatbike 250 W avec mes molosses, formée à l'éducation canine. Ma méthode, mes engagements et pourquoi ce site existe." schema={person}>
+  <section class="bg-sand">
+    <div class="wrap grid items-center gap-10 py-14 md:grid-cols-[1.1fr_1fr] md:py-20">
+      <div>
+        <p class="eyebrow">À propos</p>
+        <h1 class="h-lg mt-4">Salut, moi c'est Vanessa 👋</h1>
+        <p class="lead mt-5">Je roule en fatbike électrique, presque toujours avec mes chiens. J'ai créé TrouveTonFatbike parce que je n'arrivais pas à trouver d'infos claires et honnêtes sur une question simple : <strong>quel fatbike a vraiment le droit de rouler ?</strong></p>
+      </div>
+      <img src="/img/vanessa-fatbike-chemin-chien.webp" alt="Le fatbike de Vanessa et son chien sur un chemin de campagne" width="900" height="680" class="aspect-[4/3] w-full rounded-4xl object-cover shadow-lift" />
+    </div>
+  </section>
+
+  <section class="wrap-prose article py-14">
+    <h2>Mon fatbike, mes chiens</h2>
+    <p>Mon fatbike est un Colorway BK29 : 250 W, assistance limitée à 25 km/h, acheté moins de 800 €. Je l'ai choisi pour son confort et parce que je voulais rester dans la loi. Mes compagnons de route sont des molosses : des chiens puissants, attachants, souvent mal jugés, et qui ont besoin de se dépenser intelligemment.</p>
+    <p>J'ai suivi une formation en éducation canine. Je ne me présente pas comme éducatrice professionnelle, mais ces connaissances guident tout ce que j'écris sur le cani-fatbike : le bien-être du chien passe avant la performance.</p>
+    <img src="/img/chien-pose-fatbike-colorway.webp" alt="Chien assis dans l'herbe à côté d'un fatbike sur un chemin" width="900" height="1200" loading="lazy" />
+
+    <h2>Ma méthode</h2>
+    <ul>
+      <li><strong>Uniquement des fatbikes légaux.</strong> 250 W, 25 km/h, pédalage. Aucun modèle débridable ou surpuissant en sélection, même s'il rapporterait plus.</li>
+      <li><strong>Des sources vérifiées.</strong> Code de la route, fiches techniques officielles, prix constatés chez les revendeurs, avis de propriétaires.</li>
+      <li><strong>De l'honnêteté sur mes tests.</strong> Quand je n'ai pas testé un vélo moi-même, je le dis. Quand j'ai peu roulé, je le dis aussi.</li>
+      <li><strong>Des mises à jour régulières</strong>, en particulier sur la réglementation, qui bouge vite.</li>
+    </ul>
+
+    <h2>Comment le site se finance</h2>
+    <p>Certains liens sont des liens d'affiliation : si tu achètes après avoir cliqué, je touche une petite commission, sans surcoût pour toi. Aucune marque ne paie pour apparaître dans les comparatifs. Les détails sont sur la page <a href="/affiliation/">affiliation</a>.</p>
+
+    <h2>Et derrière tout ça ?</h2>
+    <p>TrouveTonFatbike fait partie des petits projets passion que je développe en ligne. Ils ont un objectif commun : financer, à terme, un grand projet qui me tient à cœur, un lieu dédié aux chiens et à leurs humains. Mais ici, on parle fatbike, promis.</p>
+
+    <h2>Me contacter</h2>
+    <p>Une question, une erreur repérée, un fatbike à me faire tester ? Écris-moi via la page <a href="/contact/">contact</a>. Les marques qui souhaitent me prêter un vélo ou une remorque pour un test honnête sont les bienvenues.</p>
+  </section>
+  <Newsletter />
+</Base>

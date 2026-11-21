@@ -1,0 +1,18 @@
+---
+interface Props { items: { q: string; a: string }[]; title?: string }
+const { items, title = 'Questions fréquentes' } = Astro.props;
+---
+<section class="my-14" aria-labelledby="faq-title">
+  <h2 id="faq-title" class="h-md mb-6">{title}</h2>
+  <div class="space-y-3">
+    {items.map((i) => (
+      <details class="card group p-5 open:shadow-lift">
+        <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-display text-lg font-bold">
+          {i.q}
+          <span class="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-sand text-orange-dark transition-transform group-open:rotate-45">+</span>
+        </summary>
+        <p class="mt-3 text-ink-soft" set:html={i.a} />
+      </details>
+    ))}
+  </div>
+</section>

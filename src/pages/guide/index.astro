@@ -1,90 +1,27 @@
 ---
 import Base from '@layouts/Base.astro';
-
-const GUIDES = [
-  { title: 'Meilleur fatbike électrique 2026',  href: '/guide/meilleur-fatbike-electrique-2026/', category: 'Comparatif',    date: 'Mis à jour 2026', readingTime: 18, featured: true },
-  { title: 'Guide d\'achat fatbike complet',     href: '/guide/guide-achat-fatbike/',              category: 'Guide d\'achat', date: 'Mis à jour 2026',  readingTime: 14, featured: false },
-  { title: 'Autonomie batterie : nos astuces',   href: '/guide/autonomie-batterie-fatbike/',        category: 'Technique',     date: '2 Jan 2026',  readingTime: 10, featured: false },
-  { title: 'Réglementation VAE en France 2026',  href: '/guide/reglementation-vae-france/',         category: 'Légal',         date: 'Mis à jour 2026', readingTime: 7,  featured: false },
-  { title: 'Entretien fatbike : le guide',       href: '/guide/entretien-fatbike/',                 category: 'Entretien',     date: 'Mis à jour 2026', readingTime: 12, featured: false },
-  { title: 'Moteur 250W vs 750W : lequel ?',     href: '/guide/moteur-250w-vs-750w/',               category: 'Technique',     date: 'Mis à jour 2026', readingTime: 9,  featured: false },
+const guides = [
+  { t: 'Meilleur fatbike électrique 2026', d: '8 modèles légaux comparés, du petit budget au premium.', href: '/guide/meilleur-fatbike-electrique-2026/', img: '/img/pexels-g-force-bike-95411088-13738411.webp' },
+  { t: 'Mon fatbike est-il légal ?', d: 'Le simulateur gratuit en 5 questions.', href: '/simulateur-fatbike-legal/', img: '/img/pexels-assedrani-official-177638678-26936495.webp' },
+  { t: 'Réglementation fatbike 2026', d: 'Règles, contrôles, sanctions, assurance, casque.', href: '/guide/reglementation-vae-france/', img: '/img/pexels-assedrani-official-177638678-26825340.webp' },
+  { t: 'Fatbike pas cher et légal', d: 'Les meilleurs modèles à moins de 1 200 €.', href: '/guide/fatbike-electrique-pas-cher/', img: '/img/vanessa-fatbike-campagne.webp' },
+  { t: 'Guide d\'achat en 8 critères', d: 'Roues, capteur, autonomie réelle, freins, budget.', href: '/guide/guide-achat-fatbike/', img: '/img/pexels-g-force-bike-95411088-13633045.webp' },
+  { t: 'Avis Colorway BK29', d: 'Mon fatbike à moins de 800 €, en toute honnêteté.', href: '/guide/avis-colorway-bk29/', img: '/img/fatbike-colorway-profil.webp' },
+  { t: 'Fatbike et chien', d: 'Races, âge, harnais, attache, chaleur.', href: '/cani-fatbike/', img: '/img/ia-fatbike-avec-chien-foret.webp' },
+  { t: 'Remorque pour chien', d: 'Choisir une remorque compatible fatbike.', href: '/cani-fatbike/remorque-chien-velo-electrique/', img: '/img/ia-fatbike-avec-pit.webp' },
+  { t: 'Accessoires utiles', d: 'L\'équipement qui sert vraiment, sans gadgets.', href: '/accessoires/', img: '/img/pexels-assedrani-official-177638678-26825343.webp' },
 ];
-
-const CATEGORIES_NAV = ['Tous', 'Comparatif', 'Guide d\'achat', 'Technique', 'Entretien', 'Légal'];
 ---
-
-<Base
-  title="Guides & Conseils Fatbike Électrique 2026"
-  description="Tous nos guides experts sur le fatbike électrique : comparatifs, guides d'achat, entretien, réglementation, autonomie. Mis à jour en 2026."
->
-  <section class="section-padding-sm border-b border-brand-gray-800">
-    <div class="container-site">
-      <nav aria-label="Fil d'Ariane" class="mb-6">
-        <ol class="flex items-center gap-2 text-xs text-brand-gray-400" role="list">
-          <li><a href="/" class="hover:text-brand-orange transition-colors">Accueil</a></li>
-          <li><span>/</span></li>
-          <li class="text-brand-gray-200">Guides</li>
-        </ol>
-      </nav>
-      <div class="section-label mb-4">Guides & Conseils</div>
-      <h1 class="heading-h1 mb-4">Tous nos guides fatbike</h1>
-      <p class="text-brand-gray-300 text-lg max-w-xl">Expertise indépendante. Mis à jour chaque trimestre.</p>
-    </div>
-  </section>
-
-  <section class="section-padding">
-    <div class="container-site">
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <!-- Featured -->
-        {GUIDES.filter(g => g.featured).map(g => (
-          <article class="lg:col-span-2 card-base card-hover group overflow-hidden">
-            <a href={g.href} class="flex flex-col h-full">
-              <div class="p-7 flex flex-col flex-1">
-                <div class="flex items-center gap-3 mb-4">
-                  <span class="badge badge-orange border border-brand-orange/25">{g.category}</span>
-                  <span class="text-xs text-brand-gray-500">{g.readingTime} min</span>
-                </div>
-                <h2 class="font-display font-bold text-brand-offwhite text-2xl mb-3 leading-snug
-                           group-hover:text-brand-orange transition-colors">{g.title}</h2>
-                <p class="text-brand-gray-400 text-sm flex-1">Guide complet mis à jour en {g.date}.</p>
-                <span class="text-sm text-brand-orange font-medium mt-6">Lire le guide →</span>
-              </div>
-            </a>
-          </article>
-        ))}
-
-        <!-- Others -->
-        <div class="flex flex-col gap-4">
-          {GUIDES.filter(g => !g.featured).slice(0, 3).map(g => (
-            <article class="card-base card-hover group">
-              <a href={g.href} class="flex flex-col p-5">
-                <div class="flex items-center gap-2 mb-2">
-                  <span class="badge badge-gray">{g.category}</span>
-                  <span class="text-2xs text-brand-gray-500">{g.readingTime} min</span>
-                </div>
-                <h2 class="text-sm font-medium text-brand-gray-200 group-hover:text-brand-orange transition-colors leading-snug">
-                  {g.title} →
-                </h2>
-              </a>
-            </article>
-          ))}
-        </div>
-
-        <!-- All remaining -->
-        {GUIDES.filter(g => !g.featured).slice(3).map(g => (
-          <article class="card-base card-hover group">
-            <a href={g.href} class="flex flex-col p-5">
-              <div class="flex items-center gap-2 mb-2">
-                <span class="badge badge-gray">{g.category}</span>
-                <span class="text-2xs text-brand-gray-500">{g.readingTime} min</span>
-              </div>
-              <h2 class="text-sm font-medium text-brand-gray-200 group-hover:text-brand-orange transition-colors leading-snug">
-                {g.title} →
-              </h2>
-            </a>
-          </article>
-        ))}
-      </div>
+<Base title="Tous les guides fatbike électrique" description="Tous les guides TrouveTonFatbike : comparatif 2026, réglementation, petit budget, guide d'achat, fatbike avec son chien et accessoires.">
+  <section class="bg-sand"><div class="wrap py-14 md:py-20"><p class="eyebrow">Guides</p><h1 class="h-lg mt-4">Tous les guides fatbike</h1></div></section>
+  <section class="wrap section !pt-12">
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {guides.map((g) => (
+        <a href={g.href} class="card card-hover group overflow-hidden">
+          <img src={g.img} alt="" width="600" height="400" loading="lazy" class="aspect-[3/2] w-full object-cover" />
+          <div class="p-6"><h2 class="text-xl group-hover:text-orange-dark">{g.t}</h2><p class="mt-2 text-ink-soft">{g.d}</p></div>
+        </a>
+      ))}
     </div>
   </section>
 </Base>

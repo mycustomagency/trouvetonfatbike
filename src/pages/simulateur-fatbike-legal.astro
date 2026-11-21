@@ -1,0 +1,145 @@
+---
+import Base from '@layouts/Base.astro';
+import Faq from '@components/Faq.astro';
+import AuthorBox from '@components/AuthorBox.astro';
+import Newsletter from '@components/Newsletter.astro';
+import { buildFaqSchema, buildBreadcrumbSchema } from '@utils/seo';
+
+const questions = [
+  { id: 'w', label: 'Puissance nominale du moteur', help: 'Écrite sur le moteur, la plaque du cadre ou la notice. Ne confonds pas avec la puissance « max » ou « crête » des annonces.',
+    options: [['250', '250 W ou moins'], ['500', 'Entre 251 et 500 W'], ['1000', 'Entre 501 et 1 000 W'], ['2000', 'Plus de 1 000 W'], ['?', 'Je ne sais pas']] },
+  { id: 'v', label: "Vitesse à laquelle l'assistance s'arrête", help: "L'assistance doit se couper à 25 km/h. Tu peux aller plus vite, mais seulement à la force des jambes.",
+    options: [['25', '25 km/h ou moins'], ['45', 'Entre 26 et 45 km/h'], ['99', 'Plus de 45 km/h'], ['?', 'Je ne sais pas']] },
+  { id: 'g', label: 'Le vélo peut-il avancer sans pédaler ?', help: "Gâchette ou poignée d'accélérateur. Seule une aide au démarrage jusqu'à 6 km/h est tolérée.",
+    options: [['non', 'Non, uniquement en pédalant'], ['6', "Oui, mais seulement jusqu'à 6 km/h (aide au démarrage)"], ['oui', 'Oui, au-delà de 6 km/h']] },
+  { id: 'm', label: 'Quel marquage ou document as-tu ?', help: 'Sur la plaque du cadre, la notice ou la facture.',
+    options: [['en', 'Norme EN 15194 (vélo à assistance électrique)'], ['l1e', 'Homologation cyclomoteur (L1e) avec certificat de conformité'], ['rien', 'Aucun marquage'], ['?', 'Je ne sais pas']] },
+  { id: 'd', label: 'Le vélo a-t-il été débridé ou modifié ?', help: 'Kit, réglage dans le menu caché de l\'écran, changement de contrôleur…',
+    options: [['non', 'Non, il est d\'origine'], ['oui', 'Oui']] },
+];
+
+const faq = [
+  { q: 'Quelle est la puissance maximale autorisée pour un fatbike électrique ?', a: "250 W de puissance nominale continue. Les chiffres de 500, 750 ou 1 000 W affichés dans les annonces correspondent souvent à une puissance de crête ou à un moteur trop puissant : dans ce dernier cas, le vélo n'est plus un VAE." },
+  { q: 'Un fatbike avec une gâchette d\'accélérateur est-il légal ?', a: "Seulement si la gâchette sert d'aide au démarrage et s'arrête à 6 km/h. Une gâchette qui fait avancer le vélo plus vite sans pédaler le sort de la catégorie VAE." },
+  { q: 'Que risque-t-on avec un fatbike débridé ?', a: "Le débridage est puni jusqu'à 1 an de prison et 30 000 € d'amende (article L317-1 du Code de la route). Le vélo devient un véhicule à moteur non assuré (jusqu'à 3 750 € d'amende) et peut être immobilisé ou saisi. En cas d'accident, l'assurance peut refuser de payer." },
+  { q: 'Peut-on rouler avec un fatbike 1 000 W sur un terrain privé ?', a: "Oui, sur un terrain privé fermé à la circulation, avec l'accord du propriétaire. Mais pas sur la route, les pistes cyclables, ni les chemins ouverts au public." },
+  { q: 'Ce simulateur a-t-il une valeur juridique ?', a: "Non. Il t'aide à y voir clair à partir des règles du Code de la route (article R311-1). En cas de doute, demande la déclaration UE de conformité au vendeur." },
+];
+---
+<Base
+  title="Mon fatbike est-il légal ? Simulateur gratuit 2026"
+  description="Puissance, vitesse, gâchette, débridage : en 30 secondes, découvre si ton fatbike électrique est un VAE légal, un cyclomoteur ou un engin non homologué. Règles 2026."
+  schema={[buildFaqSchema(faq), buildBreadcrumbSchema([{ name: 'Accueil', url: '/' }, { name: 'Simulateur', url: '/simulateur-fatbike-legal/' }])]}
+>
+  <section class="bg-forest-dark text-white">
+    <div class="wrap-prose py-14 text-center md:py-20">
+      <p class="eyebrow !text-orange-light justify-center">Outil gratuit · règles à jour novembre 2026</p>
+      <h1 class="mt-4 text-4xl text-white md:text-6xl">Mon fatbike est-il légal ?</h1>
+      <p class="mx-auto mt-5 max-w-xl text-lg text-white/80">Réponds à 5 questions. Le simulateur te dit si ton fatbike est un vélo électrique légal, un cyclomoteur ou un engin qui risque la saisie, et ce que tu dois faire.</p>
+    </div>
+  </section>
+
+  <section class="wrap-prose -mt-8 md:-mt-10">
+    <form id="sim" class="card space-y-8 p-6 md:p-10" novalidate>
+      {questions.map((q, i) => (
+        <fieldset>
+          <legend class="font-display text-xl font-extrabold"><span class="mr-2 text-orange">{i + 1}.</span>{q.label}</legend>
+          <p class="mt-1 text-sm text-ink-mute">{q.help}</p>
+          <div class="mt-4 grid gap-2.5">
+            {q.options.map(([v, l]) => (
+              <label class="flex cursor-pointer items-center gap-3 rounded-2xl border-2 border-ink/10 px-4 py-3 transition hover:border-orange/60 has-[:checked]:border-orange has-[:checked]:bg-orange-soft">
+                <input type="radio" name={q.id} value={v} class="h-4 w-4 accent-orange" required />
+                <span class="font-medium">{l}</span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+      ))}
+      <button type="submit" class="btn-primary w-full text-base">Voir le verdict</button>
+      <p id="sim-err" class="hidden text-center text-sm font-semibold text-bad" role="alert">Réponds à toutes les questions pour obtenir ton verdict.</p>
+    </form>
+
+    <div id="result" class="mt-8 hidden scroll-mt-28" aria-live="polite"></div>
+  </section>
+
+  <section class="wrap-prose article mt-16">
+    <h2>Comment le simulateur décide</h2>
+    <p>Il applique la définition du vélo à assistance électrique de l'article R311-1 du Code de la route. Trois conditions doivent être réunies en même temps :</p>
+    <ul>
+      <li><strong>Moteur de 250 W nominal maximum.</strong> C'est la puissance continue, pas le pic affiché en gros dans les annonces.</li>
+      <li><strong>Assistance coupée à 25 km/h.</strong> Tu peux aller plus vite en pédalant, mais sans aide du moteur.</li>
+      <li><strong>Assistance uniquement au pédalage.</strong> Une aide au démarrage sans pédaler est tolérée jusqu'à 6 km/h.</li>
+    </ul>
+    <p>Si une seule condition manque, ton fatbike n'est plus un vélo. Il doit alors être homologué comme cyclomoteur, immatriculé et assuré. S'il n'a aucune homologation, il n'a tout simplement pas le droit de rouler sur la voie publique.</p>
+    <div class="callout-info not-prose">
+      <p class="font-bold">Pourquoi c'est important en 2026</p>
+      <p class="mt-1 text-ink-soft">Les contrôles se multiplient : la police de Paris contrôle les fatbikes chaque semaine depuis le début de l'année, et Bordeaux a lancé une opération « tolérance zéro » en avril 2026, avec des engins saisis sur les pistes cyclables. Tous les détails sont dans le <a href="/guide/reglementation-vae-france/" class="font-bold text-orange-dark">guide de la réglementation 2026</a>.</p>
+    </div>
+    <Faq items={faq} />
+    <AuthorBox />
+  </section>
+  <Newsletter />
+</Base>
+
+<script>
+  type A = Record<string, string>;
+  const form = document.getElementById('sim') as HTMLFormElement;
+  const out = document.getElementById('result')!;
+  const err = document.getElementById('sim-err')!;
+
+  const risks = `<ul class="mt-3 list-disc space-y-1 pl-5">
+    <li>Immobilisation ou saisie du vélo lors d'un contrôle</li>
+    <li>Jusqu'à 3 750 € d'amende pour défaut d'assurance</li>
+    <li>En cas d'accident : refus d'indemnisation possible, tu paies les dégâts de ta poche</li></ul>`;
+
+  function verdict(a: A) {
+    if (a.d === 'oui') return { tone: 'bad', title: 'Débridé : interdit sur la voie publique',
+      body: `Un vélo débridé perd son statut de VAE et son homologation. Le débridage est puni jusqu'à <strong>1 an de prison et 30 000 € d'amende</strong> (article L317-1 du Code de la route).${risks}<p class="mt-3"><strong>Que faire :</strong> remets les réglages d'origine (250 W, 25 km/h), idéalement chez un vélociste qui te remet une attestation.</p>` };
+
+    const unknown = [a.w, a.v, a.m].includes('?');
+    const vaeOk = a.w === '250' && a.v === '25' && a.g !== 'oui';
+
+    if (vaeOk && a.m === 'en') return { tone: 'ok', title: 'Bonne nouvelle : c\'est un vélo électrique légal',
+      body: `Ton fatbike respecte les trois règles du VAE. Il est considéré comme un vélo : pas de plaque, pas de permis, pas d'assurance spécifique obligatoire, et accès aux pistes cyclables.<p class="mt-3"><strong>Conseils :</strong> une assurance responsabilité civile reste vivement recommandée (vérifie ton contrat habitation), le casque aussi. Garde la facture et la déclaration de conformité dans un coin.</p>` };
+
+    if (vaeOk && a.m !== 'l1e') return { tone: 'warn', title: 'Probablement légal, mais il manque une preuve',
+      body: `Les caractéristiques sont celles d'un VAE légal. Il te manque la preuve : la norme <strong>EN 15194</strong> sur le cadre ou dans la notice, ou la <strong>déclaration UE de conformité</strong>.<p class="mt-3"><strong>Que faire :</strong> demande ce document au vendeur. Sans lui, impossible de prouver ta bonne foi en cas de contrôle ou d'accident.</p>` };
+
+    if (a.m === 'l1e' && a.v !== '99') {
+      const speed = a.v === '45';
+      return { tone: 'warn', title: speed ? 'C\'est un speed bike : légal, mais comme un cyclomoteur' : 'C\'est un cyclomoteur léger : légal sous conditions',
+        body: `Ton engin est homologué comme ${speed ? 'cyclomoteur (catégorie L1e-B)' : 'cycle à moteur (catégorie L1e-A)'}. Il peut rouler, mais avec les obligations d'un deux-roues motorisé :
+          <ul class="mt-3 list-disc space-y-1 pl-5"><li>Carte grise et plaque d'immatriculation</li><li>Assurance deux-roues obligatoire</li><li>Casque homologué et gants certifiés</li><li>Permis AM (ex-BSR) si tu es né à partir de 1988, ou permis B</li><li><strong>Interdit sur les pistes et bandes cyclables</strong></li></ul>` };
+    }
+
+    if (unknown) return { tone: 'warn', title: 'Impossible de conclure pour l\'instant',
+      body: `Il manque une information clé. Cherche la <strong>puissance nominale</strong> et la <strong>vitesse maximale assistée</strong> sur la plaque du cadre (souvent près du pédalier), dans la notice ou sur la facture, ainsi que la mention <strong>EN 15194</strong>.<p class="mt-3">Si l'annonce affichait « 750 W », « 1 000 W » ou « 45 km/h », c'est très mauvais signe.</p>` };
+
+    return { tone: 'bad', title: 'Ce fatbike n\'a pas le droit de rouler sur la voie publique',
+      body: `${a.g === 'oui' ? 'Il avance sans pédaler au-delà de 6 km/h' : a.w !== '250' ? 'Son moteur dépasse 250 W' : 'Son assistance dépasse 25 km/h'} et il n'a pas d'homologation de cyclomoteur. Ce n'est donc ni un vélo, ni un cyclomoteur autorisé : c'est un engin non homologué, comme la grande majorité des fatbikes vendus en ligne.${risks}<p class="mt-3"><strong>Que faire :</strong> réserve-le à un terrain privé fermé, ou revends-le en précisant qu'il n'est pas homologué, et passe à un modèle 250 W.</p>` };
+  }
+
+  const tones: Record<string, string> = { ok: 'border-ok bg-ok-soft', warn: 'border-warn bg-warn-soft', bad: 'border-bad bg-bad-soft' };
+  const icons: Record<string, string> = { ok: '✅', warn: '⚠️', bad: '⛔' };
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const data = Object.fromEntries(new FormData(form)) as A;
+    if (['w', 'v', 'g', 'm', 'd'].some((k) => !data[k])) { err.classList.remove('hidden'); return; }
+    err.classList.add('hidden');
+    const r = verdict(data);
+    out.innerHTML = `
+      <div class="rounded-3xl border-l-8 p-6 md:p-8 ${tones[r.tone]}">
+        <p class="text-3xl" aria-hidden="true">${icons[r.tone]}</p>
+        <h2 class="mt-2 font-display text-2xl font-black md:text-3xl">${r.title}</h2>
+        <div class="mt-3 text-ink-soft">${r.body}</div>
+      </div>
+      <div class="card mt-5 flex flex-col items-start gap-4 p-6 sm:flex-row sm:items-center sm:justify-between">
+        <p class="font-semibold">${r.tone === 'ok' ? 'Équipe-le bien pour tes sorties.' : 'Envie d\'un fatbike 100 % légal ?'}</p>
+        <a class="btn-primary" href="${r.tone === 'ok' ? '/accessoires/' : '/guide/meilleur-fatbike-electrique-2026/'}">${r.tone === 'ok' ? 'Voir les accessoires' : 'Voir les modèles conformes'} →</a>
+      </div>`;
+    out.classList.remove('hidden');
+    out.scrollIntoView({ behavior: 'smooth' });
+    (window as any).gtag?.('event', 'simulateur_verdict', { verdict: r.tone });
+  });
+</script>

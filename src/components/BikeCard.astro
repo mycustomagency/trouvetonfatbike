@@ -1,0 +1,49 @@
+---
+import type { Bike } from '@data/bikes';
+import { euro } from '@data/bikes';
+import { AFF_REL } from '@utils/affiliate';
+interface Props { bike: Bike; rank?: number; label?: string }
+const { bike, rank, label } = Astro.props;
+const dogs = ['', 'Possible', 'Bien', 'Idéal'][bike.dogFriendly];
+---
+<article id={bike.id} class="card overflow-hidden scroll-mt-28">
+  <div class="flex flex-wrap items-center justify-between gap-3 border-b border-ink/5 bg-sand/60 px-6 py-4">
+    <div class="flex items-center gap-3">
+      {rank && <span class="grid h-9 w-9 place-items-center rounded-full bg-forest font-display text-sm font-black text-white">{rank}</span>}
+      <div>
+        {label && <p class="text-xs font-bold uppercase tracking-wider text-orange-dark">{label}</p>}
+        <h3 class="text-xl md:text-2xl">{bike.name}</h3>
+      </div>
+    </div>
+    <div class="flex flex-wrap gap-2">
+      <span class="chip-ok">✓ 250 W · 25 km/h</span>
+      {bike.tested && <span class="chip bg-orange-soft text-orange-dark">★ Mon vélo</span>}
+    </div>
+  </div>
+  <div class="grid gap-6 p-6 md:grid-cols-[1.1fr_1fr]">
+    <div>
+      <p class="font-semibold text-ink">{bike.bestFor}</p>
+      <dl class="mt-4 grid grid-cols-2 gap-x-4 gap-y-3 text-[0.92rem]">
+        <div><dt class="text-ink-mute">Roues</dt><dd class="font-semibold">{bike.wheels}</dd></div>
+        <div><dt class="text-ink-mute">Format</dt><dd class="font-semibold">{bike.format}</dd></div>
+        <div><dt class="text-ink-mute">Moteur</dt><dd class="font-semibold">{bike.motor}</dd></div>
+        <div><dt class="text-ink-mute">Capteur</dt><dd class="font-semibold">{bike.sensor}</dd></div>
+        <div><dt class="text-ink-mute">Batterie</dt><dd class="font-semibold">{bike.battery}</dd></div>
+        <div><dt class="text-ink-mute">Poids</dt><dd class="font-semibold">{bike.weight}</dd></div>
+        <div><dt class="text-ink-mute">Suspension</dt><dd class="font-semibold">{bike.suspension}</dd></div>
+        <div><dt class="text-ink-mute">Balade avec chien</dt><dd class="font-semibold">{dogs}</dd></div>
+      </dl>
+    </div>
+    <div class="flex flex-col gap-4">
+      <div class="grid grid-cols-2 gap-3 text-[0.92rem]">
+        <ul class="space-y-1.5">{bike.pros.map((p) => <li class="flex gap-2"><span class="text-ok">＋</span><span>{p}</span></li>)}</ul>
+        <ul class="space-y-1.5">{bike.cons.map((p) => <li class="flex gap-2"><span class="text-bad">－</span><span>{p}</span></li>)}</ul>
+      </div>
+      <p class="rounded-2xl bg-warn-soft px-4 py-3 text-[0.9rem] text-ink"><strong>À vérifier :</strong> {bike.check}</p>
+      <div class="mt-auto flex flex-wrap items-center justify-between gap-3">
+        <p class="text-sm text-ink-mute">Dès <strong class="font-display text-2xl text-ink">{euro(bike.priceFrom)}</strong><br /><span class="text-xs">{bike.priceNote}</span></p>
+        <a href={bike.href} rel={AFF_REL} target="_blank" data-product={bike.id} class="btn-primary">{bike.cta} →</a>
+      </div>
+    </div>
+  </div>
+</article>

@@ -1,0 +1,17 @@
+---
+interface Props { light?: boolean }
+const { light = false } = Astro.props;
+---
+<a href="/" class="group inline-flex items-center gap-2.5" aria-label="TrouveTonFatbike, accueil">
+  <span class="grid h-10 w-10 place-items-center rounded-full bg-orange text-white shadow-card transition-transform group-hover:-rotate-6">
+    <svg viewBox="0 0 48 32" class="h-6 w-7" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <circle cx="10" cy="22" r="7.5" stroke-width="4.5" />
+      <circle cx="38" cy="22" r="7.5" stroke-width="4.5" />
+      <path d="M10 22 L18 9 L31 9 L38 22 M18 9 L24 22 L31 9 M15 5 h6 M31 9 l-2-5 h4" />
+    </svg>
+  </span>
+  <span class="flex flex-col leading-none font-display" style="font-stretch:118%">
+    <span class:list={['text-[0.7rem] font-extrabold tracking-[0.12em]', light ? 'text-white/80' : 'text-navy']}>TROUVE TON</span>
+    <span class="text-xl font-black tracking-tight text-orange">FATBIKE</span>
+  </span>
+</a>

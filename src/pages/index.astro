@@ -1,221 +1,185 @@
 ---
 import Base from '@layouts/Base.astro';
-import Hero from '@components/sections/Hero.astro';
-import TrustStrip from '@components/sections/TrustStrip.astro';
-import WhyFatbike from '@components/sections/WhyFatbike.astro';
-import CategoryGrid from '@components/sections/CategoryGrid.astro';
-import FeaturedProducts from '@components/sections/FeaturedProducts.astro';
-import AdventureUniverse from '@components/sections/AdventureUniverse.astro';
-import QuizTeaser from '@components/sections/QuizTeaser.astro';
-import LatestGuides from '@components/sections/LatestGuides.astro';
-import AffiliateBanner from '@components/product/AffiliateBanner.astro';
-import FAQ from '@components/sections/FAQ.astro';
-import Newsletter from '@components/sections/Newsletter.astro';
-import { buildWebsiteSchema, SITE } from '@utils/seo';
+import Faq from '@components/Faq.astro';
+import Newsletter from '@components/Newsletter.astro';
+import { byId, euro } from '@data/bikes';
+import { AFF_REL } from '@utils/affiliate';
+import { buildFaqSchema } from '@utils/seo';
 
-// ─── Homepage SEO ───────────────────────────────────────────────────────────
-const SEO = {
-  title:       undefined, // Homepage uses site default: "TrouveTonFatBike — Explore sans limites."
-  description: 'Comparateur et guide d\'achat fatbike électrique N°1 en France. Trouve le meilleur fatbike électrique selon ton terrain, ton budget et ton usage. Comparatifs 2026, avis experts et quiz personnalisé.',
-  tags:        ['fatbike électrique', 'meilleur fatbike', 'comparatif fatbike', 'guide achat fatbike', 'fatbike 2026', 'fatbike prix'],
-  ogImage:     '/og-default.jpg',
-};
+const picks = [
+  { bike: byId('colorway-bk29'), label: 'Petit budget', img: '/img/vanessa-fatbike-campagne.webp', alt: 'Fatbike Colorway BK29 garé dans un champ' },
+  { bike: byId('engwe-ep2-3-boost'), label: 'Le plus polyvalent', img: '/img/pexels-g-force-bike-95411088-14474990.webp', alt: 'Fatbike électrique pliant garé sur un trottoir' },
+  { bike: byId('engwe-e26'), label: 'Chemins & chien', img: '/img/pexels-truckrun-19411380.webp', alt: 'Fatbike électrique 26 pouces sur un sentier' },
+];
 
-// Homepage specific schema
-const localBusinessSchema = {
-  '@context':  'https://schema.org',
-  '@type':     'WebPage',
-  name:        SITE.name,
-  description: SEO.description,
-  url:         SITE.url,
-  inLanguage:  'fr-FR',
-  about: {
-    '@type': 'Thing',
-    name:    'Fatbike électrique',
-  },
-  mainEntity: {
-    '@type': 'ItemList',
-    name:    'Meilleures catégories fatbike 2026',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Fatbike Montagne', url: `${SITE.url}/categorie/fatbike-montagne/` },
-      { '@type': 'ListItem', position: 2, name: 'Fatbike Plage',    url: `${SITE.url}/categorie/fatbike-plage/` },
-      { '@type': 'ListItem', position: 3, name: 'Fatbike Neige',    url: `${SITE.url}/categorie/fatbike-neige/` },
-      { '@type': 'ListItem', position: 4, name: 'Fatbike Urbain',   url: `${SITE.url}/categorie/fatbike-urbain/` },
-      { '@type': 'ListItem', position: 5, name: 'Cani-Fatbike',     url: `${SITE.url}/cani-fatbike/` },
-    ],
-  },
-};
+const usages = [
+  { t: 'Moins de 1 200 €', d: 'Des fatbikes légaux qui ne ruinent pas', href: '/guide/fatbike-electrique-pas-cher/', img: '/img/fatbike-colorway-profil.webp' },
+  { t: 'Pliant', d: 'Pour le coffre, le train ou l\'appart', href: '/guide/meilleur-fatbike-electrique-2026/#pliant', img: '/img/pexels-g-force-bike-95411088-13738414.webp' },
+  { t: 'Chemins, plage, neige', d: 'Les gros pneus, là où ils brillent', href: '/guide/meilleur-fatbike-electrique-2026/#chemins', img: '/img/tim-foster-s0w9nvl3vba-unsplash.webp' },
+  { t: 'Avec mon chien', d: 'Harnais, attache, remorque', href: '/cani-fatbike/', img: '/img/ia-fatbike-avec-chien-foret.webp' },
+];
+
+const faq = [
+  { q: 'Un fatbike électrique est-il légal en France en 2026 ?', a: "Oui, s'il respecte les trois règles du vélo à assistance électrique : moteur de <strong>250 W nominal maximum</strong>, assistance coupée à <strong>25 km/h</strong>, et assistance seulement quand on pédale. Au-delà, c'est un cyclomoteur : plaque, assurance, casque homologué et interdiction des pistes cyclables." },
+  { q: 'Pourquoi tant de fatbikes sont-ils illégaux ?', a: "Beaucoup de modèles vendus en ligne affichent 750, 1 000 W ou plus, une poignée d'accélérateur ou un mode « débridé ». En juillet 2026, l'Alliance pour le vélo et l'Union Sport & Cycle ont estimé que 96 % des fatbikes vendus en France sortaient de la définition légale du VAE." },
+  { q: 'Combien coûte un bon fatbike électrique légal ?', a: "On trouve des modèles conformes dès 800 € environ en promotion. Entre 1 100 et 1 700 €, on gagne un capteur de couple, de meilleures suspensions ou le pliage. Au-delà de 2 000 €, on paie surtout la marque, le design et le SAV." },
+  { q: 'Peut-on faire du fatbike avec son chien ?', a: "Oui, avec un chien adulte en bonne santé, un harnais de traction, une barre d'attache fixée sur la tige de selle et une vitesse adaptée à son allure. Pour les chiens âgés, très lourds ou à nez court, la remorque est souvent la meilleure option. Tout est détaillé dans le <a href='/cani-fatbike/'>guide fatbike et chien</a>." },
+  { q: 'Comment savoir si mon fatbike actuel est légal ?', a: "Regarde la plaque ou la notice : puissance nominale, vitesse maximale assistée et norme EN 15194. Puis utilise le <a href='/simulateur-fatbike-legal/'>simulateur</a> : en 30 secondes, il te dit si ton vélo est un VAE, un cyclomoteur ou un engin non homologué." },
+];
 ---
-
 <Base
-  {...SEO}
-  type="website"
-  schema={localBusinessSchema}
+  title="Fatbike électrique légal 2026 : comparatif, simulateur et conseils"
+  description="Le guide du fatbike électrique 100 % légal : comparatif 2026 (250 W, 25 km/h), simulateur « mon fatbike est-il légal ? », modèles pas chers et balades avec son chien."
+  schema={buildFaqSchema(faq)}
 >
-
-  <!-- ═══════════════════════════════════════════════════════════
-       1. HERO — Cinématique, immersif, plein écran
-  ════════════════════════════════════════════════════════════ -->
-  <Hero />
-  <hr class="orange-rule" />
-
-  <!-- ═══════════════════════════════════════════════════════════
-       2. TRUST STRIP — fond légèrement plus clair
-  ════════════════════════════════════════════════════════════ -->
-  <div class="section-alt">
-    <TrustStrip />
-  </div>
-
-  <!-- ═══════════════════════════════════════════════════════════
-       3. CATÉGORIES — fond noir pur
-  ════════════════════════════════════════════════════════════ -->
-  <CategoryGrid />
-  <hr class="orange-rule" />
-
-  <!-- ═══════════════════════════════════════════════════════════
-       4. POURQUOI FATBIKE — fond alt
-  ════════════════════════════════════════════════════════════ -->
-  <div class="section-alt">
-    <WhyFatbike />
-  </div>
-
-  <!-- ═══════════════════════════════════════════════════════════
-       5. MEILLEURS MODÈLES — fond noir
-  ════════════════════════════════════════════════════════════ -->
-  <FeaturedProducts />
-
-  <!-- ═══════════════════════════════════════════════════════════
-       6. GALERIE LIFESTYLE — scroll horizontal
-       → Ajouter vos photos dans /public/images/lifestyle-*.jpg
-  ════════════════════════════════════════════════════════════ -->
-  <section class="section-alt py-16 md:py-20 overflow-hidden" aria-label="L'univers fatbike en images">
-    <div class="container-site mb-8 md:mb-10">
-      <div class="section-label">Univers fatbike</div>
-      <h2 class="heading-h2 mt-3">
-        Rouler partout,
-        <span class="text-gradient-orange">explorer sans limites</span>
-      </h2>
-    </div>
-    <div class="flex gap-4 overflow-x-auto scrollbar-hide pl-5 sm:pl-8 md:pl-12 lg:pl-16 pr-5 pb-3">
-
-      <a href="/categorie/fatbike-montagne/"
-         class="relative flex-shrink-0 w-56 sm:w-72 h-80 rounded-2xl overflow-hidden border border-brand-gray-700
-                bg-gradient-to-b from-slate-700 to-brand-gray-900 group">
-        <img src="/images/lifestyle-montagne.jpg" alt="Fatbike en montagne"
-             class="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
-             loading="lazy" />
-        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-        <div class="absolute bottom-0 left-0 right-0 p-5">
-          <span class="text-brand-orange text-2xs font-semibold uppercase tracking-widest">Terrain</span>
-          <p class="font-display font-bold text-xl text-white mt-1">Montagne</p>
+  <!-- HERO -->
+  <section class="relative overflow-hidden bg-forest-dark text-white">
+    <div class="absolute inset-0 opacity-[0.07]" style="background-image:radial-gradient(circle at 1px 1px,#fff 1px,transparent 0);background-size:22px 22px" aria-hidden="true"></div>
+    <div class="wrap relative grid items-center gap-10 py-14 md:grid-cols-[1.2fr_1fr] md:py-20">
+      <div>
+        <p class="eyebrow !text-orange-light">Guide indépendant · mis à jour en novembre 2026</p>
+        <h1 class="mt-5 text-5xl text-white md:text-7xl">Le fatbike électrique <span class="text-orange-light">légal</span>, choisi pour de vrai.</h1>
+        <p class="mt-6 max-w-xl text-lg text-white/80 md:text-xl">Ici, on ne recommande que des fatbikes qui ont le droit de rouler en France : 250&nbsp;W, 25&nbsp;km/h, pédalage obligatoire. Des petits budgets aux modèles premium, testés sur les chemins avec mes chiens.</p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="/simulateur-fatbike-legal/" class="btn-primary">Mon fatbike est-il légal ?</a>
+          <a href="/guide/meilleur-fatbike-electrique-2026/" class="btn-light">Voir le comparatif 2026</a>
         </div>
-      </a>
-
-      <a href="/categorie/fatbike-plage/"
-         class="relative flex-shrink-0 w-56 sm:w-72 h-80 rounded-2xl overflow-hidden border border-brand-gray-700
-                bg-gradient-to-b from-blue-900 to-brand-gray-900 group">
-        <img src="/images/lifestyle-plage.jpg" alt="Fatbike sur la plage"
-             class="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
-             loading="lazy" />
-        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-        <div class="absolute bottom-0 left-0 right-0 p-5">
-          <span class="text-brand-orange text-2xs font-semibold uppercase tracking-widest">Terrain</span>
-          <p class="font-display font-bold text-xl text-white mt-1">Plage</p>
+        <div class="mt-10 flex items-center gap-4 rounded-2xl bg-white/5 p-4 ring-1 ring-white/10 md:max-w-lg">
+          <p class="shrink-0 whitespace-nowrap font-display text-4xl font-black text-orange-light">96&nbsp;%</p>
+          <p class="text-sm text-white/75">des fatbikes vendus en France ne sont pas des vélos électriques légaux, selon la filière vélo (juillet 2026). Le but de ce site : t'aider à être dans les 4 % restants.</p>
         </div>
-      </a>
-
-      <a href="/categorie/fatbike-neige/"
-         class="relative flex-shrink-0 w-56 sm:w-72 h-80 rounded-2xl overflow-hidden border border-brand-gray-700
-                bg-gradient-to-b from-sky-900 to-brand-gray-900 group">
-        <img src="/images/lifestyle-neige.jpg" alt="Fatbike dans la neige"
-             class="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
-             loading="lazy" />
-        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-        <div class="absolute bottom-0 left-0 right-0 p-5">
-          <span class="text-brand-orange text-2xs font-semibold uppercase tracking-widest">Terrain</span>
-          <p class="font-display font-bold text-xl text-white mt-1">Neige</p>
+      </div>
+      <div class="relative">
+        <img src="/img/hero-fatbike.webp" alt="Fatbike électrique de style moto avec phare rond, vu de face" width="1100" height="1647" class="mx-auto aspect-[4/5] w-full max-w-md rounded-4xl object-cover shadow-lift" fetchpriority="high" />
+        <div class="absolute -bottom-4 left-2 rounded-2xl bg-white px-4 py-3 text-ink shadow-lift md:-left-6">
+          <p class="text-xs font-bold uppercase tracking-wider text-ink-mute">Règle du site</p>
+          <p class="font-display text-lg font-black">✓ 250 W · 25 km/h</p>
         </div>
-      </a>
-
-      <a href="/cani-fatbike/"
-         class="relative flex-shrink-0 w-56 sm:w-72 h-80 rounded-2xl overflow-hidden border border-brand-gray-700
-                bg-gradient-to-b from-emerald-900 to-brand-gray-900 group">
-        <img src="/images/lifestyle-canicross.jpg" alt="Cani-fatbike"
-             class="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
-             loading="lazy" />
-        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-        <div class="absolute bottom-0 left-0 right-0 p-5">
-          <span class="text-brand-orange text-2xs font-semibold uppercase tracking-widest">Sport</span>
-          <p class="font-display font-bold text-xl text-white mt-1">Cani-fatbike</p>
-        </div>
-      </a>
-
-      <a href="/categorie/fatbike-urbain/"
-         class="relative flex-shrink-0 w-56 sm:w-72 h-80 rounded-2xl overflow-hidden border border-brand-gray-700
-                bg-gradient-to-b from-zinc-700 to-brand-gray-900 group">
-        <img src="/images/lifestyle-urbain.jpg" alt="Fatbike en ville"
-             class="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
-             loading="lazy" />
-        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-        <div class="absolute bottom-0 left-0 right-0 p-5">
-          <span class="text-brand-orange text-2xs font-semibold uppercase tracking-widest">Terrain</span>
-          <p class="font-display font-bold text-xl text-white mt-1">Urbain</p>
-        </div>
-      </a>
-
+      </div>
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════════════════════
-       7. AFFILIATE BANNER — CTA Amazon élégant
-  ════════════════════════════════════════════════════════════ -->
-  <section class="section-padding-sm" aria-label="Offres du moment">
-    <div class="container-site">
-      <AffiliateBanner variant="amazon" />
+  <!-- PROMESSES -->
+  <section class="border-b border-ink/5 bg-white">
+    <div class="wrap grid gap-6 py-10 md:grid-cols-3">
+      {[
+        ['⚖️', 'Uniquement des modèles légaux', 'Aucun fatbike 750 W ou « débridable » en sélection. Jamais.'],
+        ['💶', 'Les petits budgets aussi', 'Mon propre fatbike légal m\'a coûté moins de 800 €.'],
+        ['🐾', 'Pensé pour rouler avec son chien', 'Harnais, attaches, remorques : le pôle que personne ne fait.'],
+      ].map(([i, t, d]) => (
+        <div class="flex gap-4">
+          <span class="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-sand text-2xl" aria-hidden="true">{i}</span>
+          <div><p class="font-display text-lg font-extrabold">{t}</p><p class="text-[0.95rem] text-ink-soft">{d}</p></div>
+        </div>
+      ))}
     </div>
   </section>
-  <hr class="orange-rule" />
 
-  <!-- ═══════════════════════════════════════════════════════════
-       8. UNIVERS AVENTURE — fond alt
-  ════════════════════════════════════════════════════════════ -->
-  <div class="section-alt">
-    <AdventureUniverse />
-  </div>
-
-  <!-- ═══════════════════════════════════════════════════════════
-       9. QUIZ TEASER — fond noir
-  ════════════════════════════════════════════════════════════ -->
-  <QuizTeaser />
-  <hr class="orange-rule" />
-
-  <!-- ═══════════════════════════════════════════════════════════
-       10. GUIDES — fond alt
-  ════════════════════════════════════════════════════════════ -->
-  <div class="section-alt">
-    <LatestGuides />
-  </div>
-
-  <!-- ═══════════════════════════════════════════════════════════
-       11. AFFILIATE GUIDE BANNER
-  ════════════════════════════════════════════════════════════ -->
-  <section class="section-padding-sm" aria-label="Guide complet 2026">
-    <div class="container-site">
-      <AffiliateBanner variant="guide" />
+  <!-- SÉLECTION -->
+  <section class="section">
+    <div class="wrap">
+      <div class="flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <p class="eyebrow">Sélection 2026</p>
+          <h2 class="h-lg mt-3 max-w-2xl">3 fatbikes légaux pour démarrer</h2>
+        </div>
+        <a href="/guide/meilleur-fatbike-electrique-2026/" class="btn-ghost">Le comparatif complet →</a>
+      </div>
+      <div class="mt-10 grid gap-6 md:grid-cols-3">
+        {picks.map(({ bike, label, img, alt }) => (
+          <article class="card card-hover reveal flex flex-col overflow-hidden">
+            <div class="relative">
+              <img src={img} alt={alt} width="600" height="420" loading="lazy" class="aspect-[10/7] w-full object-cover" />
+              <span class="absolute left-4 top-4 chip bg-white text-ink shadow-card">{label}</span>
+              {bike.tested && <span class="absolute right-4 top-4 chip bg-orange text-white">★ Mon vélo</span>}
+            </div>
+            <div class="flex flex-1 flex-col p-6">
+              <h3 class="text-2xl">{bike.name}</h3>
+              <p class="mt-2 text-ink-soft">{bike.bestFor}.</p>
+              <ul class="mt-4 space-y-1.5 text-[0.95rem]">{bike.pros.slice(0, 2).map((p) => <li class="flex gap-2"><span class="text-ok">✓</span>{p}</li>)}</ul>
+              <div class="mt-auto flex items-center justify-between pt-6">
+                <p class="text-sm text-ink-mute">Dès <strong class="font-display text-xl text-ink">{euro(bike.priceFrom)}</strong></p>
+                <a href={bike.href} rel={AFF_REL} target="_blank" data-product={bike.id} class="btn-primary !px-5 !py-2.5 text-sm">Voir le prix</a>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
     </div>
   </section>
-  <hr class="orange-rule" />
 
-  <!-- ═══════════════════════════════════════════════════════════
-       12. FAQ SEO — fond alt
-  ════════════════════════════════════════════════════════════ -->
-  <div class="section-alt">
-    <FAQ />
-  </div>
+  <!-- SIMULATEUR -->
+  <section class="wrap">
+    <div class="grid overflow-hidden rounded-4xl bg-orange text-white md:grid-cols-[1.3fr_1fr]">
+      <div class="p-8 md:p-12">
+        <p class="text-xs font-bold uppercase tracking-[0.14em] text-white/80">Outil gratuit · 30 secondes</p>
+        <h2 class="mt-3 text-3xl text-white md:text-5xl">Ton fatbike passerait-il un contrôle de police ?</h2>
+        <p class="mt-4 max-w-lg text-white/90">Puissance, vitesse, gâchette d'accélérateur : réponds à 5 questions et découvre si ton vélo est un VAE légal, un cyclomoteur ou un engin qui risque la saisie.</p>
+        <a href="/simulateur-fatbike-legal/" class="btn mt-7 bg-white text-orange-dark hover:bg-sand">Lancer le simulateur →</a>
+      </div>
+      <div class="relative min-h-[260px]">
+        <img src="/img/pexels-assedrani-official-177638678-26936495.webp" alt="Compteur de fatbike électrique affichant la vitesse" width="700" height="700" loading="lazy" class="absolute inset-0 h-full w-full object-cover" />
+      </div>
+    </div>
+  </section>
 
-  <!-- ═══════════════════════════════════════════════════════════
-       13. NEWSLETTER — fond noir
-  ════════════════════════════════════════════════════════════ -->
+  <!-- USAGES -->
+  <section class="section">
+    <div class="wrap">
+      <p class="eyebrow">Par usage</p>
+      <h2 class="h-lg mt-3">Tu cherches un fatbike pour…</h2>
+      <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {usages.map((u) => (
+          <a href={u.href} class="group reveal relative block overflow-hidden rounded-3xl shadow-card">
+            <img src={u.img} alt="" width="500" height="620" loading="lazy" class="aspect-[4/5] w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+            <div class="absolute inset-0 bg-gradient-to-t from-forest-dark/90 via-forest-dark/20 to-transparent"></div>
+            <div class="absolute inset-x-0 bottom-0 p-5 text-white">
+              <p class="font-display text-2xl font-black">{u.t}</p>
+              <p class="text-sm text-white/80">{u.d} →</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CANI -->
+  <section class="bg-sand py-16 md:py-24">
+    <div class="wrap grid items-center gap-12 md:grid-cols-2">
+      <div class="grid grid-cols-2 gap-4">
+        <img src="/img/fatbike-et-chien-chemin.webp" alt="Chien assis à côté d'un fatbike sur un chemin de campagne" width="600" height="800" loading="lazy" class="aspect-[3/4] w-full rounded-3xl object-cover shadow-card" />
+        <img src="/img/chien-sieste-roue-fatbike.webp" alt="Chien qui fait la sieste dans l'herbe à côté de la roue d'un fatbike" width="600" height="800" loading="lazy" class="mt-10 aspect-[3/4] w-full rounded-3xl object-cover shadow-card" />
+      </div>
+      <div>
+        <p class="eyebrow">Cani-fatbike</p>
+        <h2 class="h-lg mt-3">Le fatbike, c'est encore mieux avec son chien</h2>
+        <p class="lead mt-5">Je roule avec mes molosses. Les gros pneus, la stabilité et l'assistance qui permet de garder un rythme régulier font du fatbike légal un super compagnon de balade… à condition d'être bien équipé et de respecter le chien.</p>
+        <ul class="mt-6 space-y-3">
+          <li class="flex gap-3"><span class="text-orange">●</span>Quel chien peut suivre, à quel âge, à quelle allure</li>
+          <li class="flex gap-3"><span class="text-orange">●</span>Le bon harnais et la barre d'attache (jamais au guidon)</li>
+          <li class="flex gap-3"><span class="text-orange">●</span>La remorque pour les chiens âgés, lourds ou à nez court</li>
+        </ul>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="/cani-fatbike/" class="btn-dark">Le guide fatbike & chien</a>
+          <a href="/cani-fatbike/remorque-chien-velo-electrique/" class="btn-ghost">Remorques pour chien</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VRAIE PERSONNE -->
+  <section class="section">
+    <div class="wrap grid items-center gap-12 md:grid-cols-[1fr_1.2fr]">
+      <img src="/img/vanessa-fatbike-chemin-chien.webp" alt="Le fatbike Colorway de Vanessa sur un chemin, avec son chien" width="800" height="600" loading="lazy" class="aspect-[4/3] w-full rounded-4xl object-cover shadow-lift" />
+      <div>
+        <p class="eyebrow">Qui écrit ici ?</p>
+        <h2 class="h-lg mt-3">Une vraie rideuse, pas une usine à contenu</h2>
+        <p class="lead mt-5">Je m'appelle Vanessa. Je roule sur un Colorway BK29 à 250 W acheté moins de 800 €, presque toujours avec mes chiens. Je vérifie la réglementation, je compare les fiches techniques ligne par ligne et je te dis aussi ce qui ne va pas.</p>
+        <a href="/a-propos/" class="btn-ghost mt-7">Mon histoire et ma méthode</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap-prose"><Faq items={faq} /></section>
   <Newsletter />
-
 </Base>

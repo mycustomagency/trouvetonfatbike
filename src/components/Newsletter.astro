@@ -1,0 +1,40 @@
+---
+interface Props { variant?: 'band' | 'card' }
+const { variant = 'band' } = Astro.props;
+const id = 'nl-' + Math.random().toString(36).slice(2, 8);
+---
+<section class:list={[variant === 'band' ? 'my-20' : 'my-12']}>
+  <div class:list={['relative overflow-hidden rounded-4xl bg-forest text-white', variant === 'band' ? 'wrap !px-0' : '']}>
+    <div class="grid items-center gap-8 p-8 md:grid-cols-[1.2fr_1fr] md:p-12">
+      <div>
+        <p class="eyebrow !text-orange-light">Cadeau gratuit</p>
+        <h2 class="mt-3 text-3xl text-white md:text-4xl">La checklist «&nbsp;Fatbike 100&nbsp;% légal&nbsp;»</h2>
+        <p class="mt-3 text-white/80">Les 10 points à vérifier avant d'acheter, pour ne pas te retrouver avec un engin saisi au premier contrôle. Envoyée tout de suite par email, puis un conseil fatbike de temps en temps. Désinscription en un clic.</p>
+      </div>
+      <form id={id} class="flex flex-col gap-3" novalidate>
+        <label for={`${id}-email`} class="sr-only">Ton adresse email</label>
+        <input id={`${id}-email`} type="email" name="email" required autocomplete="email" placeholder="ton@email.fr" class="field !border-white/20" />
+        <button type="submit" class="btn-primary w-full">Recevoir la checklist</button>
+        <p class="nl-msg min-h-[1.5rem] text-sm text-white/80" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+</section>
+<script define:vars={{ id }}>
+  const f = document.getElementById(id);
+  f?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const msg = f.querySelector('.nl-msg');
+    const btn = f.querySelector('button');
+    const email = f.querySelector('input').value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { msg.textContent = 'Adresse email invalide.'; return; }
+    btn.disabled = true; msg.textContent = 'Envoi…';
+    try {
+      const r = await fetch('/api/subscribe', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email }) });
+      const d = await r.json();
+      msg.textContent = r.ok ? 'C\'est parti ! Regarde ta boîte mail (et les spams).' : (d.error || 'Oups, réessaie.');
+      if (r.ok) { f.reset(); window.gtag && gtag('event', 'inscription_newsletter'); }
+    } catch { msg.textContent = 'Oups, réessaie dans un instant.'; }
+    btn.disabled = false;
+  });
+</script>

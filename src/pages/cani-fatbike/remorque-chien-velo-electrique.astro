@@ -1,0 +1,70 @@
+---
+import Article from '@layouts/Article.astro';
+import Faq from '@components/Faq.astro';
+import { DOG_TRAILERS } from '@data/accessories';
+import { AFF_REL } from '@utils/affiliate';
+import { buildFaqSchema } from '@utils/seo';
+
+const faq = [
+  { q: 'Peut-on atteler une remorque pour chien à un fatbike ?', a: "Souvent oui, mais vérifie deux points : la compatibilité de l'attache avec l'axe arrière (les fatbikes ont des axes et des cadres plus larges) et la charge totale autorisée par le fabricant du vélo." },
+  { q: 'Jusqu\'à quel poids de chien ?', a: "Selon les modèles, de 20 à 45 kg environ. La Burley Bark Ranger est annoncée autour de 34 kg (45 kg pour la XL), et les Croozer Dog de 35 à 45 kg selon la version. Vérifie aussi la hauteur et la longueur de ton chien." },
+  { q: 'Un side-car pour chien, ça existe pour fatbike ?', a: "Quelques vélos électriques sont vendus avec un side-car intégré, et certains passionnés en fabriquent eux-mêmes. Mais il n'existe quasiment pas de side-car à fixer sur n'importe quel fatbike en France. La remorque reste la solution la plus sûre et la plus simple." },
+  { q: 'À quelle vitesse rouler avec une remorque ?', a: "Plus lentement que seul : la distance de freinage augmente nettement avec 30 à 40 kg de plus. Réduis la vitesse dans les descentes et les virages, et vérifie l'état de tes freins avant chaque sortie." },
+];
+---
+<Article
+  title="Remorque chien pour vélo électrique et fatbike : laquelle choisir ?"
+  h1="Remorque pour chien sur fatbike électrique : comment bien choisir"
+  description="Quelle remorque pour transporter son chien derrière un fatbike ou un vélo électrique ? Poids maximal, compatibilité, sécurité, Croozer Dog, Burley Bark Ranger et petits budgets."
+  intro="Pour les chiens âgés, lourds, à nez court ou pour finir une longue sortie, la remorque change tout. Voici comment choisir celle qui ira avec ton fatbike."
+  image="/img/ia-fatbike-avec-pit.webp"
+  imageAlt="Illustration d'un fatbike orange sur un chemin avec un chien de type molosse"
+  crumb="Remorque chien vélo électrique"
+  pubDate={new Date('2026-11-22')}
+  schema={[buildFaqSchema(faq)]}
+>
+  <h2>Pour qui, la remorque ?</h2>
+  <ul>
+    <li>Les chiens à nez court (bouledogues, carlins) qui ne doivent pas courir longtemps</li>
+    <li>Les chiens âgés, convalescents ou en surpoids</li>
+    <li>Les chiots en croissance</li>
+    <li>Les longues sorties : le chien court un peu, puis se repose</li>
+  </ul>
+
+  <h2>Les 5 critères pour choisir</h2>
+  <ol>
+    <li><strong>Le poids et la taille de ton chien</strong> : regarde la charge maximale, mais aussi la hauteur intérieure. Un chien doit pouvoir se tenir assis la tête droite.</li>
+    <li><strong>La compatibilité avec le fatbike</strong> : axe arrière, largeur du cadre et des pneus. Demande au vendeur avant d'acheter.</li>
+    <li><strong>La sécurité</strong> : barre d'attelage rigide, laisse intérieure courte, fanion, réflecteurs et frein de stationnement.</li>
+    <li><strong>Le confort</strong> : suspension, aération, fond amovible lavable, entrée basse pour les chiens lourds.</li>
+    <li><strong>Le rangement</strong> : pliage rapide et poids de la remorque vide.</li>
+  </ol>
+
+  <h2>Les modèles à regarder</h2>
+  <div class="not-prose my-6 space-y-4">
+    {DOG_TRAILERS.map((t) => (
+      <div class="card flex flex-col gap-4 p-6 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <div class="flex flex-wrap items-center gap-2">
+            <p class="font-display text-xl font-extrabold">{t.name}</p>
+            {t.tag && <span class="chip bg-orange-soft text-orange-dark">{t.tag}</span>}
+          </div>
+          <p class="mt-1 text-ink-soft">{t.why}</p>
+          <p class="mt-1 text-sm font-semibold text-ink-mute">{t.price}</p>
+        </div>
+        <a href={t.href} rel={AFF_REL} target="_blank" class="btn-primary shrink-0">Voir les prix</a>
+      </div>
+    ))}
+  </div>
+
+  <div class="callout-warn not-prose">
+    <p class="font-bold">Habituer son chien</p>
+    <p class="mt-1 text-ink-soft">Installe la remorque ouverte à la maison plusieurs jours avant la première sortie, avec sa couverture et des friandises dedans. Fais ensuite quelques mètres au pas. Un chien qui a peur de la remorque peut paniquer en roulant.</p>
+  </div>
+
+  <h2>Et le side-car ?</h2>
+  <p>On voit passer de superbes vidéos de fatbikes avec side-car pour chien. En réalité, ce sont soit des vélos vendus complets avec leur side-car, rarement disponibles en France et pas toujours conformes, soit des fabrications maison. Si un modèle fiable et légal arrive sur le marché français, je l'ajouterai ici.</p>
+
+  <p>Avant d'acheter une remorque, lis aussi le <a href="/cani-fatbike/">guide complet pour rouler avec son chien</a>.</p>
+  <div class="not-prose"><Faq items={faq} /></div>
+</Article>

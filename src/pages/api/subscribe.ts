@@ -2,53 +2,48 @@ import type { APIRoute } from 'astro';
 
 export const prerender = false;
 
-export const GET: APIRoute = () =>
-  json({ error: 'Method not allowed' }, 405);
+const json = (data: object, status: number) =>
+  new Response(JSON.stringify(data), { status, headers: { 'Content-Type': 'application/json' } });
+
+export const GET: APIRoute = () => json({ error: 'Method not allowed' }, 405);
+
+const WELCOME = `
+<div style="font-family:Arial,sans-serif;max-width:560px;margin:auto;color:#17201B;line-height:1.6">
+  <h1 style="color:#1F3A2C">Ta checklist « Fatbike 100 % légal »</h1>
+  <p>Merci de ton inscription ! Comme promis, voici les 10 points à vérifier avant d'acheter un fatbike électrique en France :</p>
+  <p style="text-align:center;margin:28px 0">
+    <a href="https://trouvetonfatbike.com/checklist-fatbike-legal/" style="background:#E8593C;color:#fff;padding:14px 26px;border-radius:999px;text-decoration:none;font-weight:bold">Ouvrir ma checklist</a>
+  </p>
+  <p>Tu as déjà un fatbike ? Teste-le en 30 secondes avec le simulateur :
+    <a href="https://trouvetonfatbike.com/simulateur-fatbike-legal/" style="color:#C43D22">Mon fatbike est-il légal ?</a></p>
+  <p>À bientôt sur les chemins,<br>Vanessa, TrouveTonFatbike</p>
+  <p style="font-size:12px;color:#6B746E">Tu reçois cet email parce que tu t'es inscrit(e) sur trouvetonfatbike.com. Un lien de désinscription figure dans chacun de nos envois.</p>
+</div>`;
 
 export const POST: APIRoute = async ({ request, locals }) => {
-  const apiKey = locals.runtime.env.BREVO_API_KEY;
+  const apiKey = (locals as any).runtime?.env?.BREVO_API_KEY;
   if (!apiKey) return json({ error: 'Configuration serveur manquante' }, 500);
 
-  let email: string;
-  try {
-    const body = await request.json();
-    email = body.email;
-  } catch {
-    return json({ error: 'Corps de requête invalide' }, 400);
-  }
-
-  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
-    return json({ error: 'Email invalide' }, 400);
+  let email = '';
+  try { email = String((await request.json()).email ?? '').trim(); } catch { return json({ error: 'Requête invalide' }, 400); }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return json({ error: 'Email invalide' }, 400);
 
   const headers = { 'api-key': apiKey, 'Content-Type': 'application/json' };
-
   const contactRes = await fetch('https://api.brevo.com/v3/contacts', {
-    method: 'POST',
-    headers,
+    method: 'POST', headers,
     body: JSON.stringify({ email, listIds: [3], updateEnabled: true }),
   });
-
-  if (!contactRes.ok && contactRes.status !== 204)
-    return json({ error: 'Inscription impossible, réessaie.' }, 502);
+  if (!contactRes.ok && contactRes.status !== 204) return json({ error: 'Inscription impossible, réessaie.' }, 502);
 
   await fetch('https://api.brevo.com/v3/smtp/email', {
-    method: 'POST',
-    headers,
+    method: 'POST', headers,
     body: JSON.stringify({
       to: [{ email }],
-      subject: 'Bienvenue sur TrouveTonFatBike !',
-      htmlContent:
-        "<h1>Merci pour ton inscription !</h1><p>Tu recevras bientôt nos meilleurs guides et bons plans fatbike.</p><a href='https://trouvetonfatbike.com'>Visiter le site</a>",
-      sender: { name: 'TrouveTonFatBike', email: 'contact@trouvetonfatbike.com' },
+      subject: 'Ta checklist « Fatbike 100 % légal » 🚲',
+      htmlContent: WELCOME,
+      sender: { name: 'Vanessa de TrouveTonFatbike', email: 'contact@trouvetonfatbike.com' },
     }),
   });
 
   return json({ success: true }, 200);
 };
-
-function json(data: object, status: number) {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: { 'Content-Type': 'application/json' },
-  });
-}

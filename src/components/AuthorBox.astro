@@ -1,0 +1,21 @@
+---
+import { AUTHOR, UPDATED_LABEL } from '@data/site';
+interface Props { compact?: boolean; updated?: string }
+const { compact = false, updated = UPDATED_LABEL } = Astro.props;
+---
+{compact ? (
+  <div class="flex items-center gap-3 text-sm text-ink-mute">
+    <img src={AUTHOR.photo} alt="" width="40" height="40" class="h-10 w-10 rounded-full object-cover" loading="lazy" />
+    <p>Par <a href={AUTHOR.url} class="font-semibold text-ink hover:text-orange-dark">{AUTHOR.name}</a> · Mis à jour en {updated} · Infos réglementaires vérifiées</p>
+  </div>
+) : (
+  <aside class="card my-12 flex flex-col gap-5 p-6 sm:flex-row sm:items-center">
+    <img src={AUTHOR.photo} alt="Le fatbike de Vanessa sur un chemin de campagne avec son chien" width="96" height="96" class="h-24 w-24 shrink-0 rounded-2xl object-cover" loading="lazy" />
+    <div>
+      <p class="text-xs font-bold uppercase tracking-wider text-orange-dark">Écrit par</p>
+      <p class="font-display text-xl font-extrabold">{AUTHOR.name}</p>
+      <p class="mt-1 text-[0.95rem] text-ink-soft">{AUTHOR.short}</p>
+      <a href={AUTHOR.url} class="mt-2 inline-block text-sm font-bold text-orange-dark hover:underline">Ma méthode et mon histoire →</a>
+    </div>
+  </aside>
+)}

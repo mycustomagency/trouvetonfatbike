@@ -1,0 +1,50 @@
+---
+import Article from '@layouts/Article.astro';
+import BikeCard from '@components/BikeCard.astro';
+import Faq from '@components/Faq.astro';
+import { byId } from '@data/bikes';
+import { buildFaqSchema } from '@utils/seo';
+
+const bk29 = byId('colorway-bk29');
+const faq = [
+  { q: 'Le Colorway BK29 est-il légal en France ?', a: "Il est vendu avec un moteur de 250 W et une assistance limitée à 25 km/h, ce qui correspond à un VAE. Certaines annonces mentionnent une gâchette d'accélérateur : elle ne doit pas faire avancer le vélo au-delà de 6 km/h sans pédaler. Vérifie ta version avec le simulateur." },
+  { q: 'Quelle différence entre BK29G et BK29T ?', a: "Selon les fiches des revendeurs, le BK29G a une batterie 36 V 12 Ah (autonomie annoncée 35 à 60 km), le BK29T une batterie plus grosse de 48 V 15 Ah (720 Wh, autonomie annoncée 45 à 80 km). Les deux ont des roues 20 × 4 pouces et un cadre en acier." },
+  { q: 'Le Colorway BK29 convient-il pour rouler avec un chien ?', a: "Pour des balades calmes sur chemin, oui : la selle longue et la position droite sont confortables, et la vitesse se règle facilement à l'allure du chien. Il faut fixer la barre d'attache sur la tige de selle, jamais au guidon." },
+];
+---
+<Article
+  title="Avis Colorway BK29 : mon fatbike légal à moins de 800 €"
+  h1="Colorway BK29 : mon avis de propriétaire sur ce fatbike à petit prix"
+  description="Avis honnête sur le Colorway BK29 (BK29G / BK29T), fatbike électrique 250 W style moto à moins de 800 € : points forts, limites, légalité et balades avec un chien."
+  intro="Mon fatbike à moi. Je l'ai acheté en premier prix et j'ai encore peu roulé avec : voici mes premières impressions honnêtes, que je compléterai au printemps 2027."
+  image="/img/fatbike-colorway-profil.webp"
+  imageAlt="Fatbike Colorway BK29 noir vu de profil dans un jardin"
+  crumb="Avis Colorway BK29"
+  pubDate={new Date('2026-11-22')}
+  schema={[buildFaqSchema(faq)]}
+>
+  <div class="callout-warn not-prose">
+    <p class="font-bold">Transparence</p>
+    <p class="mt-1 text-ink-soft">Ce n'est pas (encore) un test longue durée : j'ai fait peu de kilomètres depuis l'achat. Je préfère te le dire plutôt que d'inventer. Cette page sera mise à jour avec mes vraies sorties de la saison 2027.</p>
+  </div>
+
+  <h2>Pourquoi j'ai choisi ce fatbike</h2>
+  <p>Je voulais un fatbike au look moto, confortable pour des balades avec mes chiens, qui reste un <strong>vrai vélo électrique légal</strong> et qui ne coûte pas une fortune. Le BK29 coche ces cases : moteur 250 W, assistance limitée à 25 km/h, gros pneus de 20 × 4 pouces, et un prix autour de 800 € en promotion.</p>
+  <img src="/img/fatbike-et-chien-chemin.webp" alt="Le Colorway BK29 sur un chemin de campagne avec un chien assis à côté" width="900" height="1200" loading="lazy" />
+
+  <h2>Mes premières impressions</h2>
+  <ul>
+    <li><strong>Le confort :</strong> la selle longue et les gros pneus absorbent bien les chemins de terre. On se sent posé, stable, même à basse vitesse quand le chien trottine à côté.</li>
+    <li><strong>Le look :</strong> phare rond, garde-boue, allure de petite moto. C'est clairement ce qui fait craquer.</li>
+    <li><strong>Le poids :</strong> le cadre en acier le rend lourd. Le monter dans un coffre ou un escalier, c'est du sport.</li>
+    <li><strong>L'assistance :</strong> capteur de rotation, donc l'aide arrive d'un coup quand les pédales tournent. Moins naturel qu'un capteur de couple, mais facile à prendre en main.</li>
+  </ul>
+
+  <h2>Le point à vérifier : la gâchette</h2>
+  <p>Certaines annonces du BK29 parlent d'un « accélérateur ». En France, une aide au démarrage sans pédaler n'est tolérée que <strong>jusqu'à 6 km/h</strong>. Si ta version permet d'aller plus vite sans pédaler, ne l'utilise pas sur la voie publique. Fais le test avec le <a href="/simulateur-fatbike-legal/">simulateur</a>.</p>
+
+  <h2>Sa fiche et mon verdict provisoire</h2>
+  <div class="not-prose"><BikeCard bike={bk29} /></div>
+  <p class="mt-6">Pour moins de 800 €, c'est une bonne porte d'entrée dans le fatbike légal, surtout pour des balades tranquilles. Si tu veux plus léger ou une assistance plus douce, regarde du côté de l'<a href="/guide/meilleur-fatbike-electrique-2026/#engwe-ep2-3-boost">ENGWE EP-2 3.0 Boost</a> ou du <a href="/guide/meilleur-fatbike-electrique-2026/#fiido-m1-pro">Fiido M1 Pro</a>.</p>
+  <div class="not-prose"><Faq items={faq} /></div>
+</Article>
