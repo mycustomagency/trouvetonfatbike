@@ -1,10 +1,10 @@
 // ─── Liens partenaires ──────────────────────────────────────────────────────
 // Un seul endroit à modifier quand un nouveau programme d'affiliation est accepté.
-// Amazon : actif (tag customdeal00-21).
+// Amazon : actif (identifiant de suivi trouvetonfatbike-21).
 // ENGWE (Awin, jusqu'à 6 %), Alltricks, Upway : à activer dès validation,
 // en remplissant les champs ci-dessous. Les liens du site basculent automatiquement.
 
-export const AMAZON_TAG = 'customdeal00-21';
+export const AMAZON_TAG = 'trouvetonfatbike-21'; // identifiant de suivi dédié au site (compte principal : customdeal00-21)
 
 export const PARTNER_URLS: Record<string, string | null> = {
   // Exemple une fois accepté : 'engwe': 'https://www.awin1.com/cread.php?awinmid=XXXX&awinaffid=YYYY&ued='
