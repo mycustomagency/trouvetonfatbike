@@ -64,6 +64,52 @@ export const ACCESSORY_GROUPS: AccessoryGroup[] = [
       { name: 'Housse de protection', why: 'Si le vélo dort dehors ou dans un garage poussiéreux.', price: '15 à 30 €', href: amazonSearch('housse protection vélo électrique') },
     ],
   },
+  {
+    id: 'batterie',
+    title: 'Batterie : la protéger et la charger sans risque',
+    intro: "La batterie est la pièce la plus chère du vélo, et la plus sensible au froid et aux chocs.",
+    img: '/img/pexels-assedrani-official-177638678-26733813.webp',
+    items: [
+      { name: 'Sac de charge ignifugé pour batterie', why: 'Pour charger à la maison avec une sécurité en plus en cas de surchauffe.', price: '20 à 40 €', href: amazonSearch('sac ignifugé batterie vélo électrique'), tag: 'Sécurité' },
+      { name: 'Housse néoprène pour batterie', why: "En hiver, garde la batterie au chaud et limite la perte d'autonomie.", price: '15 à 30 €', href: amazonSearch('housse néoprène batterie vélo électrique') },
+      { name: 'Détecteur de fumée pour le garage', why: 'Indispensable si le vélo et la batterie dorment dans un garage ou une cave.', price: '15 à 30 €', href: amazonSearch('détecteur de fumée garage') },
+    ],
+  },
+  {
+    id: 'hiver',
+    title: 'Hiver et pluie : rouler toute l\'année',
+    intro: 'Le fatbike adore la boue et la neige. Toi, un peu moins : voici de quoi rester au sec et au chaud.',
+    img: '/img/john-nzoka-fehf_9os_mi-unsplash.webp',
+    items: [
+      { name: 'Gants vélo hiver coupe-vent', why: "À 25 km/h, le vent glace les doigts bien avant le reste du corps.", price: '25 à 60 €', href: amazonSearch('gants vélo hiver coupe vent') },
+      { name: 'Veste de pluie vélo réfléchissante', why: 'Imperméable et visible : deux problèmes réglés en une pièce.', price: '40 à 100 €', href: amazonSearch('veste pluie vélo réfléchissante') },
+      { name: 'Garde-boue larges pour fatbike', why: 'Beaucoup de fatbikes en sont livrés sans. Indispensable sur chemin mouillé.', price: '20 à 50 €', href: amazonSearch('garde boue fatbike 4.0') },
+      { name: 'Cache-cou et sous-casque', why: 'Petit, léger, et ça change tout par temps froid.', price: '10 à 25 €', href: amazonSearch('sous casque vélo hiver') },
+    ],
+  },
+  {
+    id: 'entretien',
+    title: 'Entretien : le minimum pour faire durer ton fatbike',
+    intro: "Un fatbike bien entretenu garde ses freins, sa chaîne et sa batterie plus longtemps. Inutile d'être mécanicien.",
+    img: '/img/pexels-g-force-bike-95411088-13738415.webp',
+    items: [
+      { name: 'Kit de nettoyage vélo', why: 'Brosses et nettoyant adaptés, sans karcher (l\'eau sous pression abîme moteur et roulements).', price: '20 à 40 €', href: amazonSearch('kit nettoyage vélo brosses') },
+      { name: 'Lubrifiant chaîne conditions humides', why: 'Boue, sable, pluie : une chaîne propre et graissée dure deux fois plus longtemps.', price: '8 à 15 €', href: amazonSearch('lubrifiant chaîne vélo conditions humides') },
+      { name: 'Multi-outil vélo', why: 'Pour resserrer une vis ou régler une selle en pleine balade.', price: '15 à 35 €', href: amazonSearch('multi outil vélo') },
+      { name: 'Pied d\'atelier ou béquille de maintenance', why: 'Un fatbike de 30 kg ne se retourne pas facilement : un support rend l\'entretien bien plus simple.', price: '30 à 90 €', href: amazonSearch('pied atelier vélo électrique') },
+    ],
+  },
+  {
+    id: 'filmer',
+    title: 'Filmer tes sorties',
+    intro: 'Pour garder des souvenirs de tes balades (avec ou sans ton chien), ou partager tes itinéraires.',
+    img: '/img/lucas-qb_lxmfkhb0-unsplash.webp',
+    items: [
+      { name: 'Caméra embarquée type action cam', why: 'Stabilisée, étanche, elle filme le chemin et le chien sans tenir le téléphone.', price: '150 à 450 €', href: amazonSearch('caméra sport stabilisée 4K') },
+      { name: 'Support caméra pour guidon', why: 'Fixation solide pour les gros tubes de guidon des fatbikes.', price: '15 à 30 €', href: amazonSearch('support caméra guidon vélo') },
+      { name: 'Montre ou compteur GPS', why: 'Pour suivre distance, dénivelé et retrouver ton itinéraire.', price: '50 à 250 €', href: amazonSearch('compteur GPS vélo') },
+    ],
+  },
 ];
 
 export const DOG_GEAR: Accessory[] = [
@@ -72,6 +118,7 @@ export const DOG_GEAR: Accessory[] = [
   { name: 'Ligne de trait élastique', why: 'Absorbe les départs brusques et protège le dos du chien.', price: '15 à 30 €', href: amazonSearch('laisse élastique canicross amortisseur') },
   { name: 'Gourde-gamelle pour chien', why: 'Une pause eau toutes les 15 à 20 minutes quand il fait doux.', price: '10 à 25 €', href: amazonSearch('gourde chien gamelle balade') },
   { name: 'Baume protecteur de coussinets', why: 'Protège des graviers, du bitume et du sel en hiver.', price: '12 à 20 €', href: amazonSearch('baume coussinets chien') },
+  { name: 'Panier de transport pour petit chien', why: 'Pour les chiens de moins de 8 à 10 kg, ou pour finir la balade au repos. Vérifie la charge du porte-bagages.', price: '40 à 120 €', href: amazonSearch('panier vélo chien porte bagage') },
   { name: 'Gilet réfléchissant ou lumineux pour chien', why: 'Pour être vus des voitures au crépuscule.', price: '10 à 30 €', href: amazonSearch('gilet réfléchissant chien lumineux') },
 ];
 

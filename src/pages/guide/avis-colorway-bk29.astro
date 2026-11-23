@@ -7,7 +7,7 @@ import { buildFaqSchema } from '@utils/seo';
 
 const bk29 = byId('colorway-bk29');
 const faq = [
-  { q: 'Le Colorway BK29 est-il légal en France ?', a: "Il est vendu avec un moteur de 250 W et une assistance limitée à 25 km/h, ce qui correspond à un VAE. Certaines annonces mentionnent une gâchette d'accélérateur : elle ne doit pas faire avancer le vélo au-delà de 6 km/h sans pédaler. Vérifie ta version avec le simulateur." },
+  { q: 'Le Colorway BK29 est-il légal en France ?', a: "Il est vendu avec un moteur de 250 W et une assistance limitée à 25 km/h, ce qui correspond à un VAE. Le mien n'a pas de gâchette d'accélérateur : on choisit simplement le niveau d'assistance avec un boîtier + / −. Certaines annonces de revendeurs parlent d'« accélérateur » : vérifie la version avec le simulateur." },
   { q: 'Quelle différence entre BK29G et BK29T ?', a: "Selon les fiches des revendeurs, le BK29G a une batterie 36 V 12 Ah (autonomie annoncée 35 à 60 km), le BK29T une batterie plus grosse de 48 V 15 Ah (720 Wh, autonomie annoncée 45 à 80 km). Les deux ont des roues 20 × 4 pouces et un cadre en acier." },
   { q: 'Le Colorway BK29 convient-il pour rouler avec un chien ?', a: "Pour des balades calmes sur chemin, oui : la selle longue et la position droite sont confortables, et la vitesse se règle facilement à l'allure du chien. Il faut fixer la barre d'attache sur la tige de selle, jamais au guidon." },
 ];
@@ -40,8 +40,8 @@ const faq = [
     <li><strong>L'assistance :</strong> capteur de rotation, donc l'aide arrive d'un coup quand les pédales tournent. Moins naturel qu'un capteur de couple, mais facile à prendre en main.</li>
   </ul>
 
-  <h2>Le point à vérifier : la gâchette</h2>
-  <p>Certaines annonces du BK29 parlent d'un « accélérateur ». En France, une aide au démarrage sans pédaler n'est tolérée que <strong>jusqu'à 6 km/h</strong>. Si ta version permet d'aller plus vite sans pédaler, ne l'utilise pas sur la voie publique. Fais le test avec le <a href="/simulateur-fatbike-legal/">simulateur</a>.</p>
+  <h2>Gâchette d'accélérateur : non</h2>
+  <p>Sur mon BK29, pas de gâchette : l'assistance ne fonctionne qu'en pédalant, et un petit boîtier + / − au guidon permet de changer le niveau d'assistance. C'est exactement ce que demande la loi. Attention, certaines annonces de revendeurs parlent d'« accélérateur » : en France, une aide au démarrage sans pédaler n'est tolérée que <strong>jusqu'à 6 km/h</strong>. En cas de doute sur une version, fais le test avec le <a href="/simulateur-fatbike-legal/">simulateur</a>.</p>
 
   <h2>Sa fiche et mon verdict provisoire</h2>
   <div class="not-prose"><BikeCard bike={bk29} /></div>

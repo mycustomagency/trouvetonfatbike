@@ -20,6 +20,7 @@ const cols = [
     ['Accessoires', '/accessoires/'],
   ]},
 ];
+const LABELS: Record<string, string> = { youtube: 'YouTube', tiktok: 'TikTok', pinterest: 'Pinterest' };
 const socials = Object.entries(SOCIAL).filter(([, v]) => v) as [string, string][];
 ---
 <footer class="mt-24 bg-forest-dark text-white/80">
@@ -27,11 +28,11 @@ const socials = Object.entries(SOCIAL).filter(([, v]) => v) as [string, string][
     <div>
       <Logo light />
       <p class="mt-5 max-w-xs text-[0.95rem] leading-relaxed text-white/70">
-        Le guide indépendant du fatbike électrique <strong class="text-white">légal</strong>, testé sur les chemins avec mes chiens.
+        Le guide indépendant du fatbike électrique <strong class="text-white">légal</strong>, écrit par une rideuse qui roule avec ses chiens.
       </p>
       {socials.length > 0 && (
         <ul class="mt-6 flex gap-3">
-          {socials.map(([k, v]) => <li><a href={v} class="capitalize text-sm font-semibold text-white hover:text-orange-light" rel="noopener" target="_blank">{k}</a></li>)}
+          {socials.map(([k, v]) => <li><a href={v} class="text-sm font-semibold text-white hover:text-orange-light" rel="noopener" target="_blank">{LABELS[k] ?? k}</a></li>)}
         </ul>
       )}
     </div>

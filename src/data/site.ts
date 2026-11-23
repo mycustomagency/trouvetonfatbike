@@ -2,7 +2,7 @@ export const AUTHOR = {
   name: 'Vanessa',
   role: 'Fondatrice de TrouveTonFatbike',
   short:
-    "Rideuse en fatbike 250 W, toujours accompagnée de ses molosses. Formée à l'éducation canine, elle teste et vérifie avant de recommander.",
+    "Rideuse en fatbike 250 W, toujours accompagnée de ses molosses. Formée à l'éducation canine, elle vérifie la réglementation et les fiches techniques avant de recommander.",
   photo: '/img/vanessa-fatbike-chemin-chien.webp',
   url: '/a-propos/',
 };
@@ -20,7 +20,7 @@ export const NAV = [
 
 // À remplir avec les vraies adresses des comptes (laisser null = lien masqué)
 export const SOCIAL: Record<string, string | null> = {
-  youtube: null,
-  tiktok: null,
+  youtube: 'https://www.youtube.com/@TrouveTonFatbike',
+  tiktok: 'https://www.tiktok.com/@trouvetonfatbike',
   pinterest: null,
 };

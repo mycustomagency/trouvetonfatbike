@@ -2,7 +2,7 @@ import { AUTHOR } from '@data/site';
 
 export const SITE = {
   name: 'TrouveTonFatbike',
-  tagline: 'Le fatbike électrique légal, testé pour de vrai',
+  tagline: 'Le fatbike électrique légal, choisi pour de vrai',
   url: 'https://trouvetonfatbike.com',
   description:
     "Fatbikes électriques 100 % légaux (250 W, 25 km/h) : comparatif 2026, simulateur de conformité, petits budgets et balades avec son chien.",
@@ -39,6 +39,7 @@ export const ORG = {
   name: SITE.name,
   url: SITE.url,
   logo: { '@type': 'ImageObject', url: `${SITE.url}/logo-header.png` },
+  sameAs: ['https://www.youtube.com/@TrouveTonFatbike', 'https://www.tiktok.com/@trouvetonfatbike'],
 };
 
 export function buildWebsiteSchema() {
