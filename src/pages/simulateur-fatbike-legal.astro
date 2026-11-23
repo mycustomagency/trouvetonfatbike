@@ -31,10 +31,11 @@ const faq = [
   description="Puissance, vitesse, gâchette, débridage : en 30 secondes, découvre si ton fatbike électrique est un VAE légal, un cyclomoteur ou un engin non homologué. Règles 2026."
   schema={[buildFaqSchema(faq), buildBreadcrumbSchema([{ name: 'Accueil', url: '/' }, { name: 'Simulateur', url: '/simulateur-fatbike-legal/' }])]}
 >
-  <section class="bg-forest-dark text-white">
+  <section class="relative bg-forest text-white">
+    <div class="stripes absolute right-0 top-0 h-3.5 w-1/3" aria-hidden="true"></div>
     <div class="wrap-prose py-14 text-center md:py-20">
       <p class="eyebrow !text-orange-light justify-center">Outil gratuit · règles à jour novembre 2026</p>
-      <h1 class="mt-4 text-4xl text-white md:text-6xl">Mon fatbike est-il légal ?</h1>
+      <h1 class="h-sport mt-4 text-4xl text-white md:text-6xl">Mon fatbike est-il légal ?</h1>
       <p class="mx-auto mt-5 max-w-xl text-lg text-white/80">Réponds à 5 questions. Le simulateur te dit si ton fatbike est un vélo électrique légal, un cyclomoteur ou un engin qui risque la saisie, et ce que tu dois faire.</p>
     </div>
   </section>

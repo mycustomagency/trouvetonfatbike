@@ -4,10 +4,10 @@ interface Props { title: string; h1: string; description: string; eyebrow?: stri
 const { title, h1, description, eyebrow = 'Infos pratiques', noIndex = false } = Astro.props;
 ---
 <Base title={title} description={description} noIndex={noIndex}>
-  <section class="bg-sand">
+  <section class="relative bg-forest text-white"><div class="stripes absolute right-0 top-0 h-3.5 w-1/3" aria-hidden="true"></div>
     <div class="wrap-prose py-12 md:py-16">
       <p class="eyebrow">{eyebrow}</p>
-      <h1 class="h-lg mt-4">{h1}</h1>
+      <h1 class="h-lg text-white mt-4">{h1}</h1>
     </div>
   </section>
   <div class="wrap-prose article py-12"><slot /></div>

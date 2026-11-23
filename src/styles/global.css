@@ -13,6 +13,7 @@
   h3 { font-weight: 700; }
   a { @apply transition-colors; }
   ::selection { @apply bg-orange text-white; }
+  h1, h2, h3, h4 { font-stretch: 100%; }
   :focus-visible { outline: 3px solid #E8593C; outline-offset: 3px; border-radius: 6px; }
 }
 
@@ -28,7 +29,7 @@
   .lead { @apply text-lg md:text-xl text-ink-soft; }
 
   .btn { @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-[0.95rem] font-bold transition-all duration-200; }
-  .btn-primary { @apply btn bg-orange text-white hover:bg-orange-dark shadow-card hover:shadow-lift hover:-translate-y-0.5; }
+  .btn-primary { @apply btn bg-orange text-white hover:bg-orange-dark shadow-glow hover:-translate-y-0.5; }
   .btn-dark { @apply btn bg-forest text-white hover:bg-forest-dark; }
   .btn-ghost { @apply btn border-2 border-ink/15 text-ink hover:border-ink/40 bg-white/60; }
   .btn-light { @apply btn border-2 border-white/30 text-white hover:bg-white/10; }
@@ -42,10 +43,10 @@
   .chip-neutral { @apply chip bg-sand text-ink-soft; }
 
   .callout { @apply rounded-2xl border-l-4 p-5 md:p-6 my-8; }
-  .callout-ok { @apply callout border-ok bg-ok-soft; }
+  .callout-ok { @apply callout border-orange bg-orange-soft; }
   .callout-warn { @apply callout border-warn bg-warn-soft; }
   .callout-bad { @apply callout border-bad bg-bad-soft; }
-  .callout-info { @apply callout border-forest bg-sand; }
+  .callout-info { @apply callout border-ink bg-sand; }
 
   /* Contenu éditorial */
   .article { @apply prose prose-lg max-w-none
@@ -67,6 +68,8 @@
 
   .field { @apply w-full rounded-xl border-2 border-ink/10 bg-white px-4 py-3 text-ink focus:border-orange focus:outline-none; }
 
+  .stripes { background: repeating-linear-gradient(-45deg, #FF5A1F 0 14px, transparent 14px 28px); }
+  .h-sport { @apply font-display uppercase; font-weight: 900; letter-spacing: -0.02em; }
   .reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; }
   .reveal.is-in { opacity: 1; transform: none; }
 }

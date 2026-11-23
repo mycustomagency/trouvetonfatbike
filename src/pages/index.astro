@@ -33,55 +33,53 @@ const faq = [
   schema={buildFaqSchema(faq)}
 >
   <!-- HERO -->
-  <section class="relative overflow-hidden bg-forest-dark text-white">
-    <div class="absolute inset-0 opacity-[0.07]" style="background-image:radial-gradient(circle at 1px 1px,#fff 1px,transparent 0);background-size:22px 22px" aria-hidden="true"></div>
-    <div class="wrap relative grid items-center gap-10 py-14 md:grid-cols-[1.2fr_1fr] md:py-20">
+  <section class="relative overflow-hidden bg-forest pb-28 pt-10 text-white md:pb-36" style="clip-path:polygon(0 0,100% 0,100% 90%,0 100%)">
+    <div class="stripes absolute right-0 top-0 h-4 w-2/5" aria-hidden="true"></div>
+    <div class="wrap relative grid items-center gap-12 md:grid-cols-[1.2fr_1fr]">
       <div>
-        <p class="eyebrow !text-orange-light">Guide indépendant · mis à jour en novembre 2026</p>
-        <h1 class="mt-5 text-5xl text-white md:text-7xl">Le fatbike électrique <span class="text-orange-light">légal</span>, choisi pour de vrai.</h1>
-        <p class="mt-6 max-w-xl text-lg text-white/80 md:text-xl">Ici, on ne recommande que des fatbikes qui ont le droit de rouler en France : 250&nbsp;W, 25&nbsp;km/h, pédalage obligatoire. Des petits budgets aux modèles premium, sélectionnés sur fiches techniques vérifiées, par une rideuse qui roule avec ses chiens.</p>
+        <p class="eyebrow">Guide indépendant · mis à jour en novembre 2026</p>
+        <h1 class="h-sport mt-5 text-5xl text-white md:text-[5.2rem] md:leading-[0.98]">Le fatbike <span class="text-orange">légal</span>,<br />sans limites.</h1>
+        <p class="mt-6 max-w-xl text-lg text-white/75 md:text-xl">Ici, on ne recommande que des fatbikes qui ont le droit de rouler en France : 250&nbsp;W, 25&nbsp;km/h, pédalage obligatoire. Du petit budget au premium, sélectionnés sur fiches techniques vérifiées, par une rideuse qui roule avec ses chiens.</p>
         <div class="mt-8 flex flex-wrap gap-3">
-          <a href="/simulateur-fatbike-legal/" class="btn-primary">Mon fatbike est-il légal ?</a>
+          <a href="/simulateur-fatbike-legal/" class="btn-primary">Mon fatbike est-il légal ? →</a>
           <a href="/guide/meilleur-fatbike-electrique-2026/" class="btn-light">Voir le comparatif 2026</a>
         </div>
-        <div class="mt-10 flex items-center gap-4 rounded-2xl bg-white/5 p-4 ring-1 ring-white/10 md:max-w-lg">
-          <p class="shrink-0 whitespace-nowrap font-display text-4xl font-black text-orange-light">96&nbsp;%</p>
-          <p class="text-sm text-white/75">des fatbikes vendus en France ne sont pas des vélos électriques légaux, selon la filière vélo (juillet 2026). Le but de ce site : t'aider à être dans les 4 % restants.</p>
+        <div class="mt-10 flex max-w-lg items-center gap-4 border-l-4 border-orange pl-4">
+          <p class="shrink-0 whitespace-nowrap font-display text-5xl font-black text-orange">96&nbsp;%</p>
+          <p class="text-sm text-white/70">des fatbikes vendus en France ne sont pas des vélos électriques légaux, selon la filière vélo (juillet 2026). Le but de ce site : t'aider à être dans les 4 % restants.</p>
         </div>
       </div>
-      <div class="relative">
-        <img src="/img/hero-fatbike.webp" alt="Fatbike électrique de style moto avec phare rond, vu de face" width="1100" height="1647" class="mx-auto aspect-[4/5] w-full max-w-md rounded-4xl object-cover shadow-lift" fetchpriority="high" />
-        <div class="absolute -bottom-4 left-2 rounded-2xl bg-white px-4 py-3 text-ink shadow-lift md:-left-6">
-          <p class="text-xs font-bold uppercase tracking-wider text-ink-mute">Règle du site</p>
-          <p class="font-display text-lg font-black">✓ 250 W · 25 km/h</p>
+      <div class="relative mx-auto w-full max-w-md">
+        <div class="stripes absolute inset-0 translate-x-5 translate-y-6 rounded-4xl md:translate-x-6" aria-hidden="true"></div>
+        <img src="/img/hero-fatbike.webp" alt="Fatbike électrique de style moto avec phare rond, vu de face" width="1100" height="1647" class="relative aspect-[4/5] w-full rounded-4xl object-cover" fetchpriority="high" />
+        <div class="absolute -bottom-5 -left-3 rounded-2xl bg-white px-4 py-3 text-ink shadow-lift md:-left-8">
+          <p class="text-[0.68rem] font-bold uppercase tracking-wider text-ink-mute">Règle du site</p>
+          <p class="font-display text-lg font-black"><span class="text-ok">✓</span> 250 W · 25 km/h</p>
         </div>
       </div>
     </div>
   </section>
 
   <!-- PROMESSES -->
-  <section class="border-b border-ink/5 bg-white">
-    <div class="wrap grid gap-6 py-10 md:grid-cols-3">
+  <section class="relative z-10 -mt-16 -skew-y-2 bg-orange text-ink md:-mt-20">
+    <div class="wrap grid skew-y-2 gap-6 py-9 md:grid-cols-3">
       {[
-        ['⚖️', 'Uniquement des modèles légaux', 'Aucun fatbike 750 W ou « débridable » en sélection. Jamais.'],
-        ['💶', 'Les petits budgets aussi', 'Mon propre fatbike légal m\'a coûté moins de 800 €.'],
-        ['🐾', 'Pensé pour rouler avec son chien', 'Harnais, attaches, remorques : le pôle que personne ne fait.'],
-      ].map(([i, t, d]) => (
-        <div class="flex gap-4">
-          <span class="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-sand text-2xl" aria-hidden="true">{i}</span>
-          <div><p class="font-display text-lg font-extrabold">{t}</p><p class="text-[0.95rem] text-ink-soft">{d}</p></div>
-        </div>
+        ['100 % légal', 'Aucun fatbike 750 W ou « débridable » en sélection. Jamais.'],
+        ['Petits budgets aussi', 'Mon propre fatbike légal m\'a coûté moins de 800 €.'],
+        ['Avec son chien', 'Harnais, attaches, remorques : le pôle que personne ne fait.'],
+      ].map(([t, d]) => (
+        <div><p class="h-sport text-xl">{t}</p><p class="text-[0.95rem] text-ink/80">{d}</p></div>
       ))}
     </div>
   </section>
 
   <!-- SÉLECTION -->
-  <section class="section">
+  <section class="section bg-sand">
     <div class="wrap">
       <div class="flex flex-wrap items-end justify-between gap-4">
         <div>
           <p class="eyebrow">Sélection 2026</p>
-          <h2 class="h-lg mt-3 max-w-2xl">3 fatbikes légaux pour démarrer</h2>
+          <h2 class="h-sport mt-3 max-w-3xl text-3xl md:text-5xl">3 fatbikes légaux pour démarrer</h2>
         </div>
         <a href="/guide/meilleur-fatbike-electrique-2026/" class="btn-ghost">Le comparatif complet →</a>
       </div>
@@ -110,12 +108,13 @@ const faq = [
 
   <!-- SIMULATEUR -->
   <section class="wrap">
-    <div class="grid overflow-hidden rounded-4xl bg-orange text-white md:grid-cols-[1.3fr_1fr]">
+    <div class="relative grid overflow-hidden rounded-4xl bg-forest text-white md:grid-cols-[1.3fr_1fr]">
+      <div class="stripes absolute inset-x-0 bottom-0 z-10 h-3.5" aria-hidden="true"></div>
       <div class="p-8 md:p-12">
-        <p class="text-xs font-bold uppercase tracking-[0.14em] text-white/80">Outil gratuit · 30 secondes</p>
-        <h2 class="mt-3 text-3xl text-white md:text-5xl">Ton fatbike passerait-il un contrôle de police ?</h2>
-        <p class="mt-4 max-w-lg text-white/90">Puissance, vitesse, gâchette d'accélérateur : réponds à 5 questions et découvre si ton vélo est un VAE légal, un cyclomoteur ou un engin qui risque la saisie.</p>
-        <a href="/simulateur-fatbike-legal/" class="btn mt-7 bg-white text-orange-dark hover:bg-sand">Lancer le simulateur →</a>
+        <p class="eyebrow">Outil gratuit · 30 secondes</p>
+        <h2 class="h-sport mt-3 text-3xl text-white md:text-5xl">Ton fatbike passerait-il un contrôle de police ?</h2>
+        <p class="mt-4 max-w-lg text-white/75">Puissance, vitesse, gâchette d'accélérateur : réponds à 5 questions et découvre si ton vélo est un VAE légal, un cyclomoteur ou un engin qui risque la saisie.</p>
+        <a href="/simulateur-fatbike-legal/" class="btn-primary mt-7">Lancer le simulateur →</a>
       </div>
       <div class="relative min-h-[260px]">
         <img src="/img/pexels-assedrani-official-177638678-26936495.webp" alt="Compteur de fatbike électrique affichant la vitesse" width="700" height="700" loading="lazy" class="absolute inset-0 h-full w-full object-cover" />
@@ -127,7 +126,7 @@ const faq = [
   <section class="section">
     <div class="wrap">
       <p class="eyebrow">Par usage</p>
-      <h2 class="h-lg mt-3">Tu cherches un fatbike pour…</h2>
+      <h2 class="h-sport mt-3 text-3xl md:text-5xl">Tu cherches un fatbike pour…</h2>
       <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {usages.map((u) => (
           <a href={u.href} class="group reveal relative block overflow-hidden rounded-3xl shadow-card">
@@ -152,7 +151,7 @@ const faq = [
       </div>
       <div>
         <p class="eyebrow">Cani-fatbike</p>
-        <h2 class="h-lg mt-3">Le fatbike, c'est encore mieux avec son chien</h2>
+        <h2 class="h-sport mt-3 text-3xl md:text-5xl">Le fatbike, c'est encore mieux avec son chien</h2>
         <p class="lead mt-5">Je roule avec mes molosses. Les gros pneus, la stabilité et l'assistance qui permet de garder un rythme régulier font du fatbike légal un super compagnon de balade… à condition d'être bien équipé et de respecter le chien.</p>
         <ul class="mt-6 space-y-3">
           <li class="flex gap-3"><span class="text-orange">●</span>Quel chien peut suivre, à quel âge, à quelle allure</li>
@@ -173,7 +172,7 @@ const faq = [
       <img src="/img/vanessa-fatbike-chemin-chien.webp" alt="Le fatbike Colorway de Vanessa sur un chemin, avec son chien" width="800" height="600" loading="lazy" class="aspect-[4/3] w-full rounded-4xl object-cover shadow-lift" />
       <div>
         <p class="eyebrow">Qui écrit ici ?</p>
-        <h2 class="h-lg mt-3">Une vraie rideuse, pas une usine à contenu</h2>
+        <h2 class="h-sport mt-3 text-3xl md:text-5xl">Une vraie rideuse, pas une usine à contenu</h2>
         <p class="lead mt-5">Je m'appelle Vanessa. Je roule sur un Colorway BK29 à 250 W acheté moins de 800 €, presque toujours avec mes chiens. Je vérifie la réglementation, je compare les fiches techniques ligne par ligne et je te dis aussi ce qui ne va pas.</p>
         <a href="/a-propos/" class="btn-ghost mt-7">Mon histoire et ma méthode</a>
       </div>

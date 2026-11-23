@@ -5,10 +5,11 @@ const id = 'nl-' + Math.random().toString(36).slice(2, 8);
 ---
 <section class:list={[variant === 'band' ? 'my-20' : 'my-12']}>
   <div class:list={['relative overflow-hidden rounded-4xl bg-forest text-white', variant === 'band' ? 'wrap !px-0' : '']}>
+    <div class="stripes absolute inset-x-0 top-0 h-3.5" aria-hidden="true"></div>
     <div class="grid items-center gap-8 p-8 md:grid-cols-[1.2fr_1fr] md:p-12">
       <div>
         <p class="eyebrow !text-orange-light">Cadeau gratuit</p>
-        <h2 class="mt-3 text-3xl text-white md:text-4xl">La checklist «&nbsp;Fatbike 100&nbsp;% légal&nbsp;»</h2>
+        <h2 class="h-sport mt-3 text-3xl text-white md:text-4xl">La checklist «&nbsp;Fatbike 100&nbsp;% légal&nbsp;»</h2>
         <p class="mt-3 text-white/80">Les 10 points à vérifier avant d'acheter, pour ne pas te retrouver avec un engin saisi au premier contrôle. Envoyée tout de suite par email, puis un conseil fatbike de temps en temps. Désinscription en un clic.</p>
       </div>
       <form id={id} class="flex flex-col gap-3" novalidate>
