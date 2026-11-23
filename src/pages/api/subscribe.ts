@@ -33,7 +33,12 @@ export const POST: APIRoute = async ({ request, locals }) => {
     method: 'POST', headers,
     body: JSON.stringify({ email, listIds: [3], updateEnabled: true }),
   });
-  if (!contactRes.ok && contactRes.status !== 204) return json({ error: 'Inscription impossible, réessaie.' }, 502);
+  if (!contactRes.ok && contactRes.status !== 204) {
+    let detail = '';
+    try { const e = await contactRes.json() as any; detail = `${contactRes.status} ${e.code ?? ''} ${e.message ?? ''}`.trim(); } catch { detail = String(contactRes.status); }
+    // 400 (et non 502) : Cloudflare remplace les réponses 502 par sa propre page d'erreur
+    return json({ error: 'Inscription impossible, réessaie dans quelques minutes.', detail }, 400);
+  }
 
   await fetch('https://api.brevo.com/v3/smtp/email', {
     method: 'POST', headers,
