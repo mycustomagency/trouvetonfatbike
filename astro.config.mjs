@@ -7,7 +7,7 @@ const C = '/guide/meilleur-fatbike-electrique-2026/';
 
 export default defineConfig({
   site: 'https://trouvetonfatbike.com',
-  trailingSlash: 'always',
+  trailingSlash: 'ignore',
   adapter: cloudflare({ mode: 'advanced' }),
   integrations: [tailwind({ applyBaseStyles: false })],
   output: 'hybrid',
