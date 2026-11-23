@@ -8,14 +8,15 @@ const json = (data: object, status: number) =>
 export const GET: APIRoute = () => json({ error: 'Method not allowed' }, 405);
 
 const WELCOME = `
-<div style="font-family:Arial,sans-serif;max-width:560px;margin:auto;color:#17201B;line-height:1.6">
-  <h1 style="color:#1F3A2C">Ta checklist « Fatbike 100 % légal »</h1>
+<div style="font-family:Arial,sans-serif;max-width:560px;margin:auto;color:#141414;line-height:1.6">
+  <div style="height:8px;background:repeating-linear-gradient(-45deg,#FF5A1F 0 10px,#161616 10px 20px);border-radius:4px"></div>
+  <h1 style="color:#161616">Ta checklist « Fatbike 100 % légal »</h1>
   <p>Merci de ton inscription ! Comme promis, voici les 10 points à vérifier avant d'acheter un fatbike électrique en France :</p>
   <p style="text-align:center;margin:28px 0">
-    <a href="https://trouvetonfatbike.com/checklist-fatbike-legal/" style="background:#E8593C;color:#fff;padding:14px 26px;border-radius:999px;text-decoration:none;font-weight:bold">Ouvrir ma checklist</a>
+    <a href="https://trouvetonfatbike.com/checklist-fatbike-legal/" style="background:#FF5A1F;color:#fff;padding:14px 26px;border-radius:999px;text-decoration:none;font-weight:bold">Ouvrir ma checklist</a>
   </p>
   <p>Tu as déjà un fatbike ? Teste-le en 30 secondes avec le simulateur :
-    <a href="https://trouvetonfatbike.com/simulateur-fatbike-legal/" style="color:#C43D22">Mon fatbike est-il légal ?</a></p>
+    <a href="https://trouvetonfatbike.com/simulateur-fatbike-legal/" style="color:#D9430F">Mon fatbike est-il légal ?</a></p>
   <p>À bientôt sur les chemins,<br>Vanessa, TrouveTonFatbike</p>
   <p style="font-size:12px;color:#6B746E">Tu reçois cet email parce que tu t'es inscrit(e) sur trouvetonfatbike.com. Un lien de désinscription figure dans chacun de nos envois.</p>
 </div>`;
