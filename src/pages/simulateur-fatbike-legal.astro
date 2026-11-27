@@ -27,14 +27,14 @@ const faq = [
 ];
 ---
 <Base
-  title="Mon fatbike est-il légal ? Simulateur gratuit 2026"
-  description="Puissance, vitesse, gâchette, débridage : en 30 secondes, découvre si ton fatbike électrique est un VAE légal, un cyclomoteur ou un engin non homologué. Règles 2026."
+  title="Mon fatbike est-il légal ? Le simulateur gratuit en 30 secondes"
+  description="Puissance, vitesse, gâchette, débridage : en 30 secondes, découvre si ton fatbike électrique est un VAE légal, un cyclomoteur ou un engin non homologué. Gratuit et sans inscription."
   schema={[buildFaqSchema(faq), buildBreadcrumbSchema([{ name: 'Accueil', url: '/' }, { name: 'Simulateur', url: '/simulateur-fatbike-legal/' }])]}
 >
   <section class="relative bg-forest text-white">
     <div class="stripes absolute right-0 top-0 h-3.5 w-1/3" aria-hidden="true"></div>
     <div class="wrap-prose py-14 text-center md:py-20">
-      <p class="eyebrow !text-orange-light justify-center">Outil gratuit · règles à jour novembre 2026</p>
+      <p class="eyebrow !text-orange-light justify-center">Outil gratuit · 30 secondes</p>
       <h1 class="h-sport mt-4 text-4xl text-white md:text-6xl">Mon fatbike est-il légal ?</h1>
       <p class="mx-auto mt-5 max-w-xl text-lg text-white/80">Réponds à 5 questions. Le simulateur te dit si ton fatbike est un vélo électrique légal, un cyclomoteur ou un engin qui risque la saisie, et ce que tu dois faire.</p>
     </div>
@@ -73,8 +73,8 @@ const faq = [
     </ul>
     <p>Si une seule condition manque, ton fatbike n'est plus un vélo. Il doit alors être homologué comme cyclomoteur, immatriculé et assuré. S'il n'a aucune homologation, il n'a tout simplement pas le droit de rouler sur la voie publique.</p>
     <div class="callout-info not-prose">
-      <p class="font-bold">Pourquoi c'est important en 2026</p>
-      <p class="mt-1 text-ink-soft">Les contrôles se multiplient : la police de Paris contrôle les fatbikes chaque semaine depuis le début de l'année, et Bordeaux a lancé une opération « tolérance zéro » en avril 2026, avec des engins saisis sur les pistes cyclables. Tous les détails sont dans le <a href="/guide/reglementation-vae-france/" class="font-bold text-orange-dark">guide de la réglementation 2026</a>.</p>
+      <p class="font-bold">Pourquoi c'est important</p>
+      <p class="mt-1 text-ink-soft">Les contrôles se multiplient : la police de Paris contrôle les fatbikes chaque semaine, et Bordeaux a lancé une opération « tolérance zéro », avec des engins saisis sur les pistes cyclables. Tous les détails sont dans le <a href="/guide/reglementation-vae-france/" class="font-bold text-orange-dark">guide de la réglementation</a>.</p>
     </div>
     <Faq items={faq} />
     <AuthorBox />

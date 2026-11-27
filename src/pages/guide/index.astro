@@ -1,11 +1,12 @@
 ---
 import Base from '@layouts/Base.astro';
+import { YEAR } from '@data/site';
 const guides = [
-  { t: 'Meilleur fatbike électrique 2026', d: '8 modèles légaux comparés, du petit budget au premium.', href: '/guide/meilleur-fatbike-electrique-2026/', img: '/img/pexels-g-force-bike-95411088-13738411.webp' },
+  { t: `Meilleur fatbike électrique ${YEAR}`, d: '8 modèles légaux comparés, du petit budget au premium.', href: '/guide/meilleur-fatbike-electrique-2026/', img: '/img/pexels-g-force-bike-95411088-13738411.webp' },
   { t: 'Fatbike style moto', d: 'Le look moto en version 250 W, et les pièges à éviter.', href: '/guide/fatbike-style-moto/', img: '/img/hero-fatbike.webp' },
   { t: 'Fatbike 1000 W : terrain privé', d: 'Les modèles puissants, expliqués sans filtre.', href: '/guide/fatbike-1000w-terrain-prive/', img: '/img/tim-foster-s0w9nvl3vba-unsplash.webp' },
   { t: 'Mon fatbike est-il légal ?', d: 'Le simulateur gratuit en 5 questions.', href: '/simulateur-fatbike-legal/', img: '/img/pexels-assedrani-official-177638678-26936495.webp' },
-  { t: 'Réglementation fatbike 2026', d: 'Règles, contrôles, sanctions, assurance, casque.', href: '/guide/reglementation-vae-france/', img: '/img/pexels-assedrani-official-177638678-26825340.webp' },
+  { t: 'Réglementation fatbike', d: 'Règles, contrôles, sanctions, assurance, casque.', href: '/guide/reglementation-vae-france/', img: '/img/pexels-assedrani-official-177638678-26825340.webp' },
   { t: 'Fatbike pas cher et légal', d: 'Les meilleurs modèles à moins de 1 200 €.', href: '/guide/fatbike-electrique-pas-cher/', img: '/img/vanessa-fatbike-campagne.webp' },
   { t: 'Guide d\'achat en 8 critères', d: 'Roues, capteur, autonomie réelle, freins, budget.', href: '/guide/guide-achat-fatbike/', img: '/img/pexels-g-force-bike-95411088-13633045.webp' },
   { t: 'Avis Colorway BK29', d: 'Mon fatbike à moins de 800 €, en toute honnêteté.', href: '/guide/avis-colorway-bk29/', img: '/img/fatbike-colorway-profil.webp' },
@@ -14,7 +15,7 @@ const guides = [
   { t: 'Accessoires utiles', d: 'L\'équipement qui sert vraiment, sans gadgets.', href: '/accessoires/', img: '/img/pexels-assedrani-official-177638678-26825343.webp' },
 ];
 ---
-<Base title="Tous les guides fatbike électrique" description="Tous les guides TrouveTonFatbike : comparatif 2026, réglementation, petit budget, guide d'achat, fatbike avec son chien et accessoires.">
+<Base title="Tous les guides fatbike électrique" description="Tous les guides TrouveTonFatbike : comparatif, réglementation, petit budget, guide d'achat, fatbike avec son chien et accessoires.">
   <section class="relative bg-forest text-white"><div class="stripes absolute right-0 top-0 h-3.5 w-1/3" aria-hidden="true"></div><div class="wrap py-14 md:py-20"><p class="eyebrow">Guides</p><h1 class="h-lg text-white mt-4">Tous les guides fatbike</h1></div></section>
   <section class="wrap section !pt-12">
     <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

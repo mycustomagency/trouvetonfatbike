@@ -5,6 +5,7 @@ import CompareTable from '@components/CompareTable.astro';
 import Faq from '@components/Faq.astro';
 import { BIKES, byId } from '@data/bikes';
 import { buildFaqSchema, buildItemListSchema, SITE } from '@utils/seo';
+import { YEAR } from '@data/site';
 
 const ordered = ['engwe-ep2-3-boost', 'colorway-bk29', 'engwe-l20-boost', 'engwe-e26', 'fiido-m1-pro', 'engwe-engine-pro-3', 'ruff-lil-buddy-edge', 'super73-s2-se'].map(byId);
 const labels: Record<string, string> = {
@@ -19,11 +20,11 @@ const labels: Record<string, string> = {
 };
 
 const faq = [
-  { q: 'Quel est le meilleur fatbike électrique en 2026 ?', a: "Pour la plupart des gens, l'ENGWE EP-2 3.0 Boost : pliant, capteur de couple, annoncé conforme UE, vers 1 300 €. Avec un petit budget, le Colorway BK29 fait le travail dès 800 € environ. Pour les chemins et les balades avec un chien, l'ENGWE E26 et ses roues de 26 pouces." },
+  { q: `Quel est le meilleur fatbike électrique en ${YEAR} ?`, a: "Pour la plupart des gens, l'ENGWE EP-2 3.0 Boost : pliant, capteur de couple, annoncé conforme UE, vers 1 300 €. Avec un petit budget, le Colorway BK29 fait le travail dès 800 € environ. Pour les chemins et les balades avec un chien, l'ENGWE E26 et ses roues de 26 pouces." },
   { q: 'Pourquoi pas de fatbike 750 ou 1 000 W dans ce comparatif ?', a: "Parce que ce comparatif réunit les modèles que tu peux utiliser sur la route et les pistes cyclables. Les fatbikes 750 ou 1 000 W ne sont pas des vélos aux yeux de la loi : sans homologation, ils sont réservés au terrain privé. Je les présente à part, sans filtre, dans le <a href='/guide/fatbike-1000w-terrain-prive/'>guide des fatbikes puissants</a>." },
   { q: 'Capteur de couple ou capteur de rotation ?', a: "Le capteur de couple dose l'assistance selon la force que tu mets dans les pédales : c'est plus naturel et plus économe en batterie. Le capteur de rotation déclenche l'assistance dès que les pédales tournent : moins cher, mais plus brusque." },
   { q: 'Quelle autonomie réelle attendre ?', a: "Divise souvent l'autonomie annoncée par deux. Avec une batterie de 600 à 700 Wh, compte 40 à 70 km en usage mixte, moins en hiver, dans le sable ou avec beaucoup de dénivelé." },
-  { q: 'Les prix affichés sont-ils à jour ?', a: "Ce sont des ordres de grandeur relevés en 2026. Les promotions changent toutes les semaines : le bouton « Voir le prix » t'emmène vers le tarif du jour." },
+  { q: 'Les prix affichés sont-ils à jour ?', a: "Ce sont des ordres de grandeur. Les promotions changent toutes les semaines : le bouton « Voir le prix » t'emmène vers le tarif du jour." },
 ];
 
 const toc = [
@@ -33,20 +34,19 @@ const toc = [
   { id: 'pliant', label: 'Si tu veux un pliant' },
   { id: 'chemins', label: 'Chemins, plage et neige' },
   { id: 'pieges', label: 'Les pièges des annonces' },
-  { id: 'methode', label: 'Ma méthode' },
 ];
 ---
 <Article
-  title="Meilleur fatbike électrique 2026 : 8 modèles légaux comparés"
-  h1="Meilleur fatbike électrique 2026 : les 8 modèles légaux à choisir"
-  description="Comparatif 2026 des meilleurs fatbikes électriques 100 % légaux (250 W, 25 km/h) : petit budget, pliant, chemins, premium. Tableau, avis et pièges à éviter."
+  title={`Meilleur fatbike électrique ${YEAR} : 8 modèles légaux comparés`}
+  h1={`Meilleur fatbike électrique ${YEAR} : les 8 modèles légaux à choisir`}
+  description="Comparatif des meilleurs fatbikes électriques 100 % légaux (250 W, 25 km/h) : petit budget, pliant, chemins, premium. Tableau, avis et pièges à éviter."
   intro="Uniquement des modèles <strong>250 W et 25 km/h</strong>, donc autorisés sur la route et les pistes cyclables. De 800 à 4 000 €, classés selon ton usage."
   image="/img/pexels-g-force-bike-95411088-13738411.webp"
   imageAlt="Femme sur un fatbike électrique pliant sur un chemin en forêt"
-  crumb="Meilleur fatbike électrique 2026"
+  crumb={`Meilleur fatbike électrique ${YEAR}`}
   pubDate={new Date('2026-01-05')}
   toc={toc}
-  schema={[buildFaqSchema(faq), buildItemListSchema('Meilleurs fatbikes électriques légaux 2026', ordered.map((b) => ({ name: b.name, url: `${SITE.url}/guide/meilleur-fatbike-electrique-2026/#${b.id}` })))]}
+  schema={[buildFaqSchema(faq), buildItemListSchema(`Meilleurs fatbikes électriques légaux ${YEAR}`, ordered.map((b) => ({ name: b.name, url: `${SITE.url}/guide/meilleur-fatbike-electrique-2026/#${b.id}` })))]}
 >
   <div class="callout-ok not-prose">
     <p class="font-display text-lg font-extrabold">En bref</p>
@@ -97,8 +97,7 @@ const toc = [
     <li><strong>Vendeur hors UE sans représentant en Europe :</strong> en cas de problème, personne ne répond de la conformité du produit.</li>
   </ul>
 
-  <h2 id="methode">Ma méthode de sélection</h2>
-  <p>Je ne suis pas payée par les marques pour apparaître ici. Je n'ai pas testé ces vélos moi-même, à l'exception de mon Colorway BK29. Je compare les fiches techniques officielles, je vérifie que la version vendue en France est bien conforme et je croise les avis de propriétaires. Certains liens sont affiliés : si tu achètes, je touche une petite commission, sans surcoût pour toi. C'est ce qui finance le site.</p>
+  <h2 id="aller-plus-loin">Pour aller plus loin</h2>
   <p>Envie d'aller plus loin ? Lis le <a href="/guide/guide-achat-fatbike/">guide d'achat complet</a>, ou fais le <a href="/quiz/">quiz pour trouver ton fatbike</a> en 1 minute.</p>
 
   <div class="not-prose"><Faq items={faq} /></div>

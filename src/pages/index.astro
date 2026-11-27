@@ -5,6 +5,7 @@ import Newsletter from '@components/Newsletter.astro';
 import { byId, euro } from '@data/bikes';
 import { AFF_REL } from '@utils/affiliate';
 import { buildFaqSchema } from '@utils/seo';
+import { YEAR } from '@data/site';
 
 const picks = [
   { bike: byId('colorway-bk29'), label: 'Petit budget', img: '/img/vanessa-fatbike-campagne.webp', alt: 'Fatbike Colorway BK29 garé dans un champ' },
@@ -21,7 +22,7 @@ const usages = [
 ];
 
 const faq = [
-  { q: 'Un fatbike électrique est-il légal en France en 2026 ?', a: "Oui, s'il respecte les trois règles du vélo à assistance électrique : moteur de <strong>250 W nominal maximum</strong>, assistance coupée à <strong>25 km/h</strong>, et assistance seulement quand on pédale. Au-delà, c'est un cyclomoteur : plaque, assurance, casque homologué et interdiction des pistes cyclables." },
+  { q: `Un fatbike électrique est-il légal en France en ${YEAR} ?`, a: "Oui, s'il respecte les trois règles du vélo à assistance électrique : moteur de <strong>250 W nominal maximum</strong>, assistance coupée à <strong>25 km/h</strong>, et assistance seulement quand on pédale. Au-delà, c'est un cyclomoteur : plaque, assurance, casque homologué et interdiction des pistes cyclables." },
   { q: 'Pourquoi tant de fatbikes sont-ils illégaux ?', a: "Beaucoup de modèles vendus en ligne affichent 750, 1 000 W ou plus, une poignée d'accélérateur ou un mode « débridé ». En juillet 2026, l'Alliance pour le vélo et l'Union Sport & Cycle ont estimé que 96 % des fatbikes vendus en France sortaient de la définition légale du VAE." },
   { q: 'Parles-tu aussi des fatbikes 750 ou 1 000 W ?', a: "Oui, dans une page à part et avec une étiquette claire : <strong>hors route, terrain privé uniquement</strong>. Ils ne sont pas autorisés sur la voie publique, mais tu as le droit de les acheter pour un usage privé. Je te dis ce que tu achètes vraiment, et tu choisis en connaissance de cause. Tout est dans le <a href='/guide/fatbike-1000w-terrain-prive/'>guide des fatbikes puissants</a>." },
   { q: 'Combien coûte un bon fatbike électrique légal ?', a: "On trouve des modèles conformes dès 800 € environ en promotion. Entre 1 100 et 1 700 €, on gagne un capteur de couple, de meilleures suspensions ou le pliage. Au-delà de 2 000 €, on paie surtout la marque, le design et le SAV." },
@@ -30,8 +31,8 @@ const faq = [
 ];
 ---
 <Base
-  title="Fatbike électrique 2026 : comparatif, style moto, légal ou pas ?"
-  description="Le guide transparent du fatbike électrique : comparatif 2026, fatbikes style moto en version légale, modèles 1 000 W expliqués sans filtre, simulateur de légalité et balades avec son chien."
+  title={`Fatbike électrique ${YEAR} : comparatif, style moto, légal ou pas ?`}
+  description="Le guide transparent du fatbike électrique : comparatif, fatbikes style moto en version légale, modèles 1 000 W expliqués sans filtre, simulateur de légalité et balades avec son chien."
   schema={buildFaqSchema(faq)}
 >
   <!-- HERO -->
@@ -39,16 +40,16 @@ const faq = [
     <div class="stripes absolute right-0 top-0 h-4 w-2/5" aria-hidden="true"></div>
     <div class="wrap relative grid items-center gap-12 md:grid-cols-[1.2fr_1fr]">
       <div>
-        <p class="eyebrow">Guide indépendant · mis à jour en novembre 2026</p>
+        <p class="eyebrow">Guide indépendant · fatbike électrique</p>
         <h1 class="h-sport mt-5 text-5xl text-white md:text-[5.2rem] md:leading-[0.98]">Le fatbike,<br /><span class="text-orange">sans filtre</span>.</h1>
         <p class="mt-6 max-w-xl text-lg text-white/75 md:text-xl">Légal sur route, à vérifier ou réservé au terrain privé : pour chaque fatbike, je te dis ce que tu achètes vraiment. Du petit budget au look moto, sélectionnés sur fiches techniques vérifiées, par une rideuse qui roule avec ses chiens. Tu choisis en connaissance de cause.</p>
         <div class="mt-8 flex flex-wrap gap-3">
           <a href="/simulateur-fatbike-legal/" class="btn-primary">Mon fatbike est-il légal ? →</a>
-          <a href="/guide/meilleur-fatbike-electrique-2026/" class="btn-light">Voir le comparatif 2026</a>
+          <a href="/guide/meilleur-fatbike-electrique-2026/" class="btn-light">Voir le comparatif {YEAR}</a>
         </div>
         <div class="mt-10 flex max-w-lg items-center gap-4 border-l-4 border-orange pl-4">
           <p class="shrink-0 whitespace-nowrap font-display text-5xl font-black text-orange">96&nbsp;%</p>
-          <p class="text-sm text-white/70">des fatbikes vendus en France ne sont pas des vélos électriques légaux, selon la filière vélo (juillet 2026). Le but de ce site : que tu saches toujours dans quelle catégorie est le tien.</p>
+          <p class="text-sm text-white/70">des fatbikes vendus en France ne sont pas des vélos électriques légaux, selon une étude de la filière vélo. Le but de ce site : que tu saches toujours dans quelle catégorie est le tien.</p>
         </div>
       </div>
       <div class="relative mx-auto w-full max-w-md">
@@ -80,7 +81,7 @@ const faq = [
     <div class="wrap">
       <div class="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <p class="eyebrow">Sélection 2026</p>
+          <p class="eyebrow">Sélection {YEAR}</p>
           <h2 class="h-sport mt-3 max-w-3xl text-3xl md:text-5xl">3 fatbikes légaux pour démarrer</h2>
         </div>
         <a href="/guide/meilleur-fatbike-electrique-2026/" class="btn-ghost">Le comparatif complet →</a>

@@ -1,9 +1,9 @@
 ---
 import Logo from './Logo.astro';
-import { SOCIAL } from '@data/site';
+import { SOCIAL, YEAR } from '@data/site';
 const cols = [
   { title: 'Bien choisir', links: [
-    ['Comparatif fatbikes 2026', '/guide/meilleur-fatbike-electrique-2026/'],
+    [`Comparatif fatbikes ${YEAR}`, '/guide/meilleur-fatbike-electrique-2026/'],
     ['Fatbike pas cher et légal', '/guide/fatbike-electrique-pas-cher/'],
     ['Fatbike style moto', '/guide/fatbike-style-moto/'],
     ['Guide d\'achat complet', '/guide/guide-achat-fatbike/'],
@@ -12,7 +12,7 @@ const cols = [
   ]},
   { title: 'Rouler légal', links: [
     ['Simulateur « Mon fatbike est-il légal ? »', '/simulateur-fatbike-legal/'],
-    ['Réglementation fatbike 2026', '/guide/reglementation-vae-france/'],
+    ['Réglementation fatbike', '/guide/reglementation-vae-france/'],
     ['Checklist avant d\'acheter', '/checklist-fatbike-legal/'],
     ['Fatbike 1000 W : terrain privé', '/guide/fatbike-1000w-terrain-prive/'],
   ]},

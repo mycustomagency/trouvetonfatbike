@@ -1,4 +1,5 @@
 ---
+import { YEAR } from '@data/site';
 import Article from '@layouts/Article.astro';
 import Faq from '@components/Faq.astro';
 import { buildFaqSchema } from '@utils/seo';
@@ -14,20 +15,20 @@ const faq = [
 const toc = [
   { id: 'regles', label: 'Les 3 règles du VAE' },
   { id: 'categories', label: 'VAE, speed bike, engin non homologué' },
-  { id: '2026', label: 'Ce qui change en 2026' },
+  { id: 'controles', label: 'La fin de la tolérance' },
   { id: 'sanctions', label: 'Les sanctions' },
   { id: 'equipement', label: 'Équipement obligatoire' },
   { id: 'achat', label: 'Acheter sans se tromper' },
 ];
 ---
 <Article
-  title="Fatbike électrique : la réglementation 2026 en France (légal ou pas ?)"
-  h1="Fatbike électrique et loi en 2026 : ce qui est légal, ce qui ne l'est plus"
-  description="Fatbike électrique légal en France en 2026 : 250 W, 25 km/h, pédalage. Contrôles, saisies, amendes, assurance, casque et pièges à l'achat. Guide à jour."
-  intro="250 W, 25 km/h, pédalage obligatoire : en dessous, ton fatbike est un vélo. Au-dessus, c'est un véhicule à moteur, et en 2026 les contrôles se multiplient."
+  title={`Fatbike électrique : la réglementation ${YEAR} en France (légal ou pas ?)`}
+  h1={`Fatbike électrique et loi en ${YEAR} : ce qui est légal, ce qui ne l'est plus`}
+  description="Fatbike électrique légal en France : 250 W, 25 km/h, pédalage. Contrôles, saisies, amendes, assurance, casque et pièges à l'achat. Guide à jour."
+  intro="250 W, 25 km/h, pédalage obligatoire : en dessous, ton fatbike est un vélo. Au-dessus, c'est un véhicule à moteur, et les contrôles se multiplient."
   image="/img/pexels-assedrani-official-177638678-26825340.webp"
   imageAlt="Fatbike électrique de style moto garé sur des pavés en ville"
-  crumb="Réglementation fatbike 2026"
+  crumb="Réglementation fatbike"
   pubDate={new Date('2026-01-05')}
   toc={toc}
   schema={[buildFaqSchema(faq)]}
@@ -66,11 +67,11 @@ const toc = [
     </table>
   </div>
 
-  <h2 id="2026">Ce qui change en 2026 : la fin de la tolérance</h2>
+  <h2 id="controles">La fin de la tolérance : les contrôles se durcissent</h2>
   <p>La loi n'a pas changé sur le fond. Ce qui change, c'est qu'elle est enfin appliquée.</p>
   <ul>
     <li><strong>Une alerte de la filière.</strong> Le 8 juillet 2026, l'Alliance pour le vélo et l'Union Sport & Cycle ont publié un recensement : près de 8 % des vélos électriques vendus en France seraient non conformes, 94 % de ces produits sont des fatbikes, et 96 % des fatbikes vendus sortent de la définition légale. Les marketplaces sont pointées du doigt.</li>
-    <li><strong>Des contrôles réguliers.</strong> À Paris, la police contrôle les fatbikes au moins une fois par semaine depuis le début de l'année, parfois avec des jumelles radar. Bordeaux a lancé une opération « tolérance zéro » le 13 avril 2026 : 33 engins saisis en trois jours sur les pistes cyclables. Lyon et La Rochelle intègrent aussi ces engins à leurs contrôles.</li>
+    <li><strong>Des contrôles réguliers.</strong> À Paris, la police contrôle les fatbikes au moins une fois par semaine depuis début 2026, parfois avec des jumelles radar. Bordeaux a lancé une opération « tolérance zéro » le 13 avril 2026 : 33 engins saisis en trois jours sur les pistes cyclables. Lyon et La Rochelle intègrent aussi ces engins à leurs contrôles.</li>
     <li><strong>Une pression européenne sur les plateformes.</strong> Le règlement européen sur la sécurité des produits (2023/988) impose qu'un opérateur établi dans l'UE réponde de chaque produit vendu. Des fédérations demandent des obligations plus strictes pour les places de marché.</li>
   </ul>
   <p>Conséquence pratique : acheter un fatbike « 1 000 W » en pensant passer inaperçu devient un vrai pari, et c'est l'acheteur qui en supporte le risque.</p>
@@ -103,7 +104,7 @@ const toc = [
     <li>Préfère un vendeur établi dans l'Union européenne, avec un SAV joignable.</li>
     <li>Garde ta facture : elle prouve la version achetée.</li>
   </ol>
-  <p>Pour gagner du temps, pioche dans notre <a href="/guide/meilleur-fatbike-electrique-2026/">comparatif des fatbikes légaux 2026</a> ou dans la sélection <a href="/guide/fatbike-electrique-pas-cher/">petit budget</a>.</p>
+  <p>Pour gagner du temps, pioche dans notre <a href="/guide/meilleur-fatbike-electrique-2026/">comparatif des fatbikes légaux</a> ou dans la sélection <a href="/guide/fatbike-electrique-pas-cher/">petit budget</a>.</p>
 
   <div class="not-prose"><Faq items={faq} /></div>
 
@@ -114,5 +115,5 @@ const toc = [
     <li>Règlement (UE) 2023/988 relatif à la sécurité générale des produits</li>
     <li>Presse régionale et nationale sur les contrôles à Paris, Bordeaux et Lyon (2026)</li>
   </ul>
-  <p class="text-sm text-ink-mute">Ce guide est informatif et ne remplace pas un conseil juridique. Dernière vérification : novembre 2026.</p>
+  <p class="text-sm text-ink-mute">Ce guide est informatif et ne remplace pas un conseil juridique.</p>
 </Article>

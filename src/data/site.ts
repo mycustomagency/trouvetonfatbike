@@ -8,10 +8,12 @@ export const AUTHOR = {
 };
 
 export const UPDATED = new Date('2026-11-22');
-export const UPDATED_LABEL = 'novembre 2026';
+// Année affichée dans les titres : calculée au moment de la mise en ligne.
+// Elle passe toute seule à l'année suivante dès la première publication après le 1er janvier.
+export const YEAR = new Date().getFullYear();
 
 export const NAV = [
-  { label: 'Comparatif 2026', href: '/guide/meilleur-fatbike-electrique-2026/' },
+  { label: `Comparatif ${YEAR}`, href: '/guide/meilleur-fatbike-electrique-2026/' },
   { label: 'Légal ou pas ?', href: '/simulateur-fatbike-legal/' },
   { label: 'Petit budget', href: '/guide/fatbike-electrique-pas-cher/' },
   { label: 'Style moto', href: '/guide/fatbike-style-moto/' },

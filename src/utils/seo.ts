@@ -5,7 +5,7 @@ export const SITE = {
   tagline: 'Le fatbike électrique légal, choisi pour de vrai',
   url: 'https://trouvetonfatbike.com',
   description:
-    "Fatbikes électriques 100 % légaux (250 W, 25 km/h) : comparatif 2026, simulateur de conformité, petits budgets et balades avec son chien.",
+    "Fatbikes électriques 100 % légaux (250 W, 25 km/h) : comparatif, fatbikes style moto, simulateur de conformité, petits budgets et balades avec son chien.",
   locale: 'fr_FR',
   ogImage: '/og-default.jpg',
 };

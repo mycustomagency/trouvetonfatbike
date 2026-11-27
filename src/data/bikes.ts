@@ -6,7 +6,7 @@ import { buyLink } from '@utils/affiliate';
 //   'verifier' : 250 W / 25 km/h annoncés, mais un point (souvent l'accélérateur) est à contrôler
 // Les engins hors route (plus de 250 W, 45 km/h...) ne sont pas dans ce fichier :
 // ils sont présentés à part, sur /guide/fatbike-1000w-terrain-prive/.
-// Prix = ordres de grandeur constatés en 2026 chez les revendeurs. Ils bougent souvent.
+// Prix = ordres de grandeur constatés chez les revendeurs. Ils bougent souvent.
 
 export type Tier = 'budget' | 'milieu' | 'premium';
 export type Legal = 'route' | 'verifier' | 'hors-route';
@@ -69,7 +69,7 @@ export const BIKES: Bike[] = [
     brand: 'ENGWE',
     tier: 'budget',
     priceFrom: 1149,
-    priceNote: 'environ 1 150 € (site officiel, 2026)',
+    priceNote: 'environ 1 150 € (site officiel)',
     format: 'Cadre bas, facile à enjamber',
     wheels: '20 × 4,0"',
     motor: '250 W, bouton Boost',
@@ -93,7 +93,7 @@ export const BIKES: Bike[] = [
     brand: 'Fiido',
     tier: 'milieu',
     priceFrom: 1099,
-    priceNote: 'environ 1 100 € en promotion (2026)',
+    priceNote: 'environ 1 100 € en promotion',
     format: 'Pliant',
     wheels: '20 × 4,0"',
     motor: '250 W',
@@ -117,7 +117,7 @@ export const BIKES: Bike[] = [
     brand: 'ENGWE',
     tier: 'milieu',
     priceFrom: 1299,
-    priceNote: 'environ 1 300 € sur le site officiel (novembre 2026)',
+    priceNote: 'environ 1 300 € sur le site officiel',
     format: 'Pliant',
     wheels: '20 × 4,0"',
     motor: '250 W, 75 Nm, Boost',
@@ -141,7 +141,7 @@ export const BIKES: Bike[] = [
     brand: 'ENGWE',
     tier: 'milieu',
     priceFrom: 1099,
-    priceNote: 'entre 1 099 et 1 499 € selon les offres (2026)',
+    priceNote: 'entre 1 099 et 1 499 € selon les offres',
     format: 'Grand cadre (existe en cadre bas « ST »)',
     wheels: '26 × 4,0"',
     motor: '250 W',
@@ -165,7 +165,7 @@ export const BIKES: Bike[] = [
     brand: 'ENGWE',
     tier: 'milieu',
     priceFrom: 1699,
-    priceNote: 'environ 1 700 € (2026)',
+    priceNote: 'environ 1 700 €',
     format: 'Pliant tout-suspendu',
     wheels: '20 × 4,0"',
     motor: '250 W, 90 Nm',
@@ -189,7 +189,7 @@ export const BIKES: Bike[] = [
     brand: 'Ruff Cycles',
     tier: 'premium',
     priceFrom: 1699,
-    priceNote: 'de 1 700 à 2 200 € selon coloris (2026)',
+    priceNote: 'de 1 700 à 2 200 € selon coloris',
     format: 'Cruiser rétro',
     wheels: '20 × 4,0"',
     motor: 'Bafang 250 W, 60 Nm',
@@ -213,7 +213,7 @@ export const BIKES: Bike[] = [
     brand: 'Super73',
     tier: 'premium',
     priceFrom: 3999,
-    priceNote: 'environ 4 000 € (2026)',
+    priceNote: 'environ 4 000 €',
     format: 'Style moto iconique',
     wheels: '20 × 4,0"',
     motor: '250 W moyeu',
@@ -237,7 +237,7 @@ export const BIKES: Bike[] = [
     brand: 'ENGWE',
     tier: 'milieu',
     priceFrom: 1099,
-    priceNote: 'environ 1 100 € sur le site officiel (novembre 2026), plus cher en double batterie',
+    priceNote: 'environ 1 100 € sur le site officiel, plus cher en double batterie',
     format: 'Style moto, selle biplace',
     wheels: '20 × 4,0"',
     motor: '250 W, 65 Nm (EN 15194 annoncée)',
@@ -261,7 +261,7 @@ export const BIKES: Bike[] = [
     brand: 'ENGWE',
     tier: 'budget',
     priceFrom: 1099,
-    priceNote: 'environ 1 100 € (site officiel et Decathlon, novembre 2026), version double batterie plus chère',
+    priceNote: 'environ 1 100 € (site officiel et Decathlon), version double batterie plus chère',
     format: 'Style moto tout-suspendu',
     wheels: '20 × 4,0"',
     motor: '250 W, 55 Nm (version UE)',
