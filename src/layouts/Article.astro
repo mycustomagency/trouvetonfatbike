@@ -18,8 +18,9 @@ interface Props {
   schema?: object[];
   toc?: { id: string; label: string }[];
   newsletter?: boolean;
+  affiliate?: boolean; // false sur les pages sans lien affilié
 }
-const { title, h1, description, intro, image, imageAlt, crumb, pubDate, updatedDate = UPDATED, schema = [], toc = [], newsletter = true } = Astro.props;
+const { title, h1, description, intro, image, imageAlt, crumb, pubDate, updatedDate = UPDATED, schema = [], toc = [], newsletter = true, affiliate = true } = Astro.props;
 const path = Astro.url.pathname;
 const schemas = [
   buildArticleSchema({ title: h1, description, path, image, pubDate, updatedDate }),
@@ -37,7 +38,7 @@ const schemas = [
         </nav>
         <h1 class="h-lg text-balance text-white">{h1}</h1>
         {intro && <p class="lead mt-5 !text-white/75 [&_strong]:text-white" set:html={intro} />}
-        <div class="mt-6"><AuthorBox compact dark /></div>
+        <div class="mt-6"><AuthorBox compact dark affiliate={affiliate} /></div>
       </div>
       <img src={image} alt={imageAlt} width="900" height="680" class="aspect-[4/3] w-full rounded-4xl object-cover shadow-lift ring-4 ring-orange/90 ring-offset-4 ring-offset-forest" fetchpriority="high" />
     </div>
