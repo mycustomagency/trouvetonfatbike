@@ -1,9 +1,10 @@
 ---
 import type { Bike } from '@data/bikes';
-import { euro } from '@data/bikes';
+import { euro, LEGAL_LABEL } from '@data/bikes';
 import { AFF_REL } from '@utils/affiliate';
 interface Props { bike: Bike; rank?: number; label?: string }
 const { bike, rank, label } = Astro.props;
+const status = LEGAL_LABEL[bike.legal];
 const dogs = ['', 'Possible', 'Bien', 'Idéal'][bike.dogFriendly];
 ---
 <article id={bike.id} class="card overflow-hidden scroll-mt-28">
@@ -16,7 +17,7 @@ const dogs = ['', 'Possible', 'Bien', 'Idéal'][bike.dogFriendly];
       </div>
     </div>
     <div class="flex flex-wrap gap-2">
-      <span class="chip-ok">✓ 250 W · 25 km/h</span>
+      <span class={status.chip}>{status.text}</span>
       {bike.tested && <span class="chip bg-orange-soft text-orange-dark">★ Mon vélo</span>}
     </div>
   </div>

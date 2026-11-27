@@ -1,0 +1,94 @@
+---
+import Article from '@layouts/Article.astro';
+import BikeCard from '@components/BikeCard.astro';
+import CompareTable from '@components/CompareTable.astro';
+import Faq from '@components/Faq.astro';
+import { byId } from '@data/bikes';
+import { buildFaqSchema, buildItemListSchema, SITE } from '@utils/seo';
+
+const picks = ['colorway-bk29', 'engwe-m1', 'engwe-m20', 'super73-s2-se'].map(byId);
+const labels: Record<string, string> = {
+  'colorway-bk29': 'Le moins cher (c\'est le mien)',
+  'engwe-m1': 'Le plus équipé',
+  'engwe-m20': 'Le plus connu',
+  'super73-s2-se': 'L\'icône premium',
+};
+
+const faq = [
+  { q: 'Un fatbike style moto peut-il être légal ?', a: "Oui. Le look ne compte pas pour la loi : ce qui compte, c'est le moteur (250 W nominal maximum), l'assistance coupée à 25 km/h et le pédalage obligatoire. Un fatbike qui ressemble à une petite moto peut donc être un vélo électrique parfaitement légal." },
+  { q: 'L\'accélérateur est-il interdit sur un fatbike ?', a: "Pas complètement. Une poignée ou une gâchette d'accélérateur est tolérée comme aide au démarrage, jusqu'à 6 km/h. Si elle fait avancer le vélo jusqu'à 25 km/h sans pédaler, le vélo n'est plus un vélo électrique au sens de la loi." },
+  { q: 'Comment savoir si l\'accélérateur est limité à 6 km/h ?', a: "Cherche la mention dans la fiche produit ou la notice (« aide au démarrage », « walk assist », « 6 km/h »). Si la fiche parle d'un mode « tout électrique » jusqu'à 25 km/h, pose la question au vendeur par écrit avant d'acheter, et garde sa réponse." },
+  { q: 'Un fatbike style moto, c\'est bien pour rouler avec son chien ?', a: "Pas vraiment pour le faire courir à côté : ces vélos sont lourds (souvent 35 à 40 kg) et moins maniables en cas d'écart du chien. Pour les balades avec un chien attelé, préfère un modèle plus léger, et lis le <a href='/cani-fatbike/'>guide fatbike et chien</a>." },
+  { q: 'Peut-on monter à deux sur un fatbike avec une selle biplace ?', a: "Une selle longue ne suffit pas. Le passager doit avoir une vraie place prévue par le constructeur (selle et repose-pieds), et le vélo doit supporter la charge totale. Vérifie la charge maximale dans la fiche. Pour un enfant, il faut un siège adapté à son âge." },
+];
+
+const toc = [
+  { id: 'tableau', label: 'Les 4 modèles en un coup d\'œil' },
+  { id: 'accelerateur', label: 'Le piège de l\'accélérateur' },
+  { id: 'selection', label: 'Les modèles en détail' },
+  { id: 'versions', label: 'Même nom, deux versions' },
+  { id: 'choisir', label: 'Lequel choisir ?' },
+];
+---
+<Article
+  title="Fatbike style moto légal : 4 modèles 250 W et le piège de l'accélérateur"
+  h1="Fatbike style moto : le look moto, en version légale"
+  description="Les fatbikes électriques style moto vendus en 250 W et 25 km/h (Colorway BK29, ENGWE M1, ENGWE M20, Super73) : statut légal de chaque modèle, piège de l'accélérateur, versions à éviter."
+  intro="Tu craques pour le look petite moto ? Bonne nouvelle : il existe en version légale. Mais c'est aussi la catégorie où les pièges sont les plus nombreux. Voici ce qu'il faut savoir, modèle par modèle."
+  image="/img/pexels-carlo-thone-660536928-29380588.webp"
+  imageAlt="Fatbike électrique de style moto rétro, crème et marron, avec phare rond"
+  crumb="Fatbike style moto"
+  pubDate={new Date('2026-11-27')}
+  toc={toc}
+  schema={[buildFaqSchema(faq), buildItemListSchema('Fatbikes style moto en version 250 W', picks.map((b) => ({ name: b.name, url: `${SITE.url}/guide/fatbike-style-moto/#${b.id}` })))]}
+>
+  <div class="callout-ok not-prose">
+    <p class="font-display text-lg font-extrabold">En bref</p>
+    <ul class="mt-2 space-y-1 text-ink-soft">
+      <li><strong>Le look moto n'est pas illégal.</strong> Ce qui compte : 250 W, 25 km/h, et un accélérateur limité à 6 km/h.</li>
+      <li><strong>Petit budget :</strong> <a href="#colorway-bk29" class="font-semibold text-orange-dark">Colorway BK29</a>, c'est celui que j'ai, sans gâchette.</li>
+      <li><strong>Le plus équipé :</strong> <a href="#engwe-m1" class="font-semibold text-orange-dark">ENGWE M1</a>, double suspension et freins hydrauliques.</li>
+      <li><strong>Premium :</strong> <a href="#super73-s2-se" class="font-semibold text-orange-dark">Super73 S2 SE</a>, en version européenne uniquement.</li>
+    </ul>
+  </div>
+
+  <h2 id="tableau">Les 4 modèles en un coup d'œil</h2>
+  <p>Tous sont vendus avec un moteur de 250 W et une vitesse assistée de 25 km/h. Le statut t'indique s'il reste un point à contrôler avant d'acheter.</p>
+  <div class="not-prose"><CompareTable bikes={picks} /></div>
+
+  <h2 id="accelerateur">Le piège n° 1 : l'accélérateur</h2>
+  <p>La plupart des fatbikes style moto ont une poignée tournante ou une gâchette d'accélérateur. Ce n'est pas un problème en soi : la loi la tolère comme <strong>aide au démarrage, jusqu'à 6 km/h</strong>. Elle sert à décoller à un feu ou dans une côte, puis c'est le pédalage qui prend le relais.</p>
+  <p>Le problème, c'est quand l'accélérateur fait avancer le vélo <strong>jusqu'à 25 km/h sans pédaler</strong>. Même avec un moteur de 250 W, le vélo n'est alors plus un vélo électrique au sens de la loi. Plusieurs fiches de revendeurs décrivent ce fonctionnement, d'où l'étiquette <span class="chip-warn">⚠ À vérifier</span> sur certains modèles.</p>
+  <div class="callout-warn not-prose">
+    <p class="font-bold">Comment vérifier avant d'acheter</p>
+    <ul class="mt-2 space-y-1 text-ink-soft">
+      <li>Cherche dans la fiche ou la notice : « aide au démarrage », « walk assist » ou « 6 km/h ».</li>
+      <li>Méfie-toi des mentions « mode tout électrique », « throttle only » ou « accélérateur jusqu'à 25 km/h ».</li>
+      <li>En cas de doute, pose la question au vendeur par écrit et garde sa réponse.</li>
+      <li>Ou passe ta fiche au <a href="/simulateur-fatbike-legal/" class="font-semibold text-orange-dark">simulateur de légalité</a>.</li>
+    </ul>
+  </div>
+
+  <h2 id="selection">Les 4 fatbikes style moto en détail</h2>
+  <div class="not-prose space-y-8">
+    {picks.map((b, i) => <BikeCard bike={b} rank={i + 1} label={labels[b.id]} />)}
+  </div>
+
+  <h2 id="versions">Le piège n° 2 : même nom, deux versions</h2>
+  <p>Certains modèles style moto existent en plusieurs versions selon le pays ou le revendeur. L'ENGWE M20, par exemple, est vendu en 250 W par la marque et chez Decathlon, mais on le trouve aussi annoncé en 750 W chez d'autres revendeurs. Même nom, même look, mais pas du tout le même statut : la version 750 W est réservée au terrain privé.</p>
+  <p>Avant de payer, lis la <strong>puissance nominale</strong> (pas la puissance « max » ou « de crête ») et la <strong>vitesse maximale assistée</strong> dans la fiche détaillée, pas seulement dans le titre de l'annonce.</p>
+
+  <h2 id="choisir">Lequel choisir ?</h2>
+  <ul>
+    <li><strong>Tu veux le look sans te ruiner :</strong> le <a href="#colorway-bk29">Colorway BK29</a>. C'est le mien : pas de gâchette, juste un boîtier + / − pour choisir le niveau d'assistance. Mon avis complet est dans <a href="/guide/avis-colorway-bk29/">l'avis sur le Colorway BK29</a>.</li>
+    <li><strong>Tu veux du confort et de l'autonomie :</strong> l'<a href="#engwe-m1">ENGWE M1</a>, après avoir vérifié l'accélérateur.</li>
+    <li><strong>Tu veux le modèle que tout le monde reconnaît :</strong> l'<a href="#engwe-m20">ENGWE M20</a>, en version 250 W uniquement.</li>
+    <li><strong>Tu veux l'original :</strong> le <a href="#super73-s2-se">Super73 S2 SE</a>, en version européenne. Ses modes « off-road » sont interdits sur la voie publique.</li>
+  </ul>
+  <p>Tu veux plus de puissance et tu as accès à un terrain privé ? Lis le <a href="/guide/fatbike-1000w-terrain-prive/">guide des fatbikes 1 000 W</a>. Tu veux comparer avec les autres formats (pliant, 26 pouces, cadre bas) ? Le <a href="/guide/meilleur-fatbike-electrique-2026/">comparatif 2026</a> est fait pour ça.</p>
+
+  <h2 id="methode">Ma méthode</h2>
+  <p>Je n'ai pas testé ces vélos, à l'exception de mon Colorway BK29. Je compare les fiches officielles et celles des grands revendeurs, je signale les incohérences entre elles et je croise les avis de propriétaires. Certains liens sont affiliés : si tu achètes, je touche une petite commission, sans surcoût pour toi. Les prix sont des ordres de grandeur relevés en novembre 2026.</p>
+
+  <div class="not-prose"><Faq items={faq} /></div>
+</Article>

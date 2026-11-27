@@ -1,10 +1,15 @@
 import { buyLink } from '@utils/affiliate';
 
-// ─── Catalogue : UNIQUEMENT des fatbikes vendus en version VAE légale ──────────
-// Règle du site : 250 W nominal, assistance coupée à 25 km/h, pédalage obligatoire.
+// ─── Catalogue des fatbikes vendus en version 250 W / 25 km/h ─────────────────
+// Statut affiché sur chaque fiche (règle de transparence du site) :
+//   'route'    : conforme VAE (250 W nominal, coupure à 25 km/h, pas d'accélérateur libre)
+//   'verifier' : 250 W / 25 km/h annoncés, mais un point (souvent l'accélérateur) est à contrôler
+// Les engins hors route (plus de 250 W, 45 km/h...) ne sont pas dans ce fichier :
+// ils sont présentés à part, sur /guide/fatbike-1000w-terrain-prive/.
 // Prix = ordres de grandeur constatés en 2026 chez les revendeurs. Ils bougent souvent.
 
 export type Tier = 'budget' | 'milieu' | 'premium';
+export type Legal = 'route' | 'verifier' | 'hors-route';
 
 export interface Bike {
   id: string;
@@ -24,6 +29,7 @@ export interface Bike {
   pros: string[];
   cons: string[];
   check: string; // le point à vérifier avant d'acheter
+  legal: Legal;
   dogFriendly: 1 | 2 | 3; // aptitude balades avec chien / remorque
   usages: ('ville' | 'chemins' | 'plage-neige' | 'pliant' | 'chien' | 'style')[];
   href: string;
@@ -50,6 +56,7 @@ export const BIKES: Bike[] = [
     pros: ['Le look moto pour moins de 1 000 €', 'Grosse batterie sur la version T', 'Selle longue très confortable'],
     cons: ['Lourd (cadre acier)', 'Capteur de rotation moins naturel', 'Plusieurs versions (G, T) : bien lire la fiche'],
     check: "Le mien n'a pas de gâchette, juste un boîtier + / − pour choisir le niveau d'assistance. Certaines annonces de revendeurs parlent pourtant d'« accélérateur » : vérifie la version proposée.",
+    legal: 'route',
     dogFriendly: 2,
     usages: ['ville', 'chemins', 'style', 'chien'],
     href: buyLink({ amazon: 'Colorway BK29 vélo électrique fatbike 250W' }),
@@ -74,9 +81,10 @@ export const BIKES: Bike[] = [
     pros: ['Capteur de couple (assistance naturelle)', 'Cadre bas très accessible', 'Marque qui vend des versions UE conformes'],
     cons: ['Fourche basique', 'Poids élevé pour le porter'],
     check: 'Commande bien la version européenne 250 W, vendue par un revendeur établi dans l\'UE.',
+    legal: 'route',
     dogFriendly: 2,
     usages: ['ville', 'chemins', 'chien'],
-    href: buyLink({ partner: 'engwe', partnerTarget: 'https://engwe.com/fr/', amazon: 'ENGWE L20 Boost 250W' }),
+    href: buyLink({ partner: 'engwe', partnerTarget: 'https://engwe.com/fr/products/engwe-l20-boost', amazon: 'ENGWE L20 Boost 250W' }),
     cta: 'Voir le prix',
   },
   {
@@ -97,6 +105,7 @@ export const BIKES: Bike[] = [
     pros: ['Parmi les plus légers de la catégorie', 'Double suspension', 'Se range partout une fois plié'],
     cons: ['SAV et documentation surtout en anglais', 'Batterie moyenne'],
     check: 'Vérifie que la fiche indique bien 25 km/h et la conformité EN 15194.',
+    legal: 'route',
     dogFriendly: 1,
     usages: ['pliant', 'ville', 'chemins'],
     href: buyLink({ amazon: 'Fiido M1 Pro fatbike 250W' }),
@@ -107,8 +116,8 @@ export const BIKES: Bike[] = [
     name: 'ENGWE EP-2 3.0 Boost',
     brand: 'ENGWE',
     tier: 'milieu',
-    priceFrom: 1199,
-    priceNote: 'environ 1 200 € (site officiel, 2026)',
+    priceFrom: 1299,
+    priceNote: 'environ 1 300 € sur le site officiel (novembre 2026)',
     format: 'Pliant',
     wheels: '20 × 4,0"',
     motor: '250 W, 75 Nm, Boost',
@@ -120,9 +129,10 @@ export const BIKES: Bike[] = [
     pros: ['Annoncé « EU Legal » par la marque', 'Capteur de couple', 'Bonne autonomie pour le prix'],
     cons: ['Lourd une fois plié', 'Pas de suspension arrière'],
     check: 'Les anciennes versions EP-2 étaient plus puissantes : prends bien la 3.0 Boost 250 W.',
+    legal: 'route',
     dogFriendly: 2,
     usages: ['pliant', 'ville', 'chemins', 'chien'],
-    href: buyLink({ partner: 'engwe', partnerTarget: 'https://engwe.com/fr/', amazon: 'ENGWE EP-2 3.0 Boost' }),
+    href: buyLink({ partner: 'engwe', partnerTarget: 'https://engwe.com/fr/products/engwe-ep-2-3-0-boost', amazon: 'ENGWE EP-2 3.0 Boost' }),
     cta: 'Voir le prix',
   },
   {
@@ -143,9 +153,10 @@ export const BIKES: Bike[] = [
     pros: ['Roues 26" : passe partout', 'Grosse batterie', 'Double suspension'],
     cons: ['Encombrant', 'Pas pliable'],
     check: 'Fiche à contrôler : 250 W, 25 km/h, et revendeur basé dans l\'UE.',
+    legal: 'route',
     dogFriendly: 3,
     usages: ['chemins', 'plage-neige', 'chien'],
-    href: buyLink({ partner: 'engwe', partnerTarget: 'https://engwe.com/fr/', amazon: 'ENGWE E26 fatbike 250W' }),
+    href: buyLink({ partner: 'engwe', partnerTarget: 'https://engwe.com/fr/products/engwe-e26', amazon: 'ENGWE E26 fatbike 250W' }),
     cta: 'Voir le prix',
   },
   {
@@ -166,9 +177,10 @@ export const BIKES: Bike[] = [
     pros: ['Très confortable', 'Couple élevé pour les côtes', 'Annoncé « EU Legal »'],
     cons: ['Prix', 'Poids'],
     check: 'L\'ancienne Engine Pro 2.0 existait en 750 W : ne confonds pas les versions.',
+    legal: 'route',
     dogFriendly: 3,
     usages: ['chemins', 'pliant', 'chien'],
-    href: buyLink({ partner: 'engwe', partnerTarget: 'https://engwe.com/fr/', amazon: 'ENGWE Engine Pro 3.0 Boost' }),
+    href: buyLink({ partner: 'engwe', partnerTarget: 'https://engwe.com/fr/products/engwe-engine-pro-3-0-boost', amazon: 'ENGWE Engine Pro 3.0 Boost' }),
     cta: 'Voir le prix',
   },
   {
@@ -189,6 +201,7 @@ export const BIKES: Bike[] = [
     pros: ['Léger pour un fatbike', 'Cadre garanti 10 ans', 'Marque européenne reconnue'],
     cons: ['Plus cher', 'Moins équipé que les marques en ligne à prix égal'],
     check: 'Achat chez un revendeur agréé pour profiter du SAV.',
+    legal: 'route',
     dogFriendly: 2,
     usages: ['ville', 'style', 'chemins'],
     href: buyLink({ amazon: "Ruff Cycles Lil'Buddy" }),
@@ -212,12 +225,67 @@ export const BIKES: Bike[] = [
     pros: ['Design de référence', 'Finitions haut de gamme', 'Version UE 250 W / 25 km/h'],
     cons: ['Très cher', 'Pensé pour le style plus que la rando'],
     check: 'N\'achète que la version européenne. Les modes « off-road » sont interdits sur la voie publique.',
+    legal: 'route',
     dogFriendly: 1,
     usages: ['ville', 'style'],
     href: buyLink({ amazon: 'Super73 S2 SE' }),
+    cta: 'Voir le prix',
+  },
+  {
+    id: 'engwe-m1',
+    name: 'ENGWE M1',
+    brand: 'ENGWE',
+    tier: 'milieu',
+    priceFrom: 1099,
+    priceNote: 'environ 1 100 € sur le site officiel (novembre 2026), plus cher en double batterie',
+    format: 'Style moto, selle biplace',
+    wheels: '20 × 4,0"',
+    motor: '250 W, 65 Nm (EN 15194 annoncée)',
+    battery: '48 V 15,6 Ah (option double batterie)',
+    weight: 'env. 40 kg',
+    suspension: 'Double (fourche + amortisseur arrière)',
+    sensor: 'Capteur de vitesse',
+    bestFor: 'Le vrai look moto, en version 250 W',
+    pros: ['Look moto très réussi', 'Double suspension et freins hydrauliques', 'Grosse autonomie, surtout en double batterie'],
+    cons: ['Très lourd (autour de 40 kg)', 'Capteur de vitesse : assistance moins naturelle'],
+    check: "Regarde comment fonctionne l'accélérateur sur la version proposée : il doit être limité à 6 km/h (aide au démarrage). S'il pousse jusqu'à 25 km/h sans pédaler, ce n'est plus un vélo électrique au sens de la loi.",
+    legal: 'verifier',
+    dogFriendly: 1,
+    usages: ['ville', 'style'],
+    href: buyLink({ partner: 'engwe', partnerTarget: 'https://engwe.com/fr/products/engwe-m1', amazon: 'ENGWE M1 250W' }),
+    cta: 'Voir le prix',
+  },
+  {
+    id: 'engwe-m20',
+    name: 'ENGWE M20',
+    brand: 'ENGWE',
+    tier: 'budget',
+    priceFrom: 1099,
+    priceNote: 'environ 1 100 € (site officiel et Decathlon, novembre 2026), version double batterie plus chère',
+    format: 'Style moto tout-suspendu',
+    wheels: '20 × 4,0"',
+    motor: '250 W, 55 Nm (version UE)',
+    battery: '48 V 13 Ah (option double batterie)',
+    weight: 'lourd, selon batterie',
+    suspension: 'Tout-suspendu',
+    sensor: 'Capteur de vitesse',
+    bestFor: 'Le fatbike style moto le plus connu, au prix le plus doux',
+    pros: ['Look moto culte', 'Tout-suspendu', 'Vendu aussi chez Decathlon'],
+    cons: ['Freins mécaniques sur la version de base', 'Existe aussi en 750 W chez certains revendeurs'],
+    check: "Deux pièges : certains revendeurs vendent une version 750 W (hors route), et plusieurs fiches 250 W parlent d'un accélérateur jusqu'à 25 km/h. Prends la version 250 W et vérifie que l'accélérateur est limité à 6 km/h.",
+    legal: 'verifier',
+    dogFriendly: 1,
+    usages: ['ville', 'style'],
+    href: buyLink({ partner: 'engwe', partnerTarget: 'https://engwe.com/fr/products/engwe-m20', amazon: 'ENGWE M20 250W' }),
     cta: 'Voir le prix',
   },
 ];
 
 export const byId = (id: string) => BIKES.find((b) => b.id === id)!;
 export const euro = (n: number) => n.toLocaleString('fr-FR').replace(/\s/g, '\u00a0') + '\u00a0€';
+
+export const LEGAL_LABEL: Record<Legal, { chip: string; text: string }> = {
+  route: { chip: 'chip-ok', text: '✓ Légal sur route · 250 W · 25 km/h' },
+  verifier: { chip: 'chip-warn', text: '⚠ À vérifier : accélérateur' },
+  'hors-route': { chip: 'chip-bad', text: '⛔ Hors route : terrain privé' },
+};

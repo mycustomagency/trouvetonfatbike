@@ -3,7 +3,7 @@ import Base from '@layouts/Base.astro';
 import Newsletter from '@components/Newsletter.astro';
 import { BIKES } from '@data/bikes';
 
-const data = BIKES.map((b) => ({ id: b.id, name: b.name, price: b.priceFrom, usages: b.usages, dog: b.dogFriendly, bestFor: b.bestFor, href: b.href, weight: b.weight, wheels: b.wheels, tested: !!b.tested }));
+const data = BIKES.filter((b) => b.legal === 'route').map((b) => ({ id: b.id, name: b.name, price: b.priceFrom, usages: b.usages, dog: b.dogFriendly, bestFor: b.bestFor, href: b.href, weight: b.weight, wheels: b.wheels, tested: !!b.tested }));
 const qs = [
   { id: 'use', q: 'Tu rouleras surtout…', o: [['ville', 'En ville et sur piste cyclable'], ['chemins', 'Sur les chemins et en forêt'], ['plage-neige', 'Dans le sable ou la neige'], ['chien', 'En balade avec mon chien']] },
   { id: 'fold', q: 'Tu dois le ranger dans un coffre, un appart ou un camping-car ?', o: [['oui', 'Oui, il doit se plier'], ['non', 'Non, j\'ai un garage ou un local']] },

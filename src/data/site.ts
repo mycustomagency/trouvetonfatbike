@@ -14,6 +14,7 @@ export const NAV = [
   { label: 'Comparatif 2026', href: '/guide/meilleur-fatbike-electrique-2026/' },
   { label: 'Légal ou pas ?', href: '/simulateur-fatbike-legal/' },
   { label: 'Petit budget', href: '/guide/fatbike-electrique-pas-cher/' },
+  { label: 'Style moto', href: '/guide/fatbike-style-moto/' },
   { label: 'Fatbike & chien', href: '/cani-fatbike/' },
   { label: 'Accessoires', href: '/accessoires/' },
 ];

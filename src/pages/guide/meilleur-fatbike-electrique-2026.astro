@@ -19,8 +19,8 @@ const labels: Record<string, string> = {
 };
 
 const faq = [
-  { q: 'Quel est le meilleur fatbike électrique en 2026 ?', a: "Pour la plupart des gens, l'ENGWE EP-2 3.0 Boost : pliant, capteur de couple, annoncé conforme UE, vers 1 200 €. Avec un petit budget, le Colorway BK29 fait le travail dès 800 € environ. Pour les chemins et les balades avec un chien, l'ENGWE E26 et ses roues de 26 pouces." },
-  { q: 'Pourquoi ne pas recommander de fatbike 750 ou 1 000 W ?', a: "Parce qu'ils ne sont pas des vélos aux yeux de la loi. Sans homologation de cyclomoteur, ils n'ont pas le droit de rouler sur la voie publique, et le risque (saisie, amende, assurance qui refuse de payer) retombe sur l'acheteur." },
+  { q: 'Quel est le meilleur fatbike électrique en 2026 ?', a: "Pour la plupart des gens, l'ENGWE EP-2 3.0 Boost : pliant, capteur de couple, annoncé conforme UE, vers 1 300 €. Avec un petit budget, le Colorway BK29 fait le travail dès 800 € environ. Pour les chemins et les balades avec un chien, l'ENGWE E26 et ses roues de 26 pouces." },
+  { q: 'Pourquoi pas de fatbike 750 ou 1 000 W dans ce comparatif ?', a: "Parce que ce comparatif réunit les modèles que tu peux utiliser sur la route et les pistes cyclables. Les fatbikes 750 ou 1 000 W ne sont pas des vélos aux yeux de la loi : sans homologation, ils sont réservés au terrain privé. Je les présente à part, sans filtre, dans le <a href='/guide/fatbike-1000w-terrain-prive/'>guide des fatbikes puissants</a>." },
   { q: 'Capteur de couple ou capteur de rotation ?', a: "Le capteur de couple dose l'assistance selon la force que tu mets dans les pédales : c'est plus naturel et plus économe en batterie. Le capteur de rotation déclenche l'assistance dès que les pédales tournent : moins cher, mais plus brusque." },
   { q: 'Quelle autonomie réelle attendre ?', a: "Divise souvent l'autonomie annoncée par deux. Avec une batterie de 600 à 700 Wh, compte 40 à 70 km en usage mixte, moins en hiver, dans le sable ou avec beaucoup de dénivelé." },
   { q: 'Les prix affichés sont-ils à jour ?', a: "Ce sont des ordres de grandeur relevés en 2026. Les promotions changent toutes les semaines : le bouton « Voir le prix » t'emmène vers le tarif du jour." },
@@ -51,7 +51,7 @@ const toc = [
   <div class="callout-ok not-prose">
     <p class="font-display text-lg font-extrabold">En bref</p>
     <ul class="mt-2 space-y-1 text-ink-soft">
-      <li><strong>Meilleur choix global :</strong> <a href="#engwe-ep2-3-boost" class="font-semibold text-orange-dark">ENGWE EP-2 3.0 Boost</a>, vers 1 200 €</li>
+      <li><strong>Meilleur choix global :</strong> <a href="#engwe-ep2-3-boost" class="font-semibold text-orange-dark">ENGWE EP-2 3.0 Boost</a>, vers 1 300 €</li>
       <li><strong>Petit budget :</strong> <a href="#colorway-bk29" class="font-semibold text-orange-dark">Colorway BK29</a>, vers 800 € en promo (c'est le mien)</li>
       <li><strong>Chemins et chien :</strong> <a href="#engwe-e26" class="font-semibold text-orange-dark">ENGWE E26</a>, roues de 26 pouces</li>
       <li><strong>Premium :</strong> <a href="#ruff-lil-buddy-edge" class="font-semibold text-orange-dark">Ruff Cycles Lil'Buddy Edge</a>, léger et garanti 10 ans</li>
@@ -62,9 +62,16 @@ const toc = [
   <p>Tous ces fatbikes sont vendus en version européenne : <strong>moteur de 250 W, assistance coupée à 25 km/h, pas d'accélérateur libre</strong>. Clique sur un nom pour lire l'avis détaillé.</p>
   <div class="not-prose"><CompareTable bikes={ordered} /></div>
 
-  <h2 id="regle">La règle de ce comparatif : zéro fatbike illégal</h2>
+  <h2 id="regle">La règle de ce comparatif : uniquement des modèles route</h2>
   <p>En juillet 2026, l'Alliance pour le vélo et l'Union Sport & Cycle ont tiré la sonnette d'alarme : <strong>96 % des fatbikes vendus en France ne respectent pas la définition du vélo à assistance électrique</strong>. Moteurs de 750 à 2 000 W, double moteur, poignée d'accélérateur, débridage en deux clics : la plupart des « meilleurs fatbikes » mis en avant sur les marketplaces sont en réalité des cyclomoteurs non homologués.</p>
-  <p>Pour toi, ça veut dire saisie possible au premier contrôle, amende pour défaut d'assurance et aucune indemnisation en cas d'accident. Ici, on ne joue pas à ça : si un modèle n'est pas vendu en version 250 W et 25 km/h, il n'apparaît pas. Pour vérifier un vélo que tu as déjà, utilise le <a href="/simulateur-fatbike-legal/">simulateur de légalité</a>.</p>
+  <p>Pour toi, ça veut dire saisie possible au premier contrôle, amende pour défaut d'assurance et aucune indemnisation en cas d'accident. Dans ce comparatif, tu ne trouveras donc que des modèles vendus en version 250 W et 25 km/h. Pour vérifier un vélo que tu as déjà, utilise le <a href="/simulateur-fatbike-legal/">simulateur de légalité</a>.</p>
+  <div class="callout-warn not-prose">
+    <p class="font-bold">Tu cherches autre chose ?</p>
+    <ul class="mt-2 space-y-1 text-ink-soft">
+      <li><strong>Le look moto :</strong> les modèles style moto vendus en 250 W sont dans le <a href="/guide/fatbike-style-moto/" class="font-semibold text-orange-dark">guide des fatbikes style moto</a>.</li>
+      <li><strong>Plus de puissance :</strong> les 750 et 1 000 W, réservés au terrain privé, sont expliqués sans filtre dans le <a href="/guide/fatbike-1000w-terrain-prive/" class="font-semibold text-orange-dark">guide des fatbikes puissants</a>.</li>
+    </ul>
+  </div>
 
   <h2 id="selection">Les 8 modèles en détail</h2>
   <div class="not-prose space-y-8">
@@ -86,7 +93,7 @@ const toc = [
     <li><strong>« 250 W » en titre, « 1 000 W max » dans le texte :</strong> lis toute la fiche. Une puissance de crête élevée peut être normale, mais un moteur annoncé à 750 ou 1 000 W nominal ne l'est pas.</li>
     <li><strong>« Mode off-road » ou « vitesse 45 km/h déverrouillable » :</strong> c'est un débridage. Interdit sur la voie publique.</li>
     <li><strong>Gâchette d'accélérateur :</strong> tolérée seulement comme aide au démarrage jusqu'à 6 km/h.</li>
-    <li><strong>Même nom, deux versions :</strong> l'ENGWE M20 ou l'ancienne Engine Pro existent en 250 W et en 750 W. Vérifie la version exacte avant de payer.</li>
+    <li><strong>Même nom, deux versions :</strong> l'ENGWE M20 ou l'ancienne Engine Pro existent en 250 W et en 750 W. Vérifie la version exacte avant de payer (voir le <a href="/guide/fatbike-style-moto/">guide style moto</a>).</li>
     <li><strong>Vendeur hors UE sans représentant en Europe :</strong> en cas de problème, personne ne répond de la conformité du produit.</li>
   </ul>
 

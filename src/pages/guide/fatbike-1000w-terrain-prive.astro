@@ -1,0 +1,101 @@
+---
+import Article from '@layouts/Article.astro';
+import Faq from '@components/Faq.astro';
+import { amazonSearch, AFF_REL } from '@utils/affiliate';
+import { buildFaqSchema } from '@utils/seo';
+
+const shops = [
+  { t: 'Fatbikes électriques 750 W', d: 'Plus de couple pour les côtes et le sable. Encore souvent vendus avec une vitesse limitée à 25 km/h, mais au-dessus de 250 W.', href: amazonSearch('fatbike électrique 750W') },
+  { t: 'Fatbikes électriques 1 000 W', d: 'La catégorie la plus recherchée. Souvent 40 km/h et plus, poignée d\'accélérateur, double batterie.', href: amazonSearch('fatbike électrique 1000W') },
+  { t: 'Fatbikes double moteur', d: '2 000 W et plus. Ce sont de vraies petites motos électriques : poids, freinage et budget à l\'avenant.', href: amazonSearch('fatbike électrique double moteur') },
+];
+
+const faq = [
+  { q: 'A-t-on le droit d\'acheter un fatbike 1 000 W en France ?', a: "Oui. L'achat n'est pas interdit. Ce qui est interdit, c'est de rouler avec sur la voie publique (routes, rues, pistes cyclables, chemins ouverts à la circulation) s'il n'est pas homologué et immatriculé." },
+  { q: 'Où peut-on rouler avec un fatbike 1 000 W ?', a: "Sur un terrain privé fermé à la circulation publique, avec l'accord du propriétaire. Attention : un chemin rural, une route forestière ou une plage ne sont pas des terrains privés." },
+  { q: 'Peut-on immatriculer un fatbike 1 000 W ?', a: "Seulement s'il est vendu avec un certificat de conformité européen (COC) dans une catégorie de cyclomoteur (L1e-A ou L1e-B). Sans ce document, il ne peut pas être immatriculé. Dans ce cas, il faut aussi une assurance, un casque homologué, des gants, et selon la catégorie, le permis AM ou B." },
+  { q: 'Peut-on brider un fatbike 1 000 W pour le rendre légal ?', a: "Non. Limiter la vitesse ne change pas la puissance nominale du moteur, ni l'homologation. Un vélo vendu en 1 000 W reste un engin non homologué, même réglé à 25 km/h." },
+  { q: 'Que risque-t-on sur la voie publique ?', a: "Saisie possible du véhicule, amende pour défaut d'assurance (délit puni de 3 750 €), et surtout aucune indemnisation en cas d'accident. Les contrôles se sont multipliés en 2026. Le détail est dans la <a href='/guide/reglementation-vae-france/'>page réglementation</a>." },
+];
+
+const toc = [
+  { id: 'statut', label: 'Ce que tu achètes vraiment' },
+  { id: 'ou', label: 'Où tu as le droit de rouler' },
+  { id: 'verifier', label: 'Ce qu\'il faut vérifier avant d\'acheter' },
+  { id: 'voir', label: 'Voir les modèles' },
+  { id: 'alternatives', label: 'Les alternatives légales sur route' },
+];
+---
+<Article
+  title="Fatbike 1000 W : légal ou pas ? Ce qu'il faut savoir avant d'acheter"
+  h1="Fatbike 1 000 W : ce que tu achètes vraiment (et où tu peux rouler)"
+  description="Fatbike électrique 750, 1 000 ou 2 000 W : statut légal, où rouler, immatriculation, assurance et points à vérifier avant d'acheter. Le guide sans filtre et sans morale."
+  intro="Pas de leçon de morale ici. Les fatbikes puissants existent, ils sont vendus partout, et tu as le droit d'en acheter un. Voici simplement ce que tu achètes, pour que tu choisisses en connaissance de cause."
+  image="/img/pexels-assedrani-official-177638678-27898369.webp"
+  imageAlt="Fatbike électrique puissant de style moto garé sur des pavés"
+  crumb="Fatbike 1000 W"
+  pubDate={new Date('2026-11-27')}
+  toc={toc}
+  schema={[buildFaqSchema(faq)]}
+>
+  <div class="not-prose rounded-3xl border-l-8 border-bad bg-bad-soft p-6">
+    <p class="chip-bad">⛔ Hors route : terrain privé uniquement</p>
+    <p class="mt-3 text-ink">Les fatbikes de plus de 250 W, ou dont l'assistance dépasse 25 km/h, ne sont <strong>pas des vélos</strong> aux yeux de la loi. Sans homologation et immatriculation, ils n'ont pas le droit de rouler sur la voie publique. C'est à toi de décider, en sachant ça.</p>
+  </div>
+
+  <h2 id="statut">Ce que tu achètes vraiment</h2>
+  <p>Un vélo à assistance électrique, c'est trois règles : <strong>250 W de puissance nominale</strong>, <strong>assistance coupée à 25 km/h</strong> et <strong>assistance seulement quand tu pédales</strong> (un accélérateur est toléré jusqu'à 6 km/h). Dès qu'un fatbike dépasse une de ces limites, il change de catégorie.</p>
+  <ul>
+    <li><strong>S'il est vendu avec un certificat de conformité européen (COC) de cyclomoteur :</strong> il peut être immatriculé. Il faut alors une plaque, une assurance, un casque homologué, des gants, et selon la catégorie le permis AM ou B. Il est interdit sur les pistes cyclables.</li>
+    <li><strong>Sans ce certificat (le cas de la grande majorité des fatbikes 1 000 W vendus en ligne) :</strong> c'est un engin non homologué. Il ne peut pas être immatriculé, donc il est réservé au terrain privé.</li>
+  </ul>
+  <p>En juillet 2026, la filière vélo estimait que 96 % des fatbikes vendus en France sortaient de la définition légale du vélo électrique. Tu ne serais donc pas une exception. Mais les contrôles se sont durcis cette année, surtout dans les grandes villes.</p>
+
+  <h2 id="ou">Où tu as le droit de rouler</h2>
+  <ul>
+    <li><strong>Oui :</strong> un terrain privé fermé à la circulation publique, avec l'accord du propriétaire (ton terrain, celui d'un proche, un terrain de loisirs motorisés qui accepte ces engins).</li>
+    <li><strong>Non :</strong> les routes, les rues, les pistes cyclables, les voies vertes, mais aussi les chemins ruraux, les routes forestières et les plages. Ce sont des espaces publics, même s'ils ont l'air déserts.</li>
+  </ul>
+  <div class="callout-warn not-prose">
+    <p class="font-bold">L'assurance, même sur terrain privé</p>
+    <p class="mt-1 text-ink-soft">Un engin de 40 kg à 40 km/h peut blesser quelqu'un, même chez toi. Demande à ton assureur si ta responsabilité civile le couvre, ou s'il faut une assurance dédiée.</p>
+  </div>
+
+  <h2 id="verifier">Ce qu'il faut vérifier avant d'acheter</h2>
+  <p>Plus un vélo est puissant et lourd, plus la qualité des composants compte. Sur ces modèles, ce sont les points qui font la différence entre un bon achat et un vrai danger :</p>
+  <ul>
+    <li><strong>Des freins à disque hydrauliques</strong>, pas mécaniques. À 40 km/h avec 40 kg de vélo, c'est non négociable.</li>
+    <li><strong>Une batterie certifiée</strong> (marquage CE et norme UN38.3 pour le transport), d'une marque identifiable. Les batteries bas de gamme sont la première cause d'incendie de vélo électrique.</li>
+    <li><strong>Un vendeur établi dans l'Union européenne</strong>, ou représenté en Europe. En cas de problème, quelqu'un doit répondre du produit.</li>
+    <li><strong>Des pièces détachées disponibles</strong> (pneus 4 pouces, plaquettes, chargeur, batterie de rechange).</li>
+    <li><strong>Le poids réel</strong> : souvent 35 à 50 kg. Pense au rangement et au transport jusqu'à ton terrain.</li>
+  </ul>
+  <p>Je ne t'expliquerai jamais comment débrider un vélo : c'est puni jusqu'à 1 an de prison et 30 000 € d'amende (article L317-1 du Code de la route), et ça fait perdre garantie et assurance.</p>
+  <div class="callout-ok not-prose">
+    <p class="font-bold">Et le chien ?</p>
+    <p class="mt-1 text-ink-soft">Jamais de chien attelé à un engin puissant : une accélération brusque et c'est l'accident. Pour rouler avec ton chien, reste sur un fatbike 250 W et lis le <a href="/cani-fatbike/" class="font-semibold text-orange-dark">guide fatbike et chien</a>.</p>
+  </div>
+
+  <h2 id="voir">Voir les modèles</h2>
+  <p>Je ne mets pas de modèle précis en avant dans cette catégorie : les versions changent tout le temps, et les fiches sont souvent contradictoires. Voici les recherches qui te donnent l'offre du moment, avec les prix et les avis des acheteurs.</p>
+  <div class="not-prose my-6 grid gap-4 md:grid-cols-3">
+    {shops.map((s) => (
+      <div class="card flex flex-col p-6">
+        <span class="chip-bad self-start">⛔ Hors route</span>
+        <h3 class="mt-3 text-xl">{s.t}</h3>
+        <p class="mt-2 flex-1 text-[0.95rem] text-ink-soft">{s.d}</p>
+        <a href={s.href} rel={AFF_REL} target="_blank" class="btn-dark mt-5 self-start !px-5 !py-2.5 text-sm">Voir les modèles →</a>
+      </div>
+    ))}
+  </div>
+
+  <h2 id="alternatives">Les alternatives qui roulent partout</h2>
+  <p>Ce qui attire dans un fatbike puissant, c'est souvent le look moto et la sensation de force dans les côtes. Deux options te donnent l'essentiel, sans restriction sur la route :</p>
+  <ul>
+    <li><strong>Le style moto en version 250 W :</strong> même look, et le droit de rouler partout. Voir le <a href="/guide/fatbike-style-moto/">guide des fatbikes style moto</a>.</li>
+    <li><strong>Un moteur à fort couple :</strong> un 250 W avec 75 à 100 Nm et un capteur de couple grimpe très bien. Voir le <a href="/guide/meilleur-fatbike-electrique-2026/">comparatif 2026</a>.</li>
+  </ul>
+  <p>Tu as déjà un fatbike et tu ne sais pas dans quelle catégorie il est ? Le <a href="/simulateur-fatbike-legal/">simulateur</a> te répond en 30 secondes.</p>
+
+  <div class="not-prose"><Faq items={faq} /></div>
+</Article>

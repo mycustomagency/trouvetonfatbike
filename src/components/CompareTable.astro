@@ -7,11 +7,12 @@ const { bikes } = Astro.props;
 ---
 <div class="card my-8 overflow-x-auto">
   <table class="table-clean min-w-[720px]">
-    <thead><tr><th>Modèle</th><th>Pour qui</th><th>Roues</th><th>Poids</th><th>Dès</th><th></th></tr></thead>
+    <thead><tr><th>Modèle</th><th>Statut</th><th>Pour qui</th><th>Roues</th><th>Poids</th><th>Dès</th><th></th></tr></thead>
     <tbody>
       {bikes.map((b) => (
         <tr>
           <td><a href={`#${b.id}`} class="font-bold text-ink hover:text-orange-dark">{b.name}</a>{b.tested && <span class="ml-1 text-xs text-orange-dark">★</span>}</td>
+          <td class="whitespace-nowrap">{b.legal === 'route' ? <span class="font-bold text-ok">✓ Route</span> : <span class="font-bold text-warn">⚠ À vérifier</span>}</td>
           <td class="text-ink-soft">{b.bestFor}</td>
           <td class="whitespace-nowrap">{b.wheels}</td>
           <td class="whitespace-nowrap">{b.weight.replace('env. ', '')}</td>

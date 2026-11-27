@@ -2,8 +2,10 @@ import type { APIRoute } from 'astro';
 
 const SITE = 'https://trouvetonfatbike.com';
 const PAGES: [string, string][] = [
-  ['/', '2026-11-22'],
-  ['/guide/meilleur-fatbike-electrique-2026/', '2026-11-22'],
+  ['/', '2026-11-27'],
+  ['/guide/meilleur-fatbike-electrique-2026/', '2026-11-27'],
+  ['/guide/fatbike-style-moto/', '2026-11-27'],
+  ['/guide/fatbike-1000w-terrain-prive/', '2026-11-27'],
   ['/simulateur-fatbike-legal/', '2026-11-22'],
   ['/guide/reglementation-vae-france/', '2026-11-22'],
   ['/guide/fatbike-electrique-pas-cher/', '2026-11-22'],
@@ -14,7 +16,7 @@ const PAGES: [string, string][] = [
   ['/accessoires/', '2026-11-22'],
   ['/quiz/', '2026-11-22'],
   ['/guide/', '2026-11-22'],
-  ['/a-propos/', '2026-11-22'],
+  ['/a-propos/', '2026-11-27'],
   ['/contact/', '2026-11-22'],
 ];
 

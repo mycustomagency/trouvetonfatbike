@@ -14,6 +14,7 @@ const picks = [
 
 const usages = [
   { t: 'Moins de 1 200 €', d: 'Des fatbikes légaux qui ne ruinent pas', href: '/guide/fatbike-electrique-pas-cher/', img: '/img/fatbike-colorway-profil.webp' },
+  { t: 'Style moto', d: 'Le look moto, en version légale', href: '/guide/fatbike-style-moto/', img: '/img/hero-fatbike.webp' },
   { t: 'Pliant', d: 'Pour le coffre, le train ou l\'appart', href: '/guide/meilleur-fatbike-electrique-2026/#pliant', img: '/img/pexels-g-force-bike-95411088-13738414.webp' },
   { t: 'Chemins, plage, neige', d: 'Les gros pneus, là où ils brillent', href: '/guide/meilleur-fatbike-electrique-2026/#chemins', img: '/img/tim-foster-s0w9nvl3vba-unsplash.webp' },
   { t: 'Avec mon chien', d: 'Harnais, attache, remorque', href: '/cani-fatbike/', img: '/img/ia-fatbike-avec-chien-foret.webp' },
@@ -22,14 +23,15 @@ const usages = [
 const faq = [
   { q: 'Un fatbike électrique est-il légal en France en 2026 ?', a: "Oui, s'il respecte les trois règles du vélo à assistance électrique : moteur de <strong>250 W nominal maximum</strong>, assistance coupée à <strong>25 km/h</strong>, et assistance seulement quand on pédale. Au-delà, c'est un cyclomoteur : plaque, assurance, casque homologué et interdiction des pistes cyclables." },
   { q: 'Pourquoi tant de fatbikes sont-ils illégaux ?', a: "Beaucoup de modèles vendus en ligne affichent 750, 1 000 W ou plus, une poignée d'accélérateur ou un mode « débridé ». En juillet 2026, l'Alliance pour le vélo et l'Union Sport & Cycle ont estimé que 96 % des fatbikes vendus en France sortaient de la définition légale du VAE." },
+  { q: 'Parles-tu aussi des fatbikes 750 ou 1 000 W ?', a: "Oui, dans une page à part et avec une étiquette claire : <strong>hors route, terrain privé uniquement</strong>. Ils ne sont pas autorisés sur la voie publique, mais tu as le droit de les acheter pour un usage privé. Je te dis ce que tu achètes vraiment, et tu choisis en connaissance de cause. Tout est dans le <a href='/guide/fatbike-1000w-terrain-prive/'>guide des fatbikes puissants</a>." },
   { q: 'Combien coûte un bon fatbike électrique légal ?', a: "On trouve des modèles conformes dès 800 € environ en promotion. Entre 1 100 et 1 700 €, on gagne un capteur de couple, de meilleures suspensions ou le pliage. Au-delà de 2 000 €, on paie surtout la marque, le design et le SAV." },
   { q: 'Peut-on faire du fatbike avec son chien ?', a: "Oui, avec un chien adulte en bonne santé, un harnais de traction, une barre d'attache fixée sur la tige de selle et une vitesse adaptée à son allure. Pour les chiens âgés, très lourds ou à nez court, la remorque est souvent la meilleure option. Tout est détaillé dans le <a href='/cani-fatbike/'>guide fatbike et chien</a>." },
   { q: 'Comment savoir si mon fatbike actuel est légal ?', a: "Regarde la plaque ou la notice : puissance nominale, vitesse maximale assistée et norme EN 15194. Puis utilise le <a href='/simulateur-fatbike-legal/'>simulateur</a> : en 30 secondes, il te dit si ton vélo est un VAE, un cyclomoteur ou un engin non homologué." },
 ];
 ---
 <Base
-  title="Fatbike électrique légal 2026 : comparatif, simulateur et conseils"
-  description="Le guide du fatbike électrique 100 % légal : comparatif 2026 (250 W, 25 km/h), simulateur « mon fatbike est-il légal ? », modèles pas chers et balades avec son chien."
+  title="Fatbike électrique 2026 : comparatif, style moto, légal ou pas ?"
+  description="Le guide transparent du fatbike électrique : comparatif 2026, fatbikes style moto en version légale, modèles 1 000 W expliqués sans filtre, simulateur de légalité et balades avec son chien."
   schema={buildFaqSchema(faq)}
 >
   <!-- HERO -->
@@ -38,23 +40,23 @@ const faq = [
     <div class="wrap relative grid items-center gap-12 md:grid-cols-[1.2fr_1fr]">
       <div>
         <p class="eyebrow">Guide indépendant · mis à jour en novembre 2026</p>
-        <h1 class="h-sport mt-5 text-5xl text-white md:text-[5.2rem] md:leading-[0.98]">Le fatbike <span class="text-orange">légal</span>,<br />sans limites.</h1>
-        <p class="mt-6 max-w-xl text-lg text-white/75 md:text-xl">Ici, on ne recommande que des fatbikes qui ont le droit de rouler en France : 250&nbsp;W, 25&nbsp;km/h, pédalage obligatoire. Du petit budget au premium, sélectionnés sur fiches techniques vérifiées, par une rideuse qui roule avec ses chiens.</p>
+        <h1 class="h-sport mt-5 text-5xl text-white md:text-[5.2rem] md:leading-[0.98]">Le fatbike,<br /><span class="text-orange">sans filtre</span>.</h1>
+        <p class="mt-6 max-w-xl text-lg text-white/75 md:text-xl">Légal sur route, à vérifier ou réservé au terrain privé : pour chaque fatbike, je te dis ce que tu achètes vraiment. Du petit budget au look moto, sélectionnés sur fiches techniques vérifiées, par une rideuse qui roule avec ses chiens. Tu choisis en connaissance de cause.</p>
         <div class="mt-8 flex flex-wrap gap-3">
           <a href="/simulateur-fatbike-legal/" class="btn-primary">Mon fatbike est-il légal ? →</a>
           <a href="/guide/meilleur-fatbike-electrique-2026/" class="btn-light">Voir le comparatif 2026</a>
         </div>
         <div class="mt-10 flex max-w-lg items-center gap-4 border-l-4 border-orange pl-4">
           <p class="shrink-0 whitespace-nowrap font-display text-5xl font-black text-orange">96&nbsp;%</p>
-          <p class="text-sm text-white/70">des fatbikes vendus en France ne sont pas des vélos électriques légaux, selon la filière vélo (juillet 2026). Le but de ce site : t'aider à être dans les 4 % restants.</p>
+          <p class="text-sm text-white/70">des fatbikes vendus en France ne sont pas des vélos électriques légaux, selon la filière vélo (juillet 2026). Le but de ce site : que tu saches toujours dans quelle catégorie est le tien.</p>
         </div>
       </div>
       <div class="relative mx-auto w-full max-w-md">
         <div class="stripes absolute inset-0 translate-x-5 translate-y-6 rounded-4xl md:translate-x-6" aria-hidden="true"></div>
         <img src="/img/hero-fatbike.webp" alt="Fatbike électrique de style moto avec phare rond, vu de face" width="1100" height="1647" class="relative aspect-[4/5] w-full rounded-4xl object-cover" fetchpriority="high" />
         <div class="absolute -bottom-5 -left-3 rounded-2xl bg-white px-4 py-3 text-ink shadow-lift md:-left-8">
-          <p class="text-[0.68rem] font-bold uppercase tracking-wider text-ink-mute">Règle du site</p>
-          <p class="font-display text-lg font-black"><span class="text-ok">✓</span> 250 W · 25 km/h</p>
+          <p class="text-[0.68rem] font-bold uppercase tracking-wider text-ink-mute">Sur chaque modèle</p>
+          <p class="font-display text-base font-black"><span class="text-ok">✓</span> Route · <span class="text-warn">⚠</span> À vérifier · <span class="text-bad">⛔</span> Hors route</p>
         </div>
       </div>
     </div>
@@ -64,7 +66,7 @@ const faq = [
   <section class="relative z-10 -mt-16 -skew-y-2 bg-orange text-ink md:-mt-20">
     <div class="wrap grid skew-y-2 gap-6 py-9 md:grid-cols-3">
       {[
-        ['100 % légal', 'Aucun fatbike 750 W ou « débridable » en sélection. Jamais.'],
+        ['Transparence totale', 'Chaque modèle étiqueté : légal, à vérifier ou hors route. Tu choisis en connaissance de cause.'],
         ['Petits budgets aussi', 'Mon propre fatbike légal m\'a coûté moins de 800 €.'],
         ['Avec son chien', 'Harnais, attaches, remorques : le pôle que personne ne fait.'],
       ].map(([t, d]) => (
@@ -127,7 +129,7 @@ const faq = [
     <div class="wrap">
       <p class="eyebrow">Par usage</p>
       <h2 class="h-sport mt-3 text-3xl md:text-5xl">Tu cherches un fatbike pour…</h2>
-      <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
         {usages.map((u) => (
           <a href={u.href} class="group reveal relative block overflow-hidden rounded-3xl shadow-card">
             <img src={u.img} alt="" width="500" height="620" loading="lazy" class="aspect-[4/5] w-full object-cover transition-transform duration-500 group-hover:scale-105" />
@@ -139,6 +141,18 @@ const faq = [
           </a>
         ))}
       </div>
+    </div>
+  </section>
+
+  <!-- PUISSANTS -->
+  <section class="wrap pb-16">
+    <div class="card flex flex-col items-start gap-5 border-l-8 border-bad p-7 md:flex-row md:items-center md:justify-between md:p-9">
+      <div>
+        <p class="chip-bad">⛔ Hors route</p>
+        <h2 class="mt-3 text-2xl md:text-3xl">Tu lorgnes sur un fatbike 1 000 W ?</h2>
+        <p class="mt-2 max-w-2xl text-ink-soft">Pas de leçon de morale ici. Je t'explique ce que tu achètes vraiment, où tu as le droit de rouler et ce qu'il faut vérifier avant de payer.</p>
+      </div>
+      <a href="/guide/fatbike-1000w-terrain-prive/" class="btn-dark shrink-0">Le guide des fatbikes puissants →</a>
     </div>
   </section>
 
